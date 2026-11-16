@@ -1,5 +1,7 @@
 # Career timeline — source of truth: CV (docs/, private).
-# `clients` is only rendered when site.showClientNames === true.
+# `clients` is only rendered when site.showClientNames === true. Keep it EMPTY
+# in the public repository: the source is public even if names are not
+# rendered. Add names only after confirming they may be disclosed.
 - id: aliando-cloud-devsecops-engineer
   order: 1
   company: ALIANDO
