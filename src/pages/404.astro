@@ -1,0 +1,63 @@
+---
+/**
+ * Single 404 page (Cloudflare Pages serves /404.html for unknown routes).
+ * Language is chosen client-side from the requested path so Spanish URLs get
+ * a Spanish message; both versions are rendered statically.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const en = useTranslations('en');
+const es = useTranslations('es');
+---
+<BaseLayout lang="en" title={en('meta.404.title')} description={en('404.body')} noindex>
+  <section class="nf">
+    <div class="container">
+      <p class="nf__code mono" aria-hidden="true">404 · route not found</p>
+      <div class="nf__msg" data-nf="en">
+        <h1>{en('404.title')}</h1>
+        <p class="lead">{en('404.body')}</p>
+        <a class="btn" href="/"><Icon name="arrow-left" /> {en('404.home')}</a>
+      </div>
+      <div class="nf__msg" data-nf="es" lang="es" hidden>
+        <h1>{es('404.title')}</h1>
+        <p class="lead">{es('404.body')}</p>
+        <a class="btn" href="/es/"><Icon name="arrow-left" /> {es('404.home')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  if (location.pathname.startsWith('/es/')) {
+    document.querySelector<HTMLElement>('[data-nf="en"]')!.hidden = true;
+    document.querySelector<HTMLElement>('[data-nf="es"]')!.hidden = false;
+    document.documentElement.lang = 'es';
+  }
+</script>
+
+<style>
+  .nf {
+    padding-block: var(--space-10);
+    min-height: 60vh;
+  }
+  .nf__code {
+    font-size: var(--step--1);
+    color: var(--accent);
+  }
+  .nf__msg h1 {
+    margin-top: var(--space-4);
+    font-size: var(--step-5);
+    letter-spacing: -0.03em;
+  }
+  .nf__msg .lead {
+    margin-top: var(--space-4);
+  }
+  .nf__msg .btn {
+    margin-top: var(--space-6);
+  }
+  .nf__msg[hidden] {
+    display: none;
+  }
+</style>

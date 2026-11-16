@@ -1,0 +1,21 @@
+# Cloudflare Pages response headers.
+# The Content-Security-Policy itself is emitted per page as a hash-based
+# <meta> tag by Astro (see astro.config.mjs → security.csp). Directives that
+# are not supported in <meta> are set here.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Fingerprinted build assets never change → cache for a year.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/cv/*
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex
