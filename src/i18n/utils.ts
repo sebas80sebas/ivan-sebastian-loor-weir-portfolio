@@ -44,7 +44,8 @@ export function neutralPath(pathname: string): string {
 
 /** Equivalent URL of the current page in every language (for hreflang + switcher). */
 export function alternates(url: URL): Record<Lang, string> {
-  const neutral = neutralPath(url.pathname);
+  let neutral = neutralPath(url.pathname);
+  if (neutral.startsWith('/404')) neutral = '/'; // the 404 page has no translated twin
   return Object.fromEntries(langs.map((lang) => [lang, localizePath(neutral, lang)])) as Record<Lang, string>;
 }
 

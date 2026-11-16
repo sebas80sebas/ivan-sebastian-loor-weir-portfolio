@@ -85,7 +85,7 @@ caseStudy:
       - { id: cli, label: Azure CLI, sub: run-command, x: 40, y: 326, w: 160, h: 54, kind: pipeline }
       - { id: vm, label: Windows VM, sub: { en: public or isolated network, es: red pública o aislada }, x: 280, y: 326, w: 190, h: 54, kind: platform }
       - { id: blob, label: Blob Storage, sub: { en: agent package, es: paquete del agente }, x: 280, y: 410, w: 190, h: 48, kind: data }
-      - { id: agent, label: Zabbix agent, sub: { en: installed as a service, es: instalado como servicio }, x: 530, y: 326, w: 170, h: 54, kind: observe }
+      - { id: agent, label: Zabbix agent, sub: { en: installed as a service, es: instalado como servicio }, x: 540, y: 326, w: 168, h: 54, kind: observe }
     edges:
       - { from: er, to: mon, label: { en: platform metrics, es: métricas }, route: h }
       - { from: vpn, to: mon }
