@@ -2,7 +2,7 @@
   order: 1
   institution: Universidad Carlos III de Madrid (UC3M)
   degree:
-    en: Bachelor’s Degree in Computer Engineering
+    en: Bachelor in Computer Science and Engineering
     es: Grado en Ingeniería Informática
   start: '2022'
   end: '2026'
@@ -25,15 +25,15 @@
 
 - id: montessori
   order: 2
-  institution: Unidad Educativa Bilingüe Montessori
+  institution: Unidad Educativa Particular Bilingüe Montessori
   degree:
-    en: High School Diploma (bilingual)
-    es: Bachillerato (bilingüe)
+    en: High School Diploma in Sciences
+    es: Título de Bachiller en Ciencias
   start: '2018'
-  end: '2021'
+  end: '2020'
   location:
-    en: Ecuador
-    es: Ecuador
+    en: Guayaquil, Ecuador
+    es: Guayaquil, Ecuador
   honours:
-    en: Academic Honour Mention for academic excellence.
-    es: Mención de Honor Académica por excelencia académica.
+    en: Academic Honour Mention (2019–2020), awarded by the school’s Executive Council for academic excellence.
+    es: Mención de Honor Académica (curso 2019–2020), otorgada por el Consejo Ejecutivo por excelencia académica.

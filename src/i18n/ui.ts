@@ -156,7 +156,7 @@ export const ui = {
     'skills.context.personal': 'Personal',
     'skills.context.certified': 'Certified',
 
-    'education.title': 'Computer Engineering, with a thesis on containers at the edge.',
+    'education.title': 'Computer Science and Engineering, with a thesis on containers at the edge.',
     'education.thesis': 'Bachelor’s thesis',
     'education.grade': 'Grade',
     'education.readThesis': 'Read the thesis case study',
