@@ -1,4 +1,4 @@
-# Cloudflare Pages response headers.
+# Cloudflare Pages response headers (Vercel uses the equivalent vercel.json).
 # The Content-Security-Policy itself is emitted per page as a hash-based
 # <meta> tag by Astro (see astro.config.mjs → security.csp). Directives that
 # are not supported in <meta> are set here.

@@ -83,7 +83,7 @@ Client-side JavaScript is limited to small progressive enhancements: theme toggl
 ```text
 ivan-sebastian-loor-weir-portfolio/
 ├── public/                      # Static files copied verbatim to the build
-│   ├── _headers                 # Cloudflare Pages security & cache headers
+│   ├── _headers                 # Cloudflare Pages security & cache headers (Vercel: vercel.json)
 │   ├── favicon.svg              # ISLW monogram (source of all icons)
 │   ├── favicon-32.png, apple-touch-icon.png, icon-512.png
 │   ├── og-image.png             # 1200×630 social / LinkedIn preview (npm run og)
@@ -126,6 +126,7 @@ ivan-sebastian-loor-weir-portfolio/
 ├── .gitignore
 ├── .nvmrc                       # Node.js version (22.x, required by Astro 7)
 ├── astro.config.mjs             # Site URL, i18n, CSP, sitemap
+├── vercel.json                  # Vercel build settings + security/cache headers
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -135,7 +136,7 @@ ivan-sebastian-loor-weir-portfolio/
 
 **Prerequisites**
 
-- Node.js **22.23.4 or later** (see `.nvmrc`; Astro 7 requires Node 22). With nvm: `nvm install && nvm use`.
+- Node.js **22.x, version 22.23.4 or later** (see `.nvmrc`; Astro 7 requires Node 22). With nvm: `nvm install && nvm use`.
 - npm 10+.
 
 **Install and run**
@@ -223,6 +224,18 @@ The site is fully static and needs no server, database or secrets.
    - Run Lighthouse against the production URL.
 
 `public/_headers` is applied automatically by Cloudflare Pages. Unknown routes are served `404.html`.
+
+### Alternative: Vercel
+
+The repository is also ready for [Vercel](https://vercel.com) (free Hobby plan for personal, non-commercial projects). This is useful because LinkedIn currently fails to load link previews in profile **Featured** sections for `*.pages.dev` URLs.
+
+1. On vercel.com, go to **Add New → Project → Import** this GitHub repository.
+2. The settings come from `vercel.json`: framework Astro, `npm ci`, `npm run build`, output `dist`, trailing slashes, and the same security and cache headers as `public/_headers`.
+3. **Node.js version:** 22.x, taken from `engines` in `package.json`. You can confirm it under *Project Settings → Build and Deployment*.
+4. **Site URL:** nothing to configure. Vercel sets `VERCEL_PROJECT_PRODUCTION_URL` and `astro.config.mjs` uses it for canonical URLs, `hreflang`, Open Graph and the sitemap. Set `SITE_URL` only to override it, for example for a custom domain.
+5. Production deploys from `main`; other branches get preview URLs.
+
+If the site stays live on both hosts, each deployment declares its own canonical URL. Keep only the one you share publicly, or point both to a custom domain via `SITE_URL`.
 
 ## 10. Security and privacy
 

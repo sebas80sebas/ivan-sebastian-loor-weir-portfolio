@@ -7,7 +7,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "author": "Iván Sebastián Loor Weir",
   "engines": {
-    "node": ">=22.23.4"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "astro dev",
