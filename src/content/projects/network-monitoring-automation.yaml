@@ -62,7 +62,7 @@ caseStudy:
       en: ExpressRoute circuits, VPN connections and Traffic Manager profiles publish platform metrics to Azure Monitor; Python collectors query the metrics API and send the values to the Zabbix server. Separately, Azure CLI Run Command executes an installer on a Windows VM, which downloads the agent package from Blob Storage; the installed Zabbix agent registers with the Zabbix server.
       es: Los circuitos ExpressRoute, las conexiones VPN y los perfiles de Traffic Manager publican métricas en Azure Monitor; colectores en Python consultan la API de métricas y envían los valores al servidor Zabbix. Por otro lado, Azure CLI Run Command ejecuta un instalador en una VM Windows, que descarga el paquete del agente desde Blob Storage; el agente Zabbix instalado se registra en el servidor Zabbix.
     width: 960
-    height: 470
+    height: 490
     groups:
       - label: { en: Azure network services, es: Servicios de red de Azure }
         x: 20
@@ -73,7 +73,7 @@ caseStudy:
         x: 20
         y: 296
         w: 700
-        h: 160
+        h: 178
         tone: signal
     nodes:
       - { id: er, label: ExpressRoute, sub: { en: circuits, es: circuitos }, x: 40, y: 62, w: 170, h: 50, kind: azure }
@@ -81,10 +81,10 @@ caseStudy:
       - { id: tm, label: Traffic Manager, sub: { en: profiles, es: perfiles }, x: 40, y: 190, w: 170, h: 50, kind: azure }
       - { id: mon, label: Azure Monitor, sub: { en: metrics API, es: API de métricas }, x: 290, y: 122, w: 170, h: 58, kind: observe }
       - { id: py, label: { en: Python collectors, es: Colectores Python }, sub: { en: per service type, es: por tipo de servicio }, x: 520, y: 122, w: 180, h: 58, kind: source }
-      - { id: zbx, label: Zabbix server, sub: { en: items · triggers · alerts, es: items · triggers · alertas }, x: 770, y: 122, w: 170, h: 58, kind: observe }
+      - { id: zbx, label: Zabbix server, sub: items · triggers, x: 770, y: 122, w: 170, h: 58, kind: observe }
       - { id: cli, label: Azure CLI, sub: run-command, x: 40, y: 326, w: 160, h: 54, kind: pipeline }
       - { id: vm, label: Windows VM, sub: { en: public or isolated network, es: red pública o aislada }, x: 280, y: 326, w: 190, h: 54, kind: platform }
-      - { id: blob, label: Blob Storage, sub: { en: agent package, es: paquete del agente }, x: 280, y: 394, w: 190, h: 48, kind: data }
+      - { id: blob, label: Blob Storage, sub: { en: agent package, es: paquete del agente }, x: 280, y: 410, w: 190, h: 48, kind: data }
       - { id: agent, label: Zabbix agent, sub: { en: installed as a service, es: instalado como servicio }, x: 530, y: 326, w: 170, h: 54, kind: observe }
     edges:
       - { from: er, to: mon, label: { en: platform metrics, es: métricas }, route: h }

@@ -59,7 +59,7 @@ caseStudy:
       en: The application on Azure VMs sends telemetry to Application Insights. An Azure Monitor alert rule runs a KQL query for HTTP 503 responses and, when it fires, an action group invokes an Azure Automation PowerShell runbook that restarts the affected VMs.
       es: La aplicación en VMs de Azure envía telemetría a Application Insights. Una regla de alerta de Azure Monitor ejecuta una consulta KQL sobre respuestas HTTP 503 y, cuando se dispara, un action group invoca un runbook de PowerShell en Azure Automation que reinicia las VMs afectadas.
     width: 960
-    height: 300
+    height: 262
     groups:
       - label: Azure Monitor
         x: 206

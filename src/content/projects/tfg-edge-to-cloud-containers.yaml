@@ -103,7 +103,7 @@ caseStudy:
       - { id: prom, label: Prometheus, x: 770, y: 290, w: 150, h: 46, kind: observe }
       - { id: graf, label: Grafana, x: 770, y: 364, w: 150, h: 46, kind: observe }
     edges:
-      - { from: dag, to: docker, label: { en: remote tasks · SSH, es: tareas remotas · SSH } }
+      - { from: dag, to: docker, label: SSH }
       - { from: stager, to: edge, label: staging, dashed: true }
       - { from: sensor, to: nomad, route: v, dashed: true }
       - { from: apptainer, to: mongo, label: { en: persist, es: persiste } }

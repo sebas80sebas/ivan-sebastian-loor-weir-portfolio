@@ -69,58 +69,58 @@ caseStudy:
       en: Logical service map based on the services listed in my CV. Network topology, naming, identifiers and sizing are confidential and omitted.
       es: Mapa lógico de servicios basado en los servicios listados en mi CV. La topología de red, la nomenclatura, los identificadores y el dimensionamiento son confidenciales y se omiten.
     width: 960
-    height: 520
+    height: 492
     groups:
       - id: lz
         label: { en: Each environment — logical service layers (40+ services), es: Cada entorno — capas lógicas de servicios (40+ servicios) }
         x: 20
         y: 128
         w: 920
-        h: 376
+        h: 348
         tone: accent
       - label: { en: Platform, es: Plataforma }
         x: 40
-        y: 160
+        y: 156
         w: 880
-        h: 64
+        h: 72
       - label: { en: Data, es: Datos }
         x: 40
-        y: 250
+        y: 238
         w: 880
-        h: 64
+        h: 72
       - label: { en: AI & integration, es: IA e integración }
         x: 40
-        y: 340
+        y: 320
         w: 880
-        h: 64
+        h: 72
     nodes:
-      - { id: docs, label: { en: Architecture docs, es: Docs de arquitectura }, sub: SD · ADR · HLD · LLD · BoQ, x: 20, y: 30, w: 160, h: 56, kind: external }
-      - { id: repo, label: Terraform modules, sub: { en: Git · per-env config, es: Git · config por entorno }, x: 210, y: 30, w: 170, h: 56, kind: source }
-      - { id: ado, label: Azure DevOps, sub: plan → apply, x: 410, y: 30, w: 160, h: 56, kind: pipeline }
-      - { id: envs, label: { en: Environments, es: Entornos }, sub: sbx · dev · qa · pre · prod — R0 / R1, x: 600, y: 30, w: 340, h: 56, kind: azure }
-      - { id: ocp, label: OpenShift UPI, x: 60, y: 174, w: 120, h: 40, kind: platform }
-      - { id: acr, label: Container Registry, x: 194, y: 174, w: 130, h: 40, kind: platform }
-      - { id: kv, label: Key Vault, x: 338, y: 174, w: 120, h: 40, kind: security }
-      - { id: redis, label: Redis Cache, x: 472, y: 174, w: 120, h: 40, kind: platform }
-      - { id: st, label: Storage, x: 606, y: 174, w: 120, h: 40, kind: platform }
-      - { id: vm, label: IaaS VMs, x: 740, y: 174, w: 120, h: 40, kind: platform }
-      - { id: adls, label: ADLS Gen2, x: 60, y: 264, w: 120, h: 40, kind: data }
-      - { id: adf, label: Data Factory, x: 194, y: 264, w: 120, h: 40, kind: data }
-      - { id: dbx, label: Databricks, x: 328, y: 264, w: 120, h: 40, kind: data }
-      - { id: sql, label: SQL Database, x: 462, y: 264, w: 120, h: 40, kind: data }
-      - { id: pg, label: PostgreSQL Flex, x: 596, y: 264, w: 120, h: 40, kind: data }
-      - { id: adx, label: Data Explorer, x: 730, y: 264, w: 120, h: 40, kind: data }
-      - { id: aoai, label: Azure OpenAI, x: 60, y: 354, w: 112, h: 40, kind: azure }
-      - { id: srch, label: AI Search, x: 182, y: 354, w: 112, h: 40, kind: azure }
-      - { id: aml, label: Azure ML, x: 304, y: 354, w: 112, h: 40, kind: azure }
-      - { id: func, label: Functions, x: 426, y: 354, w: 112, h: 40, kind: platform }
-      - { id: logic, label: Logic Apps, x: 548, y: 354, w: 112, h: 40, kind: platform }
-      - { id: evh, label: Event Hubs, x: 670, y: 354, w: 112, h: 40, kind: data }
-      - { id: nh, label: Notification Hubs, x: 792, y: 354, w: 120, h: 40, kind: platform }
-      - { id: net, label: { en: Networking layer, es: Capa de red }, sub: { en: topology intentionally omitted, es: topología omitida intencionadamente }, x: 40, y: 432, w: 880, h: 52, kind: external }
+      - { id: docs, label: { en: Architecture docs, es: Docs de arquitectura }, sub: ADR · HLD · LLD · BoQ, x: 20, y: 30, w: 170, h: 56, kind: external }
+      - { id: repo, label: Terraform modules, sub: { en: Git · per-env config, es: Git · config por entorno }, x: 250, y: 30, w: 170, h: 56, kind: source }
+      - { id: ado, label: Azure DevOps, sub: plan → apply, x: 490, y: 30, w: 150, h: 56, kind: pipeline }
+      - { id: envs, label: { en: Environments · R0 / R1, es: Entornos · R0 / R1 }, sub: sbx · dev · qa · pre · prod, x: 730, y: 30, w: 210, h: 56, kind: azure }
+      - { id: ocp, label: OpenShift UPI, x: 60, y: 180, w: 120, h: 40, kind: platform }
+      - { id: acr, label: Container Registry, x: 194, y: 180, w: 130, h: 40, kind: platform }
+      - { id: kv, label: Key Vault, x: 338, y: 180, w: 120, h: 40, kind: security }
+      - { id: redis, label: Redis Cache, x: 472, y: 180, w: 120, h: 40, kind: platform }
+      - { id: st, label: Storage, x: 606, y: 180, w: 120, h: 40, kind: platform }
+      - { id: vm, label: IaaS VMs, x: 740, y: 180, w: 120, h: 40, kind: platform }
+      - { id: adls, label: ADLS Gen2, x: 60, y: 262, w: 120, h: 40, kind: data }
+      - { id: adf, label: Data Factory, x: 194, y: 262, w: 120, h: 40, kind: data }
+      - { id: dbx, label: Databricks, x: 328, y: 262, w: 120, h: 40, kind: data }
+      - { id: sql, label: SQL Database, x: 462, y: 262, w: 120, h: 40, kind: data }
+      - { id: pg, label: PostgreSQL Flex, x: 596, y: 262, w: 120, h: 40, kind: data }
+      - { id: adx, label: Data Explorer, x: 730, y: 262, w: 120, h: 40, kind: data }
+      - { id: aoai, label: Azure OpenAI, x: 60, y: 344, w: 112, h: 40, kind: azure }
+      - { id: srch, label: AI Search, x: 182, y: 344, w: 112, h: 40, kind: azure }
+      - { id: aml, label: Azure ML, x: 304, y: 344, w: 112, h: 40, kind: azure }
+      - { id: func, label: Functions, x: 426, y: 344, w: 112, h: 40, kind: platform }
+      - { id: logic, label: Logic Apps, x: 548, y: 344, w: 112, h: 40, kind: platform }
+      - { id: evh, label: Event Hubs, x: 670, y: 344, w: 112, h: 40, kind: data }
+      - { id: nh, label: Notification Hubs, x: 792, y: 344, w: 120, h: 40, kind: platform }
+      - { id: net, label: { en: Networking layer, es: Capa de red }, sub: { en: topology intentionally omitted, es: topología omitida intencionadamente }, x: 40, y: 406, w: 880, h: 52, kind: external }
     edges:
       - { from: docs, to: repo, label: { en: informs, es: guía }, dashed: true }
-      - { from: repo, to: ado, label: commit / PR }
+      - { from: repo, to: ado, label: PR }
       - { from: ado, to: envs, label: { en: per env, es: por entorno } }
       - { from: envs, to: lz, label: { en: provisions, es: aprovisiona }, route: v }
   stackGroups:

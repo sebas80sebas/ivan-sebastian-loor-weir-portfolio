@@ -1,0 +1,681 @@
+---
+/**
+ * Case-study page body, shared by /projects/[slug]/ and /es/projects/[slug]/.
+ * Structure: overview → context → problem → responsibilities → architecture
+ * (+ diagram) → stack → implementation → challenges & decisions → security →
+ * operations → results → lessons.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Diagram from '@/components/Diagram.astro';
+import Icon from '@/components/Icon.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { l, localizePath, useTranslations } from '@/i18n/utils';
+import { getCaseStudies, projectPath, type Project } from '@/lib/projects';
+import { graph, personSchema } from '@/lib/schema';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const t = useTranslations(lang);
+const d = project.data;
+const cs = d.caseStudy!;
+const all = await getCaseStudies();
+const idx = all.findIndex((p) => p.id === project.id);
+const prev = all[(idx - 1 + all.length) % all.length];
+const next = all[(idx + 1) % all.length];
+
+const sections = [
+  { id: 'overview', label: t('case.overview') },
+  { id: 'context', label: t('case.context') },
+  { id: 'problem', label: t('case.problem') },
+  { id: 'responsibilities', label: t('case.responsibilities') },
+  { id: 'architecture', label: t('case.architecture') },
+  { id: 'stack', label: t('case.stack') },
+  { id: 'implementation', label: t('case.implementation') },
+  { id: 'challenges', label: t('case.challenges') },
+  { id: 'security', label: t('case.security') },
+  { id: 'operations', label: t('case.operations') },
+  { id: 'results', label: t('case.results') },
+  { id: 'lessons', label: t('case.lessons') },
+];
+const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
+
+const siteUrl = Astro.site!.href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const jsonLd = graph(
+  {
+    '@type': 'TechArticle',
+    '@id': `${pageUrl}#article`,
+    headline: l(d.title, lang),
+    description: l(d.summary, lang),
+    inLanguage: lang,
+    url: pageUrl,
+    image: new URL(site.ogImage, Astro.site).href,
+    author: { '@id': `${siteUrl}#person` },
+    keywords: d.stack.join(', '),
+    ...(d.repo ? { isBasedOn: d.repo } : {}),
+  },
+  personSchema(siteUrl, lang),
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: new URL(localizePath('/', lang), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: t('nav.projects'), item: new URL(localizePath('/projects/', lang), Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: l(d.title, lang), item: pageUrl },
+    ],
+  },
+);
+---
+<BaseLayout
+  lang={lang}
+  title={`${l(d.title, lang)} — ${site.name}`}
+  description={l(d.summary, lang)}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="case">
+    <header class="case-hero">
+      <div class="container">
+        <nav class="case-hero__crumbs" aria-label="Breadcrumb">
+          <a href={localizePath('/projects/', lang)}><Icon name="arrow-left" size={16} /> {t('case.back')}</a>
+        </nav>
+        <p class="case-hero__category">
+          <span class={`badge badge--${d.type} badge--on-ink`}>{t(`projects.type.${d.type}`)}</span>
+          <span>{l(d.category, lang)}</span>
+        </p>
+        <h1 class="case-hero__title">{l(d.title, lang)}</h1>
+        <p class="case-hero__summary">{l(d.summary, lang)}</p>
+
+        <dl class="case-facts">
+          <div>
+            <dt>{t('case.facts.role')}</dt>
+            <dd>{l(d.role, lang)}</dd>
+          </div>
+          {
+            d.org && (
+              <div>
+                <dt>{t('case.facts.org')}</dt>
+                <dd>{l(d.org, lang)}</dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>{t('case.facts.period')}</dt>
+            <dd>{d.period}</dd>
+          </div>
+        </dl>
+        {
+          d.repo && (
+            <a class="btn btn--on-ink case-hero__repo" href={d.repo} target="_blank" rel="noopener noreferrer">
+              <Icon name="github" /> {t('case.repo')}
+              <span class="sr-only">{t('common.newTab')}</span>
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="container case-body">
+      <aside class="case-toc" aria-label={t('case.onThisPage')}>
+        <p class="label">{t('case.onThisPage')}</p>
+        <ol role="list">
+          {
+            sections.map((s, i) => (
+              <li>
+                <a href={`#${s.id}`} data-toc-link={s.id}>
+                  <span class="case-toc__n">{String(i + 1).padStart(2, '0')}</span>
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </aside>
+
+      <div class="case-content">
+        {cs.confidential && (
+          <p class="case-note" role="note">
+            <Icon name="shield" /> {t('case.confidential')}
+          </p>
+        )}
+
+        <section id="overview" class="case-section">
+          <h2><span class="case-section__n">{num('overview')}</span>{t('case.overview')}</h2>
+          <p class="lead">{l(cs.overview, lang)}</p>
+        </section>
+
+        <section id="context" class="case-section prose">
+          <h2><span class="case-section__n">{num('context')}</span>{t('case.context')}</h2>
+          <p>{l(cs.context, lang)}</p>
+        </section>
+
+        <section id="problem" class="case-section prose">
+          <h2><span class="case-section__n">{num('problem')}</span>{t('case.problem')}</h2>
+          <p>{l(cs.problem, lang)}</p>
+        </section>
+
+        <section id="responsibilities" class="case-section prose">
+          <h2><span class="case-section__n">{num('responsibilities')}</span>{t('case.responsibilities')}</h2>
+          <ul>{l(cs.responsibilities, lang).map((x) => <li>{x}</li>)}</ul>
+        </section>
+
+        <section id="architecture" class="case-section">
+          <h2><span class="case-section__n">{num('architecture')}</span>{t('case.architecture')}</h2>
+          <div class="prose"><p>{l(cs.architecture, lang)}</p></div>
+          {cs.diagram && (
+            <div class="case-diagram">
+              <Diagram diagram={cs.diagram} lang={lang} id={`dg-${project.id}`} />
+            </div>
+          )}
+        </section>
+
+        <section id="stack" class="case-section">
+          <h2><span class="case-section__n">{num('stack')}</span>{t('case.stack')}</h2>
+          <dl class="stack-groups">
+            {
+              cs.stackGroups.map((g) => (
+                <div class="stack-group">
+                  <dt class="label">{l(g.label, lang)}</dt>
+                  <dd>
+                    <ul class="chips" role="list">
+                      {g.items.map((i) => (
+                        <li class="chip">{i}</li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+
+        <section id="implementation" class="case-section prose">
+          <h2><span class="case-section__n">{num('implementation')}</span>{t('case.implementation')}</h2>
+          <ul>{l(cs.implementation, lang).map((x) => <li>{x}</li>)}</ul>
+        </section>
+
+        <section id="challenges" class="case-section">
+          <h2><span class="case-section__n">{num('challenges')}</span>{t('case.challenges')}</h2>
+          <ol class="decisions" role="list">
+            {
+              cs.challenges.map((c, i) => (
+                <li class="decision card">
+                  <span class="decision__n" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <p class="label">{t('case.challenge')}</p>
+                    <p class="decision__challenge">{l(c.challenge, lang)}</p>
+                  </div>
+                  <div>
+                    <p class="label decision__label--accent">{t('case.decision')}</p>
+                    <p>{l(c.decision, lang)}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <div class="case-split">
+          <section id="security" class="case-section prose">
+            <h2><span class="case-section__n">{num('security')}</span>{t('case.security')}</h2>
+            <ul>{l(cs.security, lang).map((x) => <li>{x}</li>)}</ul>
+          </section>
+          <section id="operations" class="case-section prose">
+            <h2><span class="case-section__n">{num('operations')}</span>{t('case.operations')}</h2>
+            <ul>{l(cs.operations, lang).map((x) => <li>{x}</li>)}</ul>
+          </section>
+        </div>
+
+        <section id="results" class="case-section">
+          <h2><span class="case-section__n">{num('results')}</span>{t('case.results')}</h2>
+          <ul class="results" role="list">
+            {
+              l(cs.results, lang).map((x) => (
+                <li>
+                  <Icon name="check" /> <span>{x}</span>
+                </li>
+              ))
+            }
+          </ul>
+          {
+            cs.resultsTable && (
+              <div class="table-wrap">
+                <table>
+                  <caption>{l(cs.resultsTable.caption, lang)}</caption>
+                  <thead>
+                    <tr>
+                      {l(cs.resultsTable.columns, lang).map((c) => (
+                        <th scope="col">{c}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cs.resultsTable.rows.map((row) => (
+                      <tr>
+                        {row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p class="table-source">{l(cs.resultsTable.source, lang)}</p>
+              </div>
+            )
+          }
+        </section>
+
+        <section id="lessons" class="case-section">
+          <h2><span class="case-section__n">{num('lessons')}</span>{t('case.lessons')}</h2>
+          <ul class="lessons" role="list">
+            {l(cs.lessons, lang).map((x) => <li class="serif">{x}</li>)}
+          </ul>
+        </section>
+
+        <nav class="case-pager" aria-label={t('nav.projects')}>
+          <a class="case-pager__link" href={localizePath(projectPath(prev.id), lang)} rel="prev">
+            <span class="label"><Icon name="arrow-left" size={14} /> {t('case.prev')}</span>
+            <span class="case-pager__title">{l(prev.data.title, lang)}</span>
+          </a>
+          <a class="case-pager__link case-pager__link--next" href={localizePath(projectPath(next.id), lang)} rel="next">
+            <span class="label">{t('case.next')} <Icon name="arrow-right" size={14} /></span>
+            <span class="case-pager__title">{l(next.data.title, lang)}</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+  if (links.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          links.forEach((l) => l.classList.toggle('is-active', l.dataset.tocLink === e.target.id));
+        }),
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+    links.forEach((l) => {
+      const s = document.getElementById(l.dataset.tocLink!);
+      if (s) io.observe(s);
+    });
+  }
+</script>
+
+<style>
+  .case-hero {
+    background: var(--ink-bg);
+    color: var(--ink-text);
+    padding-block: var(--space-7) var(--space-8);
+    background-image:
+      radial-gradient(60rem 30rem at 85% -10%, rgba(79, 209, 224, 0.12), transparent 60%),
+      linear-gradient(rgba(233, 237, 243, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233, 237, 243, 0.04) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+  }
+  .case-hero__crumbs a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+  .case-hero__crumbs a:hover {
+    color: var(--ink-accent);
+  }
+  .case-hero__category {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  :global(.badge--on-ink.badge--professional) {
+    color: var(--ink-accent);
+    background: rgba(79, 209, 224, 0.12);
+  }
+  :global(.badge--on-ink.badge--academic) {
+    color: var(--ink-signal);
+    background: rgba(124, 157, 255, 0.14);
+  }
+  :global(.badge--on-ink.badge--personal) {
+    color: #f0c27a;
+    background: rgba(240, 194, 122, 0.12);
+  }
+  .case-hero__title {
+    margin-top: var(--space-4);
+    max-width: 22ch;
+    font-size: var(--step-5);
+    letter-spacing: -0.025em;
+  }
+  .case-hero__summary {
+    margin-top: var(--space-5);
+    max-width: 62ch;
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+  .case-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-4) var(--space-6);
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--ink-line);
+    max-width: 60rem;
+  }
+  .case-facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .case-facts dd {
+    margin: 0.25rem 0 0;
+    color: var(--ink-text);
+    font-size: var(--step--1);
+  }
+  .case-hero__repo {
+    margin-top: var(--space-6);
+  }
+
+  .case-body {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-9);
+  }
+  .case-toc {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-5));
+    align-self: start;
+  }
+  .case-toc ol {
+    margin-top: var(--space-3);
+    list-style: none;
+    padding: 0;
+    border-left: var(--border);
+  }
+  .case-toc a {
+    display: flex;
+    gap: 0.55rem;
+    padding: 0.32rem 0 0.32rem 0.9rem;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    color: var(--muted);
+    font-size: var(--step--1);
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  }
+  .case-toc a:hover {
+    color: var(--ink);
+  }
+  .case-toc a.is-active {
+    color: var(--ink);
+    border-left-color: var(--accent);
+  }
+  .case-toc__n {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding-top: 0.15em;
+  }
+
+  .case-content {
+    min-width: 0;
+    max-width: 52rem;
+  }
+  .case-note {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-7);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--ink-2);
+    font-size: var(--step--1);
+  }
+  .case-note :global(.icon) {
+    flex: none;
+    margin-top: 0.15em;
+    color: var(--accent);
+  }
+  .case-section + .case-section,
+  .case-split,
+  .case-split + .case-section {
+    margin-top: var(--space-8);
+  }
+  .case-section h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: var(--step-3);
+    margin-bottom: var(--space-4);
+  }
+  .case-section__n {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+  .case-diagram {
+    margin-top: var(--space-6);
+  }
+
+  .stack-groups {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .stack-group {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-top: var(--border);
+  }
+  .stack-group dd {
+    margin: 0;
+  }
+
+  .decisions {
+    display: grid;
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+  }
+  .decision {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
+  }
+  .decision__n {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+  .decision p:not(.label) {
+    margin-top: var(--space-2);
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+  .decision__challenge {
+    color: var(--ink) !important;
+  }
+  .decision__label--accent {
+    color: var(--accent);
+  }
+
+  .case-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+  }
+  .case-split .case-section {
+    margin-top: 0;
+  }
+  .case-split h2 {
+    font-size: var(--step-2);
+  }
+
+  .results {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+  }
+  .results li {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+  }
+  .results :global(.icon) {
+    flex: none;
+    margin-top: 0.2em;
+    color: var(--ok);
+  }
+
+  .table-wrap {
+    margin-top: var(--space-6);
+    overflow-x: auto;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    padding: var(--space-4) var(--space-5) var(--space-2);
+    text-align: left;
+    font-weight: 500;
+  }
+  th,
+  td {
+    padding: 0.7rem var(--space-5);
+    border-top: var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+  thead th {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  tbody th {
+    font-weight: 600;
+  }
+  tbody tr:first-child {
+    background: var(--accent-soft);
+  }
+  .table-source {
+    padding: var(--space-3) var(--space-5);
+    border-top: var(--border);
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .lessons {
+    display: grid;
+    gap: var(--space-5);
+    list-style: none;
+    padding: 0;
+  }
+  .lessons li {
+    padding-left: var(--space-5);
+    border-left: 2px solid var(--accent);
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .case-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: var(--border);
+  }
+  .case-pager__link {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border: var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+  }
+  .case-pager__link:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .case-pager__link .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .case-pager__link--next {
+    text-align: right;
+    justify-items: end;
+  }
+  .case-pager__title {
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 64rem) {
+    .case-body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .case-toc {
+      display: none;
+    }
+  }
+  @media (max-width: 48rem) {
+    .decision {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .case-split,
+    .case-pager {
+      grid-template-columns: 1fr;
+    }
+    .case-pager__link--next {
+      text-align: left;
+      justify-items: start;
+    }
+    .stack-group {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>

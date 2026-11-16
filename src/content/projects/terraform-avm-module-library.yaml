@@ -62,7 +62,7 @@ caseStudy:
       en: Upstream Azure Verified Modules are wrapped by a module with a typed interface, examples and a changelog. Modules pass terraform validate and tfsec before being consumed by landing-zone deployments. Every module exposes private endpoints, customer-managed keys, managed identity, RBAC, diagnostics and locks.
       es: Los Azure Verified Modules upstream se envuelven en un módulo con interfaz tipada, ejemplos y changelog. Los módulos pasan terraform validate y tfsec antes de consumirse en despliegues de landing zones. Cada módulo expone private endpoints, claves gestionadas por el cliente, identidad gestionada, RBAC, diagnóstico y locks.
     width: 960
-    height: 410
+    height: 414
     groups:
       - id: wrapper
         label: { en: Wrapper module (one per service), es: Módulo wrapper (uno por servicio) }
@@ -74,24 +74,24 @@ caseStudy:
       - id: xcut
         label: { en: Cross-cutting interfaces exposed by every module, es: Interfaces transversales expuestas por todos los módulos }
         x: 230
-        y: 318
+        y: 314
         w: 710
-        h: 76
+        h: 84
         tone: signal
     nodes:
-      - { id: avm, label: { en: Upstream AVM module, es: Módulo AVM upstream }, sub: { en: pinned version, es: versión fijada }, x: 20, y: 120, w: 170, h: 60, kind: external }
+      - { id: avm, label: { en: Upstream AVM module, es: Módulo AVM upstream }, sub: { en: pinned version, es: versión fijada }, x: 20, y: 66, w: 170, h: 52, kind: external }
       - { id: iface, label: { en: Typed interface, es: Interfaz tipada }, sub: variables · outputs · locals, x: 250, y: 66, w: 280, h: 52, kind: source }
       - { id: ex, label: { en: Scenario examples, es: Ejemplos por escenario }, sub: default · private-endpoint · cmk …, x: 250, y: 132, w: 280, h: 52, kind: source }
       - { id: chlog, label: CHANGELOG, sub: { en: semantic versions, es: versiones semánticas }, x: 250, y: 198, w: 280, h: 52, kind: source }
       - { id: validate, label: terraform validate, x: 600, y: 80, w: 160, h: 48, kind: pipeline }
-      - { id: tfsec, label: tfsec, sub: { en: static security analysis, es: análisis estático de seguridad }, x: 600, y: 168, w: 160, h: 56, kind: security }
-      - { id: lz, label: { en: Landing zones, es: Landing zones }, sub: Cloud Factory, x: 800, y: 120, w: 140, h: 60, kind: azure }
-      - { id: pe, label: Private endpoints, x: 244, y: 338, w: 108, h: 40, kind: security }
-      - { id: cmk, label: CMK, x: 362, y: 338, w: 108, h: 40, kind: security }
-      - { id: mi, label: Managed identity, x: 480, y: 338, w: 108, h: 40, kind: security }
-      - { id: rbac, label: RBAC, x: 598, y: 338, w: 108, h: 40, kind: security }
-      - { id: diag, label: Diagnostics, x: 716, y: 338, w: 108, h: 40, kind: observe }
-      - { id: lock, label: Locks, x: 834, y: 338, w: 94, h: 40, kind: security }
+      - { id: tfsec, label: tfsec, sub: { en: static analysis, es: análisis estático }, x: 600, y: 168, w: 160, h: 56, kind: security }
+      - { id: lz, label: { en: Landing zones, es: Landing zones }, sub: Cloud Factory, x: 810, y: 166, w: 130, h: 60, kind: azure }
+      - { id: pe, label: Private endpoints, x: 244, y: 344, w: 108, h: 40, kind: security }
+      - { id: cmk, label: CMK, x: 362, y: 344, w: 108, h: 40, kind: security }
+      - { id: mi, label: Managed identity, x: 480, y: 344, w: 108, h: 40, kind: security }
+      - { id: rbac, label: RBAC, x: 598, y: 344, w: 108, h: 40, kind: security }
+      - { id: diag, label: Diagnostics, x: 716, y: 344, w: 108, h: 40, kind: observe }
+      - { id: lock, label: Locks, x: 834, y: 344, w: 94, h: 40, kind: security }
     edges:
       - { from: avm, to: iface, label: { en: wraps, es: envuelve } }
       - { from: wrapper, to: validate }

@@ -1,0 +1,473 @@
+---
+/**
+ * Data-driven architecture diagram.
+ *
+ * Renders the `diagram` object of a project (src/content/projects/*.yaml) as
+ * an accessible, theme-aware inline SVG:
+ *   - groups  → labelled zones (optionally targetable by edges via `id`)
+ *   - nodes   → components, coloured by `kind`
+ *   - edges   → orthogonal connectors, routed automatically (or via `route`)
+ * A legend and a full text alternative (components + flows) are generated
+ * from the same data, so the diagram never exists only as a picture.
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+type Diagram = NonNullable<NonNullable<CollectionEntry<'projects'>['data']['caseStudy']>['diagram']>;
+type Text = string | { en: string; es: string };
+
+interface Props {
+  diagram: Diagram;
+  lang: Lang;
+  id: string;
+}
+
+const { diagram, lang, id } = Astro.props;
+const t = useTranslations(lang);
+const tx = (v: Text | undefined) => (v === undefined ? '' : typeof v === 'string' ? v : v[lang]);
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+const boxes = new Map<string, Box & { label: string }>();
+diagram.groups.forEach((g) => g.id && boxes.set(g.id, { ...g, label: tx(g.label) }));
+diagram.nodes.forEach((n) => boxes.set(n.id, { ...n, label: tx(n.label) }));
+
+const labelWidth = (s: string) => s.length * 6.4 + 12;
+const overlap = (a0: number, a1: number, b0: number, b1: number) => Math.max(0, Math.min(a1, b1) - Math.max(a0, b0));
+
+function routeEdge(a: Box, b: Box, route?: string, labelW = 0) {
+  // Straight horizontal label: centred on the line if it fits the gap, otherwise lifted above the boxes.
+  const hLabelY = (lineY: number, gap: number) => (labelW + 8 <= gap ? lineY - 11 : Math.max(a.y, b.y) - 13);
+  const ca = { x: a.x + a.w / 2, y: a.y + a.h / 2 };
+  const cb = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+  const ox = overlap(a.x, a.x + a.w, b.x, b.x + b.w);
+  const oy = overlap(a.y, a.y + a.h, b.y, b.y + b.h);
+  const r = route ?? (ox > 20 ? 'v' : oy > 20 ? 'h' : Math.abs(cb.x - ca.x) >= Math.abs(cb.y - ca.y) ? 'h' : 'v');
+
+  if (r === 'u') {
+    const sx = ca.x, sy = a.y + a.h, ex = cb.x, ey = b.y + b.h;
+    const by = Math.max(sy, ey) + 34;
+    return { d: `M${sx} ${sy}V${by}H${ex}V${ey}`, lx: (sx + ex) / 2, ly: by };
+  }
+  if (r === 'h') {
+    const right = cb.x >= ca.x;
+    const sx = right ? a.x + a.w : a.x;
+    const ex = right ? b.x : b.x + b.w;
+    if (oy > 20 && !route) {
+      const y = Math.max(a.y, b.y) + oy / 2;
+      return { d: `M${sx} ${y}H${ex}`, lx: (sx + ex) / 2, ly: hLabelY(y, Math.abs(ex - sx)) };
+    }
+    const sy = ca.y, ey = cb.y;
+    if (Math.abs(sy - ey) < 1) return { d: `M${sx} ${sy}H${ex}`, lx: (sx + ex) / 2, ly: hLabelY(sy, Math.abs(ex - sx)) };
+    const mx = (sx + ex) / 2;
+    return { d: `M${sx} ${sy}H${mx}V${ey}H${ex}`, lx: mx, ly: (sy + ey) / 2 };
+  }
+  if (r === 'v') {
+    const down = cb.y >= ca.y;
+    const sy = down ? a.y + a.h : a.y;
+    const ey = down ? b.y : b.y + b.h;
+    if (ox > 20) {
+      const x = Math.max(a.x, b.x) + ox / 2;
+      return { d: `M${x} ${sy}V${ey}`, lx: x, ly: (sy + ey) / 2 };
+    }
+    const my = (sy + ey) / 2;
+    return { d: `M${ca.x} ${sy}V${my}H${cb.x}V${ey}`, lx: (ca.x + cb.x) / 2, ly: my };
+  }
+  if (r === 'hv') {
+    const right = cb.x >= ca.x;
+    const sx = right ? a.x + a.w : a.x;
+    const down = cb.y >= ca.y;
+    const ey = down ? b.y : b.y + b.h;
+    return { d: `M${sx} ${ca.y}H${cb.x}V${ey}`, lx: (sx + cb.x) / 2, ly: ca.y - 11 };
+  }
+  // 'vh'
+  const down = cb.y >= ca.y;
+  const sy = down ? a.y + a.h : a.y;
+  const right = cb.x >= ca.x;
+  const ex = right ? b.x : b.x + b.w;
+  return { d: `M${ca.x} ${sy}V${cb.y}H${ex}`, lx: ca.x, ly: (sy + cb.y) / 2 };
+}
+
+const edges = diagram.edges
+  .map((e, i) => {
+    const a = boxes.get(e.from);
+    const b = boxes.get(e.to);
+    if (!a || !b) throw new Error(`Diagram "${id}": edge ${e.from} → ${e.to} references an unknown id.`);
+    const label = tx(e.label);
+    return { ...e, i, label, a, b, ...routeEdge(a, b, e.route, label ? labelWidth(label) : 0) };
+  });
+
+const kindLabels: Record<string, { en: string; es: string }> = {
+  source: { en: 'Code & configuration', es: 'Código y configuración' },
+  pipeline: { en: 'Delivery & automation', es: 'Entrega y automatización' },
+  security: { en: 'Security control', es: 'Control de seguridad' },
+  azure: { en: 'Azure service', es: 'Servicio de Azure' },
+  platform: { en: 'Platform / runtime', es: 'Plataforma / runtime' },
+  data: { en: 'Data & storage', es: 'Datos y almacenamiento' },
+  observe: { en: 'Observability', es: 'Observabilidad' },
+  external: { en: 'External / reference', es: 'Externo / referencia' },
+  device: { en: 'Device', es: 'Dispositivo' },
+};
+const kindsUsed = [...new Set(diagram.nodes.map((n) => n.kind))];
+
+const titleId = `${id}-title`;
+const descId = `${id}-desc`;
+const markerId = `${id}-arrow`;
+---
+<figure class="diagram" data-diagram>
+  <figcaption class="diagram__caption">
+    <span class="label">{t('case.architecture')}</span>
+    <span class="diagram__title">{tx(diagram.title)}</span>
+  </figcaption>
+
+  <div class="diagram__canvas blueprint">
+    <svg
+      viewBox={`0 0 ${diagram.width} ${diagram.height}`}
+      role="img"
+      aria-labelledby={`${titleId} ${descId}`}
+      style={`--dg-min-w: ${Math.min(diagram.width, 760)}px`}
+      class="diagram__svg"
+    >
+      <title id={titleId}>{tx(diagram.title)}</title>
+      <desc id={descId}>{tx(diagram.description)}</desc>
+      <defs>
+        <marker id={markerId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" class="dg-arrowhead" />
+        </marker>
+      </defs>
+
+      {
+        diagram.groups.map((g) => (
+          <g class={`dg-group dg-group--${g.tone}`}>
+            <rect x={g.x} y={g.y} width={g.w} height={g.h} rx="10" />
+            <text x={g.x + g.w - 12} y={g.y + 17} class="dg-group__label">
+              {tx(g.label)}
+            </text>
+          </g>
+        ))
+      }
+
+      {
+        edges.map((e) => (
+          <g class="dg-edge" data-from={e.from} data-to={e.to}>
+            <path d={e.d} class:list={['dg-edge__line', { 'is-dashed': e.dashed }]} marker-end={`url(#${markerId})`} />
+            {e.label && (
+              <g class="dg-edge__label">
+                <rect x={e.lx - labelWidth(e.label) / 2} y={e.ly - 9} width={labelWidth(e.label)} height="18" rx="4" />
+                <text x={e.lx} y={e.ly + 0.5}>
+                  {e.label}
+                </text>
+              </g>
+            )}
+          </g>
+        ))
+      }
+
+      {
+        diagram.nodes.map((n) => {
+          const sub = tx(n.sub);
+          const cy = n.y + n.h / 2;
+          const small = n.w < 125;
+          return (
+            <g class={`dg-node dg-node--${n.kind}`} data-node={n.id}>
+              <rect x={n.x} y={n.y} width={n.w} height={n.h} rx="6" class="dg-node__box" />
+              <rect x={n.x} y={n.y + 8} width="3" height={n.h - 16} rx="1.5" class="dg-node__stripe" />
+              <text x={n.x + n.w / 2} y={sub ? cy - 8 : cy} class:list={['dg-node__label', { 'is-small': small }]}>
+                {tx(n.label)}
+              </text>
+              {sub && (
+                <text x={n.x + n.w / 2} y={cy + 11} class="dg-node__sub">
+                  {sub}
+                </text>
+              )}
+            </g>
+          );
+        })
+      }
+    </svg>
+  </div>
+
+  <ul class="diagram__legend" role="list">
+    {
+      kindsUsed.map((k) => (
+        <li class={`dg-legend dg-legend--${k}`}>
+          <span class="dg-legend__swatch" aria-hidden="true" />
+          {kindLabels[k][lang]}
+        </li>
+      ))
+    }
+  </ul>
+
+  {diagram.note && <p class="diagram__note">{tx(diagram.note)}</p>}
+
+  <details class="diagram__text">
+    <summary>{t('diagram.textAlt')}</summary>
+    <div class="diagram__text-body">
+      <p>{tx(diagram.description)}</p>
+      <h4>{t('diagram.flows')}</h4>
+      <ul>
+        {
+          edges.map((e) => (
+            <li>
+              {e.a.label} → {e.b.label}
+              {e.label && <span class="muted"> ({e.label})</span>}
+            </li>
+          ))
+        }
+      </ul>
+      <h4>{t('diagram.components')}</h4>
+      <p>{diagram.nodes.map((n) => tx(n.label)).join(' · ')}</p>
+    </div>
+  </details>
+</figure>
+
+<script>
+  // Hover a component to highlight its direct connections.
+  document.querySelectorAll<HTMLElement>('[data-diagram]').forEach((fig) => {
+    const svg = fig.querySelector('svg');
+    if (!svg) return;
+    const edges = [...svg.querySelectorAll<SVGGElement>('.dg-edge')];
+    svg.querySelectorAll<SVGGElement>('[data-node]').forEach((node) => {
+      const id = node.dataset.node!;
+      node.addEventListener('pointerenter', () => {
+        svg.classList.add('is-focusing');
+        node.classList.add('is-related');
+        edges.forEach((e) => {
+          if (e.dataset.from === id || e.dataset.to === id) {
+            e.classList.add('is-related');
+            const other = e.dataset.from === id ? e.dataset.to : e.dataset.from;
+            svg.querySelector(`[data-node="${other}"]`)?.classList.add('is-related');
+          }
+        });
+      });
+      node.addEventListener('pointerleave', () => {
+        svg.classList.remove('is-focusing');
+        svg.querySelectorAll('.is-related').forEach((el) => el.classList.remove('is-related'));
+      });
+    });
+  });
+</script>
+
+<style>
+  .diagram {
+    --dg-source: var(--muted);
+    --dg-pipeline: var(--signal);
+    --dg-security: var(--ok);
+    --dg-azure: #2f7de1;
+    --dg-platform: var(--accent);
+    --dg-data: #7656d6;
+    --dg-observe: var(--warn);
+    --dg-external: var(--line-strong);
+    --dg-device: #b4532a;
+    margin: 0;
+  }
+  :global(:root[data-theme='dark']) .diagram {
+    --dg-azure: #5aa2ff;
+    --dg-data: #a991ff;
+    --dg-device: #f08a5d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .diagram {
+      --dg-azure: #5aa2ff;
+      --dg-data: #a991ff;
+      --dg-device: #f08a5d;
+    }
+  }
+
+  .diagram__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.9rem;
+    margin-bottom: var(--space-3);
+  }
+  .diagram__title {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .diagram__canvas {
+    overflow-x: auto;
+    padding: var(--space-4);
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    scrollbar-width: thin;
+  }
+  .diagram__svg {
+    width: 100%;
+    min-width: var(--dg-min-w);
+    height: auto;
+    font-family: var(--font-sans);
+  }
+
+  /* Groups */
+  .dg-group rect {
+    fill: color-mix(in srgb, var(--surface-2) 45%, transparent);
+    stroke: var(--line-strong);
+    stroke-dasharray: 4 4;
+  }
+  .dg-group--accent rect {
+    fill: color-mix(in srgb, var(--accent) 5%, transparent);
+    stroke: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+  .dg-group--signal rect {
+    fill: color-mix(in srgb, var(--signal) 5%, transparent);
+    stroke: color-mix(in srgb, var(--signal) 40%, var(--line));
+  }
+  .dg-group__label {
+    text-anchor: end;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    fill: var(--muted);
+  }
+
+  /* Edges */
+  .dg-edge__line {
+    fill: none;
+    stroke: var(--ink-2);
+    stroke-width: 1.4;
+    opacity: 0.75;
+    transition: opacity var(--dur) var(--ease-out), stroke var(--dur) var(--ease-out);
+  }
+  .dg-edge__line.is-dashed {
+    stroke-dasharray: 5 4;
+  }
+  .dg-arrowhead {
+    fill: var(--ink-2);
+  }
+  .dg-edge__label rect {
+    fill: var(--surface);
+    stroke: var(--line);
+  }
+  .dg-edge__label text {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    fill: var(--ink-2);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  /* Nodes */
+  .dg-node {
+    --c: var(--dg-source);
+    transition: opacity var(--dur) var(--ease-out);
+  }
+  .dg-node--pipeline { --c: var(--dg-pipeline); }
+  .dg-node--security { --c: var(--dg-security); }
+  .dg-node--azure { --c: var(--dg-azure); }
+  .dg-node--platform { --c: var(--dg-platform); }
+  .dg-node--data { --c: var(--dg-data); }
+  .dg-node--observe { --c: var(--dg-observe); }
+  .dg-node--external { --c: var(--dg-external); }
+  .dg-node--device { --c: var(--dg-device); }
+  .dg-node__box {
+    fill: var(--surface);
+    stroke: color-mix(in srgb, var(--c) 55%, var(--line));
+    stroke-width: 1.2;
+  }
+  .dg-node--external .dg-node__box {
+    stroke-dasharray: 4 3;
+  }
+  .dg-node__stripe {
+    fill: var(--c);
+  }
+  .dg-node__label {
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--ink);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+  .dg-node__label.is-small {
+    font-size: 11.5px;
+  }
+  .dg-node__sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--muted);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  /* Hover focus */
+  .diagram__svg.is-focusing .dg-node:not(.is-related) {
+    opacity: 0.35;
+  }
+  .diagram__svg.is-focusing .dg-edge:not(.is-related) {
+    opacity: 0.2;
+  }
+  .diagram__svg.is-focusing .dg-edge.is-related .dg-edge__line {
+    stroke: var(--accent);
+    opacity: 1;
+  }
+
+  /* Legend + text alternative */
+  .diagram__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin-top: var(--space-3);
+    list-style: none;
+    padding: 0;
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+  .dg-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    --c: var(--dg-source);
+  }
+  .dg-legend--pipeline { --c: var(--dg-pipeline); }
+  .dg-legend--security { --c: var(--dg-security); }
+  .dg-legend--azure { --c: var(--dg-azure); }
+  .dg-legend--platform { --c: var(--dg-platform); }
+  .dg-legend--data { --c: var(--dg-data); }
+  .dg-legend--observe { --c: var(--dg-observe); }
+  .dg-legend--external { --c: var(--dg-external); }
+  .dg-legend--device { --c: var(--dg-device); }
+  .dg-legend__swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--c);
+  }
+  .diagram__note {
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--muted);
+    font-style: italic;
+  }
+  .diagram__text {
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+  }
+  .diagram__text summary {
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 500;
+    width: fit-content;
+  }
+  .diagram__text-body {
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    border-left: 2px solid var(--line);
+    color: var(--ink-2);
+  }
+  .diagram__text-body > * + * {
+    margin-top: var(--space-3);
+  }
+  .diagram__text-body h4 {
+    font-size: var(--step--1);
+  }
+  .diagram__text-body ul {
+    padding-left: 1.1em;
+  }
+</style>
