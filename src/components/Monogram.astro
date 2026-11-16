@@ -1,12 +1,13 @@
 ---
 /**
- * ISLW monogram — a 2×2 letter grid joined by a single "node".
- * The same geometry is used for the favicon (public/favicon.svg), the social
- * preview image and the site logo, so the brand mark stays consistent.
+ * ISLW monogram — a 2×2 letter grid: "IS" in warm white over "LW" in cyan.
+ * The same geometry is used for the favicon (public/favicon.svg), the app
+ * icons, the social preview image (scripts/og/og-image.html) and the site
+ * logo, so the brand mark stays consistent everywhere. Keep them in sync.
  */
 interface Props {
   size?: number;
-  /** "tile" renders the filled rounded square; "bare" renders letters only. */
+  /** "tile" renders the brand tile (fixed brand colours); "bare" renders letters only. */
   variant?: 'tile' | 'bare';
   title?: string;
   class?: string;
@@ -23,30 +24,49 @@ const { size = 36, variant = 'tile', title, class: className } = Astro.props;
   aria-label={title}
   focusable="false"
 >
-  {variant === 'tile' && <rect width="64" height="64" rx="14" class="monogram__tile" />}
-  <g class="monogram__letters" fill="none" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 13.5V29.5" />
-    <path d="M47.5 16.2C45.4 13.4 37.6 12.6 37.6 17.4c0 5 10.4 3.8 10.4 9.2 0 5.2-8.6 5.1-10.9 2.2" />
-    <path d="M15 35.5V51.5h12" />
-    <path d="M35.6 35.5l3.6 16 3.8-11 3.8 11 3.6-16" />
+  {
+    variant === 'tile' && (
+      <>
+        <rect width="64" height="64" rx="14" class="monogram__tile" />
+        <rect x=".75" y=".75" width="62.5" height="62.5" rx="13.25" class="monogram__edge" />
+      </>
+    )
+  }
+  <g fill="none" stroke-width="5.6" stroke-linejoin="round">
+    <g class="monogram__primary">
+      <path d="M19.5 12.5V29.5" />
+      <path d="M48 13.3H39.6a4.1 4.1 0 0 0 0 8.2h4.3a4.1 4.1 0 0 1 0 8.2H35" />
+    </g>
+    <g class="monogram__accent">
+      <path d="M17 34.5V51.5H29" />
+      <path d="M33.4 34.5l3.7 17 4-11 4 11 3.7-17" />
+    </g>
   </g>
-  <circle cx="32" cy="32.5" r="2.6" class="monogram__node" />
 </svg>
 
 <style>
   .monogram {
     flex: none;
   }
+  /* The tile keeps brand colours in both themes. */
   .monogram__tile {
-    fill: var(--ink);
+    fill: #101a2b;
   }
-  .monogram--tile .monogram__letters {
-    stroke: var(--bg);
+  .monogram__edge {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 1.5;
   }
-  .monogram--bare .monogram__letters {
+  .monogram--tile .monogram__primary {
+    stroke: #f4f2ec;
+  }
+  .monogram--tile .monogram__accent {
+    stroke: #4fd1e0;
+  }
+  .monogram--bare .monogram__primary {
     stroke: currentColor;
   }
-  .monogram__node {
-    fill: var(--accent-bright);
+  .monogram--bare .monogram__accent {
+    stroke: var(--monogram-accent, var(--accent-bright));
   }
 </style>

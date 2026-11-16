@@ -1,10 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ISLW">
-  <rect width="64" height="64" rx="14" fill="#0E1726"/>
-  <g fill="none" stroke="#F4F2EC" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 13.5V29.5"/>
-    <path d="M47.5 16.2C45.4 13.4 37.6 12.6 37.6 17.4c0 5 10.4 3.8 10.4 9.2 0 5.2-8.6 5.1-10.9 2.2"/>
-    <path d="M15 35.5V51.5h12"/>
-    <path d="M35.6 35.5l3.6 16 3.8-11 3.8 11 3.6-16"/>
+  <defs>
+    <linearGradient id="t" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17263D"/>
+      <stop offset="1" stop-color="#0A111C"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#t)"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#FFFFFF" stroke-opacity=".12" stroke-width="1.5"/>
+  <g fill="none" stroke-width="5.6" stroke-linejoin="round">
+    <g stroke="#F4F2EC">
+      <path d="M19.5 12.5V29.5"/>
+      <path d="M48 13.3H39.6a4.1 4.1 0 0 0 0 8.2h4.3a4.1 4.1 0 0 1 0 8.2H35"/>
+    </g>
+    <g stroke="#4FD1E0">
+      <path d="M17 34.5V51.5H29"/>
+      <path d="M33.4 34.5l3.7 17 4-11 4 11 3.7-17"/>
+    </g>
   </g>
-  <circle cx="32" cy="32.5" r="2.6" fill="#13A7BB"/>
 </svg>
