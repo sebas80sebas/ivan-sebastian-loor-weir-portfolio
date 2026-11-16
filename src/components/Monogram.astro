@@ -1,0 +1,52 @@
+---
+/**
+ * ISLW monogram — a 2×2 letter grid joined by a single "node".
+ * The same geometry is used for the favicon (public/favicon.svg), the social
+ * preview image and the site logo, so the brand mark stays consistent.
+ */
+interface Props {
+  size?: number;
+  /** "tile" renders the filled rounded square; "bare" renders letters only. */
+  variant?: 'tile' | 'bare';
+  title?: string;
+  class?: string;
+}
+const { size = 36, variant = 'tile', title, class: className } = Astro.props;
+---
+<svg
+  class:list={['monogram', `monogram--${variant}`, className]}
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  aria-label={title}
+  focusable="false"
+>
+  {variant === 'tile' && <rect width="64" height="64" rx="14" class="monogram__tile" />}
+  <g class="monogram__letters" fill="none" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 13.5V29.5" />
+    <path d="M47.5 16.2C45.4 13.4 37.6 12.6 37.6 17.4c0 5 10.4 3.8 10.4 9.2 0 5.2-8.6 5.1-10.9 2.2" />
+    <path d="M15 35.5V51.5h12" />
+    <path d="M35.6 35.5l3.6 16 3.8-11 3.8 11 3.6-16" />
+  </g>
+  <circle cx="32" cy="32.5" r="2.6" class="monogram__node" />
+</svg>
+
+<style>
+  .monogram {
+    flex: none;
+  }
+  .monogram__tile {
+    fill: var(--ink);
+  }
+  .monogram--tile .monogram__letters {
+    stroke: var(--bg);
+  }
+  .monogram--bare .monogram__letters {
+    stroke: currentColor;
+  }
+  .monogram__node {
+    fill: var(--accent-bright);
+  }
+</style>
