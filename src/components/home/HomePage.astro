@@ -35,7 +35,7 @@ const jsonLd = graph(
   websiteSchema(siteUrl, lang),
 );
 ---
-<BaseLayout lang={lang} title={t('meta.home.title')} description={t('meta.home.description')} type="profile" jsonLd={jsonLd}>
+<BaseLayout lang={lang} title={t('meta.home.title')} description={t('meta.home.description')} type="website" jsonLd={jsonLd}>
   <Hero lang={lang} certCount={certs.length} />
   <About lang={lang} index={1} />
   <Experience lang={lang} index={2} />
