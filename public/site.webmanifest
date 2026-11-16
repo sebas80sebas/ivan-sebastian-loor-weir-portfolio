@@ -1,0 +1,11 @@
+{
+  "name": "Iván Sebastián Loor Weir — Cloud DevSecOps Engineer",
+  "short_name": "ISLW",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0a111c",
+  "background_color": "#f4f2ec",
+  "display": "browser"
+}

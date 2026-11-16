@@ -1,0 +1,71 @@
+---
+import Icon from './Icon.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const t = useTranslations(Astro.props.lang);
+---
+<button class="theme-toggle" type="button" data-theme-toggle aria-label={t('theme.toggle')} title={t('theme.toggle')}>
+  <Icon name="moon" class="theme-toggle__moon" />
+  <Icon name="sun" class="theme-toggle__sun" />
+</button>
+
+<script>
+  const root = document.documentElement;
+  const current = () =>
+    root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
+    const sync = () => btn.setAttribute('aria-pressed', String(current() === 'dark'));
+    sync();
+    btn.addEventListener('click', () => {
+      const next = current() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* storage unavailable — theme still applies for this page view */
+      }
+      sync();
+    });
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--ink-2);
+    transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  }
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+  .theme-toggle :global(.icon) {
+    grid-area: 1 / 1;
+  }
+  .theme-toggle :global(.theme-toggle__sun) {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.theme-toggle__sun) {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.theme-toggle__moon) {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.theme-toggle__sun) {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.theme-toggle__moon) {
+      display: none;
+    }
+  }
+</style>

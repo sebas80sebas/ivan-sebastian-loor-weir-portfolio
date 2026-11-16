@@ -1,0 +1,90 @@
+---
+/**
+ * Base document layout shared by every page: <head> metadata, theme
+ * bootstrapping (no flash of wrong theme), header, main landmark, footer and
+ * the progressive-enhancement scroll-reveal script.
+ */
+import '@/styles/fonts.css';
+import '@/styles/global.css';
+import Seo from '@/components/Seo.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  type?: 'website' | 'article' | 'profile';
+  jsonLd?: object;
+  noindex?: boolean;
+}
+
+const { lang, title, description, type, jsonLd, noindex } = Astro.props;
+const t = useTranslations(lang);
+---
+<!doctype html>
+<html lang={languages[lang].htmlLang} id="top">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a111c" media="(prefers-color-scheme: dark)" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <Seo title={title} description={description} lang={lang} type={type} jsonLd={jsonLd} noindex={noindex} />
+    <script is:inline>
+      // Apply the stored theme before first paint, and flag JS for progressive enhancement.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark') d.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('skip')}</a>
+    <Header lang={lang} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <script>
+      // Scroll-reveal: elements with [data-reveal] fade in once. Content is
+      // fully visible without JS and when reduced motion is requested.
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }),
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+/**
+ * Accessible EN/ES switch. Links point to the equivalent page in the other
+ * language (same project / same section), so switching never loses context.
+ * A tiny script also carries over the current #hash.
+ */
+import { languages, langs, type Lang } from '@/i18n/ui';
+import { alternates, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const alts = alternates(Astro.url);
+---
+<nav class="lang" aria-label={t('lang.label')}>
+  <ul role="list">
+    {
+      langs.map((l) => (
+        <li>
+          {l === lang ? (
+            <span class="lang__item is-current" aria-current="true" lang={languages[l].htmlLang}>
+              <span aria-hidden="true">{languages[l].short}</span>
+              <span class="sr-only">{languages[l].label}</span>
+            </span>
+          ) : (
+            <a
+              class="lang__item"
+              href={alts[l]}
+              hreflang={languages[l].htmlLang}
+              lang={languages[l].htmlLang}
+              data-lang-link
+            >
+              <span aria-hidden="true">{languages[l].short}</span>
+              <span class="sr-only">{t('lang.switch')}</span>
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((a) => {
+    a.addEventListener('click', () => {
+      if (location.hash && !a.href.includes('#')) a.href = a.href + location.hash;
+    });
+  });
+</script>
+
+<style>
+  .lang ul {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    list-style: none;
+  }
+  .lang__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    min-height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out);
+  }
+  a.lang__item:hover {
+    color: var(--ink);
+    background: var(--surface-2);
+  }
+  .lang__item.is-current {
+    color: var(--bg);
+    background: var(--ink);
+  }
+</style>
