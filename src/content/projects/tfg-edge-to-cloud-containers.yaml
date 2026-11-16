@@ -1,0 +1,203 @@
+# Source: Bachelor's thesis (UC3M, 2026) — docs/ (private copy). Public code:
+# https://github.com/sebas80sebas/dagonstar-containers (cited in the thesis).
+# All figures below are taken from the thesis (Table 4.15 and §4.4.7–4.4.8).
+order: 7
+featured: true
+type: academic
+category:
+  en: Research · containers & edge computing
+  es: Investigación · contenedores y edge computing
+title:
+  en: Container virtualisation frameworks in Edge-to-Cloud and serverless environments
+  es: Frameworks de contenedores virtuales en entornos edge-to-cloud y serverless
+summary:
+  en: Bachelor’s thesis (9.5/10). Extended the DAGonStar workflow engine with Docker, Kubernetes (k3s/k0s), Nomad and Apptainer executors and a cross-runtime data-staging layer, then measured performance, overhead and energy on a real Edge–Fog–Cloud testbed.
+  es: Trabajo Fin de Grado (9,5/10). Extensión del motor de workflows DAGonStar con ejecutores para Docker, Kubernetes (k3s/k0s), Nomad y Apptainer y una capa de staging de datos entre runtimes, con medición de rendimiento, overhead y energía sobre un testbed Edge–Fog–Cloud real.
+outcome:
+  en: Apptainer used 1.68 J per record vs 5.73 J for Nomad on the edge node
+  es: Apptainer consumió 1,68 J por registro frente a 5,73 J de Nomad en el nodo edge
+role:
+  en: Author — design, implementation, experimentation and evaluation
+  es: Autor — diseño, implementación, experimentación y evaluación
+period: '2025 – 2026'
+org:
+  en: Universidad Carlos III de Madrid
+  es: Universidad Carlos III de Madrid
+stack:
+  - Python
+  - Docker
+  - k3s · k0s
+  - Nomad
+  - Apptainer
+  - Prometheus
+  - Grafana
+  - MongoDB Atlas
+repo: https://github.com/sebas80sebas/dagonstar-containers
+caseStudy:
+  overview:
+    en: Edge-to-Cloud infrastructures mix ARM devices, desktop machines and managed cloud services, with no shared filesystem between them. My thesis extended DAGonStar — a DAG-based scientific workflow engine — so the same workflow can run its tasks in Docker, Kubernetes (k3s/k0s), Nomad or Apptainer, locally or on remote nodes, and then measured what each choice costs in time, resources and energy.
+    es: Las infraestructuras edge-to-cloud combinan dispositivos ARM, equipos de escritorio y servicios cloud gestionados, sin un sistema de ficheros compartido. Mi TFG extendió DAGonStar — un motor de workflows científicos basado en DAGs — para que un mismo workflow pueda ejecutar sus tareas en Docker, Kubernetes (k3s/k0s), Nomad o Apptainer, en local o en nodos remotos, y después midió lo que cuesta cada opción en tiempo, recursos y energía.
+  context:
+    en: Bachelor’s thesis in Computer Engineering at Universidad Carlos III de Madrid (2025–2026), supervised by Dante Domizzi Sánchez Gallegos and awarded 9.5/10. The testbed combined a Fog node (desktop PC acting as orchestrator), an Edge node (Raspberry Pi 5 reading a DHT11 temperature/humidity sensor through an Arduino) and a Cloud tier (MongoDB Atlas).
+    es: Trabajo Fin de Grado en Ingeniería Informática en la Universidad Carlos III de Madrid (2025–2026), tutorizado por Dante Domizzi Sánchez Gallegos y calificado con 9,5/10. El testbed combinaba un nodo Fog (PC de escritorio como orquestador), un nodo Edge (Raspberry Pi 5 que leía un sensor DHT11 de temperatura y humedad a través de un Arduino) y una capa Cloud (MongoDB Atlas).
+  problem:
+    en: Distributed workflows across Edge, Fog and Cloud face three problems — dependency isolation, portability across heterogeneous hardware (x86_64 and ARMv8), and moving intermediate data between nodes that share no filesystem. Choosing a container runtime for constrained edge devices also has measurable consequences for latency, energy and hardware temperature that are rarely quantified.
+    es: Los workflows distribuidos entre Edge, Fog y Cloud se enfrentan a tres problemas — aislamiento de dependencias, portabilidad entre hardware heterogéneo (x86_64 y ARMv8) y movimiento de datos intermedios entre nodos sin sistema de ficheros compartido. Elegir un runtime de contenedores para dispositivos edge limitados tiene además consecuencias medibles en latencia, energía y temperatura que rara vez se cuantifican.
+  responsibilities:
+    en:
+      - Designed and implemented task classes for Apptainer, Docker, Kubernetes and Nomad, each with a remote variant, behind DAGonStar’s homogeneous task interface.
+      - Built a cross-runtime staging mechanism (Stager and Data Mover) combining host-shared areas, SSH/SCP transfers and pod-to-pod streaming for Kubernetes.
+      - Integrated Prometheus, Node Exporter and Grafana to monitor execution time, resource usage, temperature and energy.
+      - Designed and ran single-node, distributed and full IoT-telemetry experiments, and analysed the results.
+    es:
+      - Diseñé e implementé clases de tareas para Apptainer, Docker, Kubernetes y Nomad, cada una con su variante remota, tras la interfaz homogénea de tareas de DAGonStar.
+      - Construí un mecanismo de staging entre runtimes (Stager y Data Mover) que combina áreas compartidas en el host, transferencias SSH/SCP y streaming entre pods para Kubernetes.
+      - Integré Prometheus, Node Exporter y Grafana para monitorizar tiempo de ejecución, uso de recursos, temperatura y energía.
+      - Diseñé y ejecuté experimentos de nodo único, distribuidos y de telemetría IoT completa, y analicé los resultados.
+  architecture:
+    en: The Fog node runs DAGonStar and orchestrates tasks on the Edge node over SSH. On the Edge, the selected runtime — Docker, Apptainer, Nomad or k3s/k0s — executes the tasks that capture and process sensor data. The Stager/Data Mover moves intermediate files between tasks and nodes, results are persisted in MongoDB Atlas, and Node Exporter metrics are scraped by Prometheus and visualised in Grafana.
+    es: El nodo Fog ejecuta DAGonStar y orquesta tareas en el nodo Edge por SSH. En el Edge, el runtime elegido — Docker, Apptainer, Nomad o k3s/k0s — ejecuta las tareas que capturan y procesan los datos del sensor. El Stager/Data Mover mueve los ficheros intermedios entre tareas y nodos, los resultados se persisten en MongoDB Atlas y las métricas de Node Exporter las recoge Prometheus y se visualizan en Grafana.
+  diagram:
+    title:
+      en: Edge–Fog–Cloud testbed
+      es: Testbed Edge–Fog–Cloud
+    description:
+      en: A Fog node runs the DAGonStar workflow engine and its Stager/Data Mover. It dispatches remote tasks over SSH to a Raspberry Pi 5 edge node running Docker, Apptainer, Nomad or k3s/k0s, with a DHT11 sensor attached via Arduino. Results are persisted to MongoDB Atlas in the cloud. Node Exporter metrics are scraped by Prometheus and visualised in Grafana.
+      es: Un nodo Fog ejecuta el motor de workflows DAGonStar y su Stager/Data Mover. Lanza tareas remotas por SSH a un nodo edge Raspberry Pi 5 con Docker, Apptainer, Nomad o k3s/k0s y un sensor DHT11 conectado mediante Arduino. Los resultados se persisten en MongoDB Atlas en la nube. Prometheus recoge las métricas de Node Exporter y Grafana las visualiza.
+    width: 960
+    height: 440
+    groups:
+      - label: { en: Fog — desktop PC, es: Fog — PC de escritorio }
+        x: 20
+        y: 36
+        w: 270
+        h: 190
+      - id: edge
+        label: Edge — Raspberry Pi 5
+        x: 350
+        y: 36
+        w: 340
+        h: 290
+        tone: accent
+      - label: Cloud
+        x: 750
+        y: 36
+        w: 190
+        h: 110
+        tone: signal
+      - label: { en: Monitoring, es: Monitorización }
+        x: 750
+        y: 186
+        w: 190
+        h: 238
+    nodes:
+      - { id: dag, label: DAGonStar, sub: { en: DAG workflow engine, es: motor de workflows DAG }, x: 40, y: 68, w: 230, h: 56, kind: pipeline }
+      - { id: stager, label: Stager · Data Mover, sub: SSH / SCP · pod streaming, x: 40, y: 146, w: 230, h: 56, kind: source }
+      - { id: docker, label: Docker, x: 370, y: 70, w: 145, h: 46, kind: platform }
+      - { id: apptainer, label: Apptainer, x: 525, y: 70, w: 145, h: 46, kind: platform }
+      - { id: nomad, label: Nomad, x: 370, y: 132, w: 145, h: 46, kind: platform }
+      - { id: k8s, label: k3s · k0s, x: 525, y: 132, w: 145, h: 46, kind: platform }
+      - { id: sensor, label: { en: DHT11 sensor via Arduino, es: Sensor DHT11 vía Arduino }, sub: { en: temperature & humidity, es: temperatura y humedad }, x: 370, y: 250, w: 300, h: 54, kind: device }
+      - { id: mongo, label: MongoDB Atlas, sub: { en: metrics & results, es: métricas y resultados }, x: 770, y: 68, w: 150, h: 56, kind: data }
+      - { id: nodeexp, label: Node Exporter, x: 770, y: 216, w: 150, h: 46, kind: observe }
+      - { id: prom, label: Prometheus, x: 770, y: 290, w: 150, h: 46, kind: observe }
+      - { id: graf, label: Grafana, x: 770, y: 364, w: 150, h: 46, kind: observe }
+    edges:
+      - { from: dag, to: docker, label: { en: remote tasks · SSH, es: tareas remotas · SSH } }
+      - { from: stager, to: edge, label: staging, dashed: true }
+      - { from: sensor, to: nomad, route: v, dashed: true }
+      - { from: apptainer, to: mongo, label: { en: persist, es: persiste } }
+      - { from: edge, to: nodeexp, label: { en: host metrics, es: métricas host }, dashed: true }
+      - { from: nodeexp, to: prom, label: scrape, route: v }
+      - { from: prom, to: graf, route: v }
+  stackGroups:
+    - label: { en: Runtimes & orchestrators, es: Runtimes y orquestadores }
+      items: [Docker, Apptainer, HashiCorp Nomad, k3s, k0s]
+    - label: { en: Workflow & data, es: Workflow y datos }
+      items: [DAGonStar, Python, SSH / SCP, MongoDB Atlas]
+    - label: { en: Observability, es: Observabilidad }
+      items: [Prometheus, Node Exporter, Grafana, Matplotlib]
+    - label: { en: Hardware, es: Hardware }
+      items: [Raspberry Pi 5, Arduino + DHT11, x86_64 desktop]
+  implementation:
+    en:
+      - A class hierarchy of task types — ApptainerTask, DockerTask, KubernetesTask, NomadTask and their remote variants — so users switch runtime without changing how the workflow is written.
+      - Credentials and connection parameters centralised in a configuration file (dagon.ini) rather than embedded in workflow code.
+      - Volume-based staging for Docker, Apptainer and Nomad; streaming between pods for Kubernetes, removing the assumption of a shared filesystem.
+      - Benchmarks implemented as DAGonStar workflows, from edge-only runs to distributed Edge–Fog execution and a complete Edge–Fog–Cloud IoT telemetry workflow.
+      - Energy, CPU, RAM and temperature monitored in real time with Grafana dashboards per runtime, and post-processed with Python and Matplotlib.
+    es:
+      - Una jerarquía de clases de tareas — ApptainerTask, DockerTask, KubernetesTask, NomadTask y sus variantes remotas — para cambiar de runtime sin modificar cómo se escribe el workflow.
+      - Credenciales y parámetros de conexión centralizados en un fichero de configuración (dagon.ini) en lugar de embebidos en el código del workflow.
+      - Staging basado en volúmenes para Docker, Apptainer y Nomad; streaming entre pods para Kubernetes, eliminando la suposición de un sistema de ficheros compartido.
+      - Benchmarks implementados como workflows de DAGonStar, desde ejecuciones solo en el edge hasta ejecución distribuida Edge–Fog y un workflow completo de telemetría IoT Edge–Fog–Cloud.
+      - Energía, CPU, RAM y temperatura monitorizadas en tiempo real con dashboards de Grafana por runtime, y postprocesadas con Python y Matplotlib.
+  challenges:
+    - challenge:
+        en: No shared filesystem between Edge, Fog and Cloud nodes.
+        es: No hay sistema de ficheros compartido entre los nodos Edge, Fog y Cloud.
+      decision:
+        en: A transversal staging layer that picks the mechanism per runtime — shared host volumes, SSH/SCP, or pod-to-pod streaming.
+        es: Una capa de staging transversal que elige el mecanismo por runtime — volúmenes compartidos en el host, SSH/SCP o streaming entre pods.
+    - challenge:
+        en: Comparing runtimes fairly when they processed different amounts of work (Nomad handled ~150 records, Docker and Apptainer ~292).
+        es: Comparar runtimes de forma justa cuando procesaron distinta cantidad de trabajo (Nomad gestionó ~150 registros; Docker y Apptainer, ~292).
+      decision:
+        en: Normalise energy by workload (joules per record) instead of comparing raw energy totals.
+        es: Normalizar la energía por carga de trabajo (julios por registro) en lugar de comparar totales brutos.
+    - challenge:
+        en: Kubernetes (k3s/k0s) on a Raspberry Pi 5 with an 8 GB SD card became unstable during long runs as cluster components and images filled the disk.
+        es: Kubernetes (k3s/k0s) en una Raspberry Pi 5 con tarjeta SD de 8 GB se volvió inestable en ejecuciones largas al llenar el disco los componentes del clúster y las imágenes.
+      decision:
+        en: Keep the KubernetesTask implementation (fully functional) but report the hardware limitation as a finding, and support lighter runtimes or delegation to the Fog tier.
+        es: Mantener la implementación de KubernetesTask (plenamente funcional) pero documentar la limitación de hardware como resultado, y soportar runtimes más ligeros o la delegación a la capa Fog.
+  security:
+    en:
+      - Remote execution and data transfers run over SSH/SCP rather than unauthenticated channels.
+      - Connection credentials kept in a dedicated configuration file, separate from workflow definitions.
+      - Identified as future work — end-to-end encryption in staging and secret vaults with automatic rotation for regulated data.
+    es:
+      - La ejecución remota y las transferencias de datos van sobre SSH/SCP y no por canales sin autenticar.
+      - Credenciales de conexión en un fichero de configuración dedicado, separado de las definiciones de workflow.
+      - Identificado como trabajo futuro — cifrado de extremo a extremo en el staging y cofres de secretos con rotación automática para datos regulados.
+  operations:
+    en:
+      - Thermal impact matters on the edge — Nomad’s higher CPU use (10.8% mean vs 0.38% for Apptainer) raised operating temperature by about 5 °C, a throttling risk in long-running or hot deployments.
+      - Apptainer’s efficiency depends on pre-built images and active storage management; Docker and Nomad handle image distribution more transparently at a higher baseline cost.
+    es:
+      - El impacto térmico importa en el edge — el mayor uso de CPU de Nomad (10,8 % de media frente al 0,38 % de Apptainer) elevó la temperatura de operación unos 5 °C, un riesgo de throttling en despliegues largos o calurosos.
+      - La eficiencia de Apptainer depende de imágenes preconstruidas y de gestionar activamente el almacenamiento; Docker y Nomad gestionan la distribución de imágenes de forma más transparente con un mayor coste base.
+  results:
+    en:
+      - Apptainer was the most efficient runtime on the edge node — 1.68 J per record, with under 1% orchestration overhead.
+      - Apptainer reduced energy consumption by 26% compared with Docker and 43% compared with Nomad.
+      - Docker offered a balanced profile for heterogeneous Edge–Fog deployments; Nomad suits centralised multi-node orchestration but not low-latency, energy-constrained edge workloads.
+      - Kubernetes executors are functional, but k3s/k0s proved unviable on minimal edge hardware — a documented finding with future work on multi-Pi or HPC clusters.
+    es:
+      - Apptainer fue el runtime más eficiente en el nodo edge — 1,68 J por registro, con menos de un 1 % de overhead de orquestación.
+      - Apptainer redujo el consumo energético un 26 % respecto a Docker y un 43 % respecto a Nomad.
+      - Docker ofreció un perfil equilibrado para despliegues Edge–Fog heterogéneos; Nomad encaja en orquestación multinodo centralizada, pero no en cargas edge de baja latencia con restricciones energéticas.
+      - Los ejecutores de Kubernetes son funcionales, pero k3s/k0s resultaron inviables en hardware edge mínimo — un resultado documentado, con trabajo futuro en clústeres de varias Raspberry Pi o HPC.
+  resultsTable:
+    caption:
+      en: Normalised efficiency on the edge node — full IoT telemetry workflow
+      es: Eficiencia normalizada en el nodo edge — workflow completo de telemetría IoT
+    columns:
+      en: [Runtime, Records, Energy (J), J / record, Temp. (°C), Overhead]
+      es: [Runtime, Registros, Energía (J), J / registro, Temp. (°C), Overhead]
+    rows:
+      - [Apptainer, '292', '490.8', '1.68', '46.1', '< 1%']
+      - [Docker, '291', '666.3', '2.29', '47.3', '~ 29.2%']
+      - [Nomad, '150', '859.3', '5.73', '51.1', '54.4%']
+    source:
+      en: Source — thesis, Table 4.15.
+      es: Fuente — TFG, Tabla 4.15.
+  lessons:
+    en:
+      - Normalise before you compare — raw totals hid that Nomad spent most of its energy on orchestration rather than useful work.
+      - Runtime choice is an infrastructure decision with energy, thermal and hardware-lifetime consequences, not only a developer preference.
+      - Heterogeneous infrastructure needs an engine that can pick the lightest viable runtime per node, or delegate work upstream.
+    es:
+      - Normalizar antes de comparar — los totales brutos ocultaban que Nomad dedicaba la mayor parte de su energía a la orquestación y no a trabajo útil.
+      - Elegir runtime es una decisión de infraestructura con consecuencias energéticas, térmicas y de vida útil del hardware, no solo una preferencia de desarrollo.
+      - Una infraestructura heterogénea necesita un motor capaz de elegir el runtime viable más ligero en cada nodo, o de delegar el trabajo hacia arriba.

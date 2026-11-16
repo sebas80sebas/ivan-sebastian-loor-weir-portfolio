@@ -1,0 +1,165 @@
+# Source: CV (Azure Cloud Administrator) + previous public portfolio entries and
+# public repositories zabbix-expressroute-monitoring,
+# zabbix-azure-trafficmanager-monitoring and no-rdp-zabbix-agent-installer.
+order: 6
+featured: true
+type: professional
+category:
+  en: Observability engineering
+  es: Ingeniería de observabilidad
+title:
+  en: Automated Zabbix monitoring for Azure network services and private VMs
+  es: Monitorización automatizada con Zabbix de servicios de red Azure y VMs privadas
+summary:
+  en: Python collectors that bring ExpressRoute, VPN and Traffic Manager metrics from Azure Monitor into Zabbix, plus a zero-touch agent rollout that works on internet-facing and isolated private networks alike.
+  es: Colectores en Python que llevan las métricas de ExpressRoute, VPN y Traffic Manager desde Azure Monitor a Zabbix, y un despliegue zero-touch de agentes que funciona igual en redes con salida a internet y en redes privadas aisladas.
+outcome:
+  en: Consistent alerting and proactive detection of degradation
+  es: Alertado homogéneo y detección proactiva de degradaciones
+role:
+  en: Designer and implementer
+  es: Diseño e implementación
+period: '2025'
+org:
+  en: ALIANDO · Managed Services area
+  es: ALIANDO · Área Managed Services
+stack:
+  - Python
+  - Azure Monitor API
+  - Zabbix
+  - ExpressRoute
+  - Traffic Manager
+  - Azure CLI
+  - PowerShell
+repo: https://github.com/sebas80sebas/zabbix-expressroute-monitoring
+caseStudy:
+  overview:
+    en: Network services are where outages start and where they are hardest to see. I automated the onboarding of Azure ExpressRoute, VPN connections and Traffic Manager into Zabbix, and built a zero-touch way to install Zabbix agents on VMs — including those in isolated private networks.
+    es: Los servicios de red son donde empiezan las caídas y donde más cuesta verlas. Automaticé la incorporación de Azure ExpressRoute, conexiones VPN y Traffic Manager en Zabbix, y construí una forma zero-touch de instalar agentes Zabbix en VMs, incluidas las de redes privadas aisladas.
+  context:
+    en: Client environments in ALIANDO’s Managed Services area are monitored centrally with Zabbix. Azure’s managed network services expose their health through Azure Monitor rather than through an agent, and many VMs sit in private networks without internet access.
+    es: Los entornos de clientes del área Managed Services de ALIANDO se monitorizan de forma centralizada con Zabbix. Los servicios de red gestionados de Azure exponen su estado a través de Azure Monitor y no mediante un agente, y muchas VMs están en redes privadas sin acceso a internet.
+  problem:
+    en: Configuring monitoring for each circuit, connection and profile by hand is slow and inconsistent, and a monitoring gap on a network service means degradations are found by users. Installing agents manually over RDP does not scale and is not always possible on isolated networks.
+    es: Configurar a mano la monitorización de cada circuito, conexión y perfil es lento e inconsistente, y un hueco de monitorización en un servicio de red significa que las degradaciones las descubren los usuarios. Instalar agentes manualmente por RDP no escala y no siempre es posible en redes aisladas.
+  responsibilities:
+    en:
+      - Automated the onboarding of ExpressRoute, VPN connection and Traffic Manager monitoring into Zabbix.
+      - Built Python collectors that read Azure Monitor metrics for these services.
+      - Engineered a zero-touch Zabbix agent installation workflow using Azure CLI and Blob Storage.
+    es:
+      - Automaticé la incorporación de la monitorización de ExpressRoute, conexiones VPN y Traffic Manager en Zabbix.
+      - Desarrollé colectores en Python que leen las métricas de Azure Monitor de estos servicios.
+      - Desarrollé un flujo de instalación zero-touch del agente Zabbix con Azure CLI y Blob Storage.
+  architecture:
+    en: Two complementary paths. For managed network services, Python collectors query the Azure Monitor metrics API — ExpressRoute ingress/egress bandwidth, BGP and ARP availability and circuit health; Traffic Manager endpoint health, queries per second and routing configuration — and feed them into Zabbix. For virtual machines, Azure CLI Run Command executes an installation script on the VM, which retrieves the agent package from Blob Storage; no RDP session or interactive credentials are required, and the approach works in isolated private networks.
+    es: Dos caminos complementarios. Para los servicios de red gestionados, colectores en Python consultan la API de métricas de Azure Monitor — ancho de banda de entrada/salida de ExpressRoute, disponibilidad BGP y ARP y estado del circuito; salud de endpoints, consultas por segundo y configuración de enrutado de Traffic Manager — y las llevan a Zabbix. Para las máquinas virtuales, Azure CLI Run Command ejecuta un script de instalación en la VM, que obtiene el paquete del agente desde Blob Storage; no hace falta sesión RDP ni credenciales interactivas, y funciona en redes privadas aisladas.
+  diagram:
+    title:
+      en: Two onboarding paths into one monitoring platform
+      es: Dos vías de incorporación hacia una única plataforma de monitorización
+    description:
+      en: ExpressRoute circuits, VPN connections and Traffic Manager profiles publish platform metrics to Azure Monitor; Python collectors query the metrics API and send the values to the Zabbix server. Separately, Azure CLI Run Command executes an installer on a Windows VM, which downloads the agent package from Blob Storage; the installed Zabbix agent registers with the Zabbix server.
+      es: Los circuitos ExpressRoute, las conexiones VPN y los perfiles de Traffic Manager publican métricas en Azure Monitor; colectores en Python consultan la API de métricas y envían los valores al servidor Zabbix. Por otro lado, Azure CLI Run Command ejecuta un instalador en una VM Windows, que descarga el paquete del agente desde Blob Storage; el agente Zabbix instalado se registra en el servidor Zabbix.
+    width: 960
+    height: 470
+    groups:
+      - label: { en: Azure network services, es: Servicios de red de Azure }
+        x: 20
+        y: 36
+        w: 210
+        h: 222
+      - label: { en: Zero-touch agent rollout, es: Despliegue zero-touch de agentes }
+        x: 20
+        y: 296
+        w: 700
+        h: 160
+        tone: signal
+    nodes:
+      - { id: er, label: ExpressRoute, sub: { en: circuits, es: circuitos }, x: 40, y: 62, w: 170, h: 50, kind: azure }
+      - { id: vpn, label: VPN, sub: { en: connections, es: conexiones }, x: 40, y: 126, w: 170, h: 50, kind: azure }
+      - { id: tm, label: Traffic Manager, sub: { en: profiles, es: perfiles }, x: 40, y: 190, w: 170, h: 50, kind: azure }
+      - { id: mon, label: Azure Monitor, sub: { en: metrics API, es: API de métricas }, x: 290, y: 122, w: 170, h: 58, kind: observe }
+      - { id: py, label: { en: Python collectors, es: Colectores Python }, sub: { en: per service type, es: por tipo de servicio }, x: 520, y: 122, w: 180, h: 58, kind: source }
+      - { id: zbx, label: Zabbix server, sub: { en: items · triggers · alerts, es: items · triggers · alertas }, x: 770, y: 122, w: 170, h: 58, kind: observe }
+      - { id: cli, label: Azure CLI, sub: run-command, x: 40, y: 326, w: 160, h: 54, kind: pipeline }
+      - { id: vm, label: Windows VM, sub: { en: public or isolated network, es: red pública o aislada }, x: 280, y: 326, w: 190, h: 54, kind: platform }
+      - { id: blob, label: Blob Storage, sub: { en: agent package, es: paquete del agente }, x: 280, y: 394, w: 190, h: 48, kind: data }
+      - { id: agent, label: Zabbix agent, sub: { en: installed as a service, es: instalado como servicio }, x: 530, y: 326, w: 170, h: 54, kind: observe }
+    edges:
+      - { from: er, to: mon, label: { en: platform metrics, es: métricas }, route: h }
+      - { from: vpn, to: mon }
+      - { from: tm, to: mon }
+      - { from: mon, to: py, label: { en: query, es: consulta } }
+      - { from: py, to: zbx, label: { en: values, es: valores } }
+      - { from: cli, to: vm, label: { en: script, es: script } }
+      - { from: blob, to: vm, label: { en: download, es: descarga }, route: v }
+      - { from: vm, to: agent, label: { en: installs, es: instala } }
+      - { from: agent, to: zbx, label: { en: registers, es: se registra }, route: hv }
+  stackGroups:
+    - label: { en: Sources, es: Fuentes }
+      items: [ExpressRoute, VPN Gateway connections, Traffic Manager]
+    - label: { en: Collection, es: Recogida }
+      items: [Azure Monitor metrics API, Python]
+    - label: { en: Agent rollout, es: Despliegue de agentes }
+      items: [Azure CLI Run Command, PowerShell, Blob Storage]
+    - label: { en: Monitoring, es: Monitorización }
+      items: [Zabbix server, Zabbix agent]
+  implementation:
+    en:
+      - "ExpressRoute: ingress and egress bandwidth, utilisation, BGP and ARP availability and circuit health brought into Zabbix."
+      - "Traffic Manager: endpoint health, queries per second and routing configuration collected from Azure Monitor."
+      - "VPN connections onboarded with the same pattern, so all three services alert consistently."
+      - "Agent installation driven by Azure CLI Run Command and a PowerShell installer — no RDP session and no interactive credentials on the VM."
+      - "Agent package served from Blob Storage so that VMs without internet access can still be provisioned."
+    es:
+      - "ExpressRoute: ancho de banda de entrada y salida, utilización, disponibilidad BGP y ARP y estado del circuito en Zabbix."
+      - "Traffic Manager: salud de endpoints, consultas por segundo y configuración de enrutado recogidas desde Azure Monitor."
+      - "Conexiones VPN incorporadas con el mismo patrón, de modo que los tres servicios alertan de forma homogénea."
+      - "Instalación del agente mediante Azure CLI Run Command y un instalador PowerShell — sin sesión RDP ni credenciales interactivas en la VM."
+      - "Paquete del agente servido desde Blob Storage para que también puedan aprovisionarse VMs sin acceso a internet."
+  challenges:
+    - challenge:
+        en: Managed network services cannot run a monitoring agent.
+        es: Los servicios de red gestionados no pueden ejecutar un agente de monitorización.
+      decision:
+        en: Collect their metrics from the Azure Monitor API and translate them into Zabbix, so they sit next to the rest of the estate in the same alerting model.
+        es: Recoger sus métricas desde la API de Azure Monitor y trasladarlas a Zabbix, para que convivan con el resto del estate en el mismo modelo de alertado.
+    - challenge:
+        en: VMs in isolated private networks cannot download installers from the internet, and RDP access is not always available.
+        es: Las VMs de redes privadas aisladas no pueden descargar instaladores de internet, y el acceso por RDP no siempre está disponible.
+      decision:
+        en: Use Azure Run Command to execute the installer through the Azure control plane and host the package in Blob Storage reachable from the VM.
+        es: Usar Azure Run Command para ejecutar el instalador a través del plano de control de Azure y alojar el paquete en un Blob Storage accesible desde la VM.
+  security:
+    en:
+      - Run Command executes through Azure RBAC on the control plane, avoiding open RDP access and shared interactive credentials.
+      - Monitoring reads platform metrics only; collectors need read access to metrics, not management rights over the network resources.
+    es:
+      - Run Command se ejecuta a través de Azure RBAC en el plano de control, evitando abrir RDP y compartir credenciales interactivas.
+      - La monitorización solo lee métricas de plataforma; los colectores necesitan acceso de lectura a métricas, no derechos de gestión sobre los recursos de red.
+  operations:
+    en:
+      - Consistent alerting across ExpressRoute, VPN and Traffic Manager.
+      - Proactive detection of resource degradation before users report it.
+      - Less configuration effort per new circuit, connection, profile or VM.
+    es:
+      - Alertado homogéneo para ExpressRoute, VPN y Traffic Manager.
+      - Detección proactiva de degradaciones antes de que las reporten los usuarios.
+      - Menos esfuerzo de configuración por cada nuevo circuito, conexión, perfil o VM.
+  results:
+    en:
+      - Automated monitoring onboarding for ExpressRoute, VPN connections and Traffic Manager.
+      - Improved reliability through proactive detection of degradation.
+      - Agent provisioning that works on both internet-facing and isolated private networks.
+    es:
+      - Incorporación automatizada de la monitorización de ExpressRoute, conexiones VPN y Traffic Manager.
+      - Mayor fiabilidad gracias a la detección proactiva de degradaciones.
+      - Aprovisionamiento de agentes válido tanto en redes con salida a internet como en redes privadas aisladas.
+  lessons:
+    en:
+      - Managed services need a metrics-API path into monitoring; agents only cover what you host.
+      - Designing for the most restricted network first produces a rollout that works everywhere.
+    es:
+      - Los servicios gestionados necesitan una vía por API de métricas hacia la monitorización; los agentes solo cubren lo que alojas.
+      - Diseñar primero para la red más restringida da como resultado un despliegue que funciona en cualquier sitio.

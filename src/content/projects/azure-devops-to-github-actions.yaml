@@ -1,0 +1,148 @@
+# Source: CV ("Migrated Azure DevOps pipeline templates to GitHub Actions,
+# translating CI/CD workflows for Terraform-based IaC while preserving
+# equivalent build and deployment logic"). Diagram is a conceptual mapping.
+order: 3
+featured: true
+type: professional
+category:
+  en: CI/CD modernisation
+  es: Modernización CI/CD
+title:
+  en: Migrating Terraform pipeline templates from Azure DevOps to GitHub Actions
+  es: Migración de plantillas de pipelines Terraform de Azure DevOps a GitHub Actions
+summary:
+  en: Translated Azure DevOps pipeline templates for Terraform-based Infrastructure as Code into GitHub Actions workflows, preserving equivalent build and deployment logic.
+  es: Traslado de plantillas de pipelines de Azure DevOps para Infrastructure as Code con Terraform a workflows de GitHub Actions, preservando una lógica de build y despliegue equivalente.
+outcome:
+  en: Equivalent IaC delivery logic on a new CI/CD platform
+  es: Lógica de entrega IaC equivalente en una nueva plataforma CI/CD
+role:
+  en: Cloud DevSecOps Engineer — pipeline migration
+  es: Cloud DevSecOps Engineer — migración de pipelines
+period: '2026'
+org:
+  en: ALIANDO · Cloud Platform area
+  es: ALIANDO · Área Cloud Platform
+stack:
+  - Azure DevOps
+  - GitHub Actions
+  - Terraform
+  - YAML
+caseStudy:
+  overview:
+    en: Pipeline templates encode a team’s delivery standards. Moving them from Azure DevOps to GitHub Actions means re-expressing those standards in a different execution model without changing what gets built or deployed. I carried out that translation for Terraform-based IaC workflows.
+    es: Las plantillas de pipelines codifican los estándares de entrega de un equipo. Llevarlas de Azure DevOps a GitHub Actions supone reexpresar esos estándares en otro modelo de ejecución sin cambiar qué se construye o se despliega. Realicé esa traducción para los workflows de IaC con Terraform.
+  context:
+    en: Infrastructure in the Cloud Platform area is delivered through Terraform executed by CI/CD pipelines. Pipeline templates already existed in Azure DevOps; the requirement was to provide the same capability in GitHub Actions.
+    es: En el área Cloud Platform la infraestructura se entrega con Terraform ejecutado desde pipelines CI/CD. Las plantillas ya existían en Azure DevOps; el requisito era ofrecer la misma capacidad en GitHub Actions.
+  problem:
+    en: Azure DevOps and GitHub Actions share concepts but not semantics — templates, stages, variable scoping and approvals are modelled differently. A literal port risks subtle behavioural changes in infrastructure deployments, where a different variable value or a skipped step can change real resources.
+    es: Azure DevOps y GitHub Actions comparten conceptos pero no semántica — plantillas, stages, ámbito de variables y aprobaciones se modelan de forma distinta. Un port literal arriesga cambios sutiles de comportamiento en despliegues de infraestructura, donde un valor de variable distinto o un paso omitido puede cambiar recursos reales.
+  responsibilities:
+    en:
+      - Analysed the existing Azure DevOps pipeline templates for Terraform IaC.
+      - Translated them into GitHub Actions workflows.
+      - Preserved equivalent build and deployment logic across the migration.
+    es:
+      - Analicé las plantillas de pipelines de Azure DevOps existentes para IaC con Terraform.
+      - Las traduje a workflows de GitHub Actions.
+      - Preservé una lógica de build y despliegue equivalente durante la migración.
+  architecture:
+    en: The migration maps each Azure DevOps construct to its GitHub Actions counterpart. The diagram shows that conceptual mapping between the two platforms’ building blocks; the Terraform logic executed inside the pipelines stays the same.
+    es: La migración asigna cada elemento de Azure DevOps a su equivalente en GitHub Actions. El diagrama muestra esa correspondencia conceptual entre los bloques de ambas plataformas; la lógica de Terraform que se ejecuta dentro de los pipelines no cambia.
+  diagram:
+    title:
+      en: Conceptual mapping — Azure DevOps constructs to GitHub Actions
+      es: Correspondencia conceptual — elementos de Azure DevOps a GitHub Actions
+    description:
+      en: Azure DevOps pipeline templates map to GitHub Actions reusable workflows; stages, jobs and steps map to jobs and steps; pipeline variables map to workflow inputs, variables and secrets; environments and approvals map to GitHub environments. Both run the same Terraform logic.
+      es: Las plantillas de pipelines de Azure DevOps se corresponden con reusable workflows de GitHub Actions; stages, jobs y steps con jobs y steps; las variables del pipeline con inputs, variables y secrets del workflow; environments y aprobaciones con environments de GitHub. Ambos ejecutan la misma lógica de Terraform.
+    note:
+      en: Conceptual view of the platform constructs involved; it does not reproduce the client’s pipelines.
+      es: Vista conceptual de los elementos de plataforma implicados; no reproduce los pipelines del cliente.
+    width: 960
+    height: 420
+    groups:
+      - label: Azure DevOps
+        x: 20
+        y: 36
+        w: 360
+        h: 290
+      - label: GitHub Actions
+        x: 580
+        y: 36
+        w: 360
+        h: 290
+        tone: accent
+    nodes:
+      - { id: a1, label: Pipeline templates, x: 50, y: 66, w: 300, h: 50, kind: pipeline }
+      - { id: a2, label: Stages · jobs · steps, x: 50, y: 132, w: 300, h: 50, kind: pipeline }
+      - { id: a3, label: Variables · variable groups, x: 50, y: 198, w: 300, h: 50, kind: pipeline }
+      - { id: a4, label: Environments · approvals, x: 50, y: 264, w: 300, h: 50, kind: pipeline }
+      - { id: g1, label: Reusable workflows, x: 610, y: 66, w: 300, h: 50, kind: pipeline }
+      - { id: g2, label: Jobs · steps, x: 610, y: 132, w: 300, h: 50, kind: pipeline }
+      - { id: g3, label: Inputs · variables · secrets, x: 610, y: 198, w: 300, h: 50, kind: pipeline }
+      - { id: g4, label: Environments · protection rules, x: 610, y: 264, w: 300, h: 50, kind: pipeline }
+      - { id: tf, label: { en: Same Terraform logic, es: Misma lógica de Terraform }, sub: init · validate · plan · apply, x: 330, y: 352, w: 300, h: 54, kind: source }
+    edges:
+      - { from: a1, to: g1 }
+      - { from: a2, to: g2 }
+      - { from: a3, to: g3 }
+      - { from: a4, to: g4 }
+  stackGroups:
+    - label: { en: Source platform, es: Plataforma origen }
+      items: [Azure DevOps Pipelines, YAML templates]
+    - label: { en: Target platform, es: Plataforma destino }
+      items: [GitHub Actions, Reusable workflows]
+    - label: { en: Workload, es: Carga }
+      items: [Terraform, Infrastructure as Code]
+  implementation:
+    en:
+      - Inventory the existing templates and the behaviour each one guarantees — inputs, ordering, conditions and deployment targets.
+      - Re-express each template in GitHub Actions terms, keeping the Terraform commands and their order unchanged.
+      - Treat equivalence as the acceptance criterion — the migrated workflows must build and deploy the same way as the originals.
+    es:
+      - Inventariar las plantillas existentes y el comportamiento que garantiza cada una — inputs, orden, condiciones y destinos de despliegue.
+      - Reexpresar cada plantilla en términos de GitHub Actions, manteniendo sin cambios los comandos de Terraform y su orden.
+      - Tratar la equivalencia como criterio de aceptación — los workflows migrados deben construir y desplegar igual que los originales.
+  challenges:
+    - challenge:
+        en: Different execution models — Azure DevOps stages and templates do not map one-to-one onto GitHub Actions workflows and jobs.
+        es: Modelos de ejecución distintos — los stages y plantillas de Azure DevOps no se corresponden uno a uno con workflows y jobs de GitHub Actions.
+      decision:
+        en: Map by intent rather than by syntax — identify what each template guarantees and reproduce that guarantee with the closest GitHub Actions construct.
+        es: Traducir por intención y no por sintaxis — identificar qué garantiza cada plantilla y reproducir esa garantía con el elemento de GitHub Actions más cercano.
+    - challenge:
+        en: In infrastructure pipelines, a behavioural difference is a change to real resources.
+        es: En pipelines de infraestructura, una diferencia de comportamiento es un cambio en recursos reales.
+      decision:
+        en: Keep the Terraform workflow itself untouched and limit the migration to the orchestration layer around it.
+        es: Mantener intacto el flujo de Terraform y limitar la migración a la capa de orquestación que lo rodea.
+  security:
+    en:
+      - Secrets and variables must keep their scoping when moved between platforms — a variable that was environment-scoped must not become globally readable.
+      - Deployment controls on sensitive environments need an explicit equivalent on the target platform.
+    es:
+      - Secretos y variables deben mantener su ámbito al moverse entre plataformas — una variable con ámbito de entorno no debe pasar a ser legible globalmente.
+      - Los controles de despliegue en entornos sensibles necesitan un equivalente explícito en la plataforma destino.
+  operations:
+    en:
+      - Equivalent logic means operators keep the same mental model of how infrastructure is delivered.
+      - Reusable workflows keep delivery standards centralised instead of copied into every repository.
+    es:
+      - Una lógica equivalente permite a los operadores mantener el mismo modelo mental de cómo se entrega la infraestructura.
+      - Los reusable workflows mantienen centralizados los estándares de entrega en lugar de copiarlos en cada repositorio.
+  results:
+    en:
+      - Azure DevOps pipeline templates for Terraform IaC translated to GitHub Actions.
+      - Equivalent build and deployment logic preserved.
+    es:
+      - Plantillas de pipelines de Azure DevOps para IaC con Terraform trasladadas a GitHub Actions.
+      - Lógica de build y despliegue equivalente preservada.
+  lessons:
+    en:
+      - A pipeline migration is a behaviour-preservation exercise; syntax is the easy part.
+      - Separating orchestration from the infrastructure logic it runs makes CI/CD platforms interchangeable.
+    es:
+      - Una migración de pipelines es un ejercicio de preservación de comportamiento; la sintaxis es la parte fácil.
+      - Separar la orquestación de la lógica de infraestructura que ejecuta hace intercambiables las plataformas CI/CD.

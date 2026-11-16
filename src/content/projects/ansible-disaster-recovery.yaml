@@ -1,0 +1,11 @@
+order: 22
+type: personal
+category: { en: Automation · resilience, es: Automatización · resiliencia }
+title: { en: Ansible disaster recovery, es: Disaster recovery con Ansible }
+summary:
+  en: Disaster-recovery automation with Ansible and Docker protecting a Flask/PostgreSQL application through automated backups and one-command restoration.
+  es: Automatización de disaster recovery con Ansible y Docker que protege una aplicación Flask/PostgreSQL mediante backups automáticos y restauración con un solo comando.
+role: { en: Author, es: Autor }
+period: Personal
+stack: [Ansible, Docker, PostgreSQL, Flask]
+repo: https://github.com/sebas80sebas/ansible-disaster-recovery

@@ -1,0 +1,39 @@
+- id: uc3m
+  order: 1
+  institution: Universidad Carlos III de Madrid (UC3M)
+  degree:
+    en: Bachelor’s Degree in Computer Engineering
+    es: Grado en Ingeniería Informática
+  start: '2022'
+  end: '2026'
+  location:
+    en: Madrid, Spain
+    es: Madrid, España
+  description:
+    en: Foundations in operating systems, computer networks, distributed systems, databases, cybersecurity and high-performance computing.
+    es: Base en sistemas operativos, redes de computadores, sistemas distribuidos, bases de datos, ciberseguridad y computación de altas prestaciones.
+  thesis:
+    title:
+      en: Evaluation of Container Virtualization Frameworks in Edge-to-Cloud and Serverless Environments
+      es: Evaluación de frameworks de contenedores virtuales en entornos edge-to-cloud y serverless
+    grade: '9.5 / 10'
+    date: '2026-03'
+    project: tfg-edge-to-cloud-containers
+    summary:
+      en: Extended the DAGonStar workflow engine with Docker, Kubernetes (k3s/k0s), Nomad and Apptainer executors plus a cross-runtime data-staging layer, and evaluated performance and energy efficiency on real Edge–Fog–Cloud hardware with Prometheus and Grafana.
+      es: Extensión del motor de workflows DAGonStar con ejecutores para Docker, Kubernetes (k3s/k0s), Nomad y Apptainer y una capa de staging de datos entre runtimes, con evaluación de rendimiento y eficiencia energética sobre hardware Edge–Fog–Cloud real con Prometheus y Grafana.
+
+- id: montessori
+  order: 2
+  institution: Unidad Educativa Bilingüe Montessori
+  degree:
+    en: High School Diploma (bilingual)
+    es: Bachillerato (bilingüe)
+  start: '2018'
+  end: '2021'
+  location:
+    en: Ecuador
+    es: Ecuador
+  honours:
+    en: Academic Honour Mention for academic excellence.
+    es: Mención de Honor Académica por excelencia académica.

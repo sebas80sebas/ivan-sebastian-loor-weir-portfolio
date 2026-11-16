@@ -1,0 +1,11 @@
+order: 20
+type: academic
+category: { en: IoT · containers, es: IoT · contenedores }
+title: { en: TachoTrack — digital tachograph simulation, es: TachoTrack — simulación de tacógrafo digital }
+summary:
+  en: Digital tachograph simulation with cloud IoT integration — Dockerised control unit, GPS, odometer and card-reader components publishing over MQTT to ThingsBoard for real-time visualisation.
+  es: Simulación de tacógrafo digital con integración IoT en la nube — componentes dockerizados (unidad de control, GPS, odómetro y lector de tarjetas) que publican por MQTT en ThingsBoard para su visualización en tiempo real.
+role: { en: Developer, es: Desarrollador }
+period: UC3M
+stack: [Python, Docker, MQTT, ThingsBoard]
+repo: https://github.com/sebas80sebas/TachoTrack

@@ -1,0 +1,208 @@
+# Technology domains. Context reflects where the technology was actually used:
+#   professional → used in paid work (CV)
+#   academic     → used in university work / thesis
+#   personal     → used in personal repositories
+#   certified    → validated by a proctored certification (never on its own)
+- id: cloud
+  order: 1
+  title: { en: Cloud platform — Azure, es: Plataforma cloud — Azure }
+  summary:
+    en: Day-to-day platform. Multi-environment provisioning, operations and audits across infrastructure, data and AI services.
+    es: Plataforma del día a día. Aprovisionamiento multientorno, operación y auditorías en servicios de infraestructura, datos e IA.
+  items:
+    - name: Microsoft Azure
+      context: [professional, certified]
+      usage:
+        en: Full environment provisioning (sbx → prod), VM operations, networking services and platform troubleshooting.
+        es: Aprovisionamiento de entornos completos (sbx → prod), operación de VMs, servicios de red y troubleshooting de plataforma.
+    - name: Data & AI services
+      context: [professional]
+      usage:
+        en: Provisioned ADLS Gen2, Data Factory, Databricks, SQL Database, PostgreSQL Flexible Server, Data Explorer, Event Hubs, Azure OpenAI, AI Search and Azure ML as code.
+        es: Aprovisionamiento como código de ADLS Gen2, Data Factory, Databricks, SQL Database, PostgreSQL Flexible Server, Data Explorer, Event Hubs, Azure OpenAI, AI Search y Azure ML.
+    - name: Platform services
+      context: [professional]
+      usage:
+        en: Container Registry, Key Vault, Redis Cache, Storage, Functions, Logic Apps, Notification Hubs and IaaS VMs.
+        es: Container Registry, Key Vault, Redis Cache, Storage, Functions, Logic Apps, Notification Hubs y VMs IaaS.
+    - name: Azure networking
+      context: [professional]
+      usage:
+        en: Monitoring automation for ExpressRoute, VPN connections and Traffic Manager; private-network agent provisioning.
+        es: Automatización de la monitorización de ExpressRoute, conexiones VPN y Traffic Manager; aprovisionamiento de agentes en redes privadas.
+
+- id: iac
+  order: 2
+  title: { en: Infrastructure as Code, es: Infrastructure as Code }
+  summary:
+    en: Core strength. Reusable modules, multi-environment deployments and standardisation.
+    es: Fortaleza principal. Módulos reutilizables, despliegues multientorno y estandarización.
+  items:
+    - name: Terraform
+      context: [professional, certified]
+      usage:
+        en: Multi-environment provisioning, custom module development, dependency troubleshooting and OpenShift/SAP infrastructure automation.
+        es: Aprovisionamiento multientorno, desarrollo de módulos propios, troubleshooting de dependencias y automatización de infraestructura OpenShift/SAP.
+    - name: Azure Verified Modules
+      context: [professional]
+      usage:
+        en: AVM-aligned module wrappers with examples, changelogs and consistent interfaces for private endpoints, CMK, identity, RBAC and diagnostics.
+        es: Wrappers de módulos alineados con AVM, con ejemplos, changelog e interfaces homogéneas para private endpoints, CMK, identidad, RBAC y diagnóstico.
+    - name: SAP Deployment Automation Framework
+      context: [professional]
+      usage:
+        en: End-to-end SAP infrastructure deployment on Azure driven from Azure DevOps.
+        es: Despliegue de extremo a extremo de infraestructura SAP en Azure desde Azure DevOps.
+    - name: Ansible
+      context: [personal]
+      usage:
+        en: Disaster-recovery and log-management automation in personal projects.
+        es: Automatización de disaster recovery y gestión de logs en proyectos personales.
+
+- id: cicd
+  order: 3
+  title: { en: CI/CD & DevOps, es: CI/CD y DevOps }
+  summary:
+    en: Pipelines that deliver infrastructure, not just applications.
+    es: Pipelines que entregan infraestructura, no solo aplicaciones.
+  items:
+    - name: Azure DevOps
+      context: [professional]
+      usage:
+        en: Terraform deployment pipelines and templates for multi-environment platforms, OpenShift lifecycle and SAP SDAF.
+        es: Pipelines y plantillas de despliegue Terraform para plataformas multientorno, ciclo de vida de OpenShift y SAP SDAF.
+    - name: GitHub Actions
+      context: [professional, certified]
+      usage:
+        en: Migration of Azure DevOps pipeline templates to GitHub Actions workflows for Terraform IaC.
+        es: Migración de plantillas de pipelines de Azure DevOps a workflows de GitHub Actions para IaC con Terraform.
+    - name: Git
+      context: [professional, academic, personal]
+      usage:
+        en: Version-controlled infrastructure, modules and automation code.
+        es: Infraestructura, módulos y código de automatización bajo control de versiones.
+
+- id: containers
+  order: 4
+  title: { en: Containers & orchestration, es: Contenedores y orquestación }
+  summary:
+    en: Enterprise OpenShift and AKS work in the job; deeper runtime comparison in the thesis.
+    es: OpenShift y AKS en el trabajo; comparativa en profundidad de runtimes en el TFG.
+  items:
+    - name: OpenShift (UPI on Azure)
+      context: [professional]
+      usage:
+        en: Provisioning and lifecycle automation of enterprise clusters with Terraform and Azure DevOps; ARO audit support.
+        es: Automatización del aprovisionamiento y ciclo de vida de clústeres enterprise con Terraform y Azure DevOps; apoyo en auditorías de ARO.
+    - name: AKS
+      context: [professional]
+      usage:
+        en: Assisted cluster upgrades and post-upgrade validation; AVM-aligned AKS Terraform module.
+        es: Apoyo en upgrades de clústeres y validación posterior; módulo Terraform de AKS alineado con AVM.
+    - name: Docker
+      context: [academic, personal]
+      usage:
+        en: Containerised workflow tasks on edge devices (thesis) and multi-container personal projects.
+        es: Tareas de workflow en contenedores sobre dispositivos edge (TFG) y proyectos personales multicontenedor.
+    - name: k3s · k0s · Nomad · Apptainer
+      context: [academic]
+      usage:
+        en: Executors implemented and benchmarked on a Raspberry Pi 5 edge node in the thesis.
+        es: Ejecutores implementados y evaluados sobre un nodo edge Raspberry Pi 5 en el TFG.
+
+- id: security
+  order: 5
+  title: { en: Security & DevSecOps, es: Seguridad y DevSecOps }
+  summary:
+    en: Security designed into module interfaces and delivery workflows.
+    es: Seguridad integrada en las interfaces de los módulos y en los flujos de entrega.
+  items:
+    - name: Secure-by-default IaC
+      context: [professional]
+      usage:
+        en: Private endpoints, customer-managed keys, managed identities, RBAC and resource locks exposed as first-class module inputs.
+        es: Private endpoints, claves gestionadas por el cliente, identidades gestionadas, RBAC y locks como inputs de primer nivel de los módulos.
+    - name: tfsec
+      context: [professional]
+      usage:
+        en: Static security analysis of Terraform module code.
+        es: Análisis estático de seguridad del código Terraform de los módulos.
+    - name: GitHub Advanced Security
+      context: [certified]
+      usage:
+        en: Code scanning (CodeQL), secret protection and supply-chain security (Dependabot, dependency review).
+        es: Code scanning (CodeQL), protección de secretos y seguridad de la cadena de suministro (Dependabot, dependency review).
+    - name: Azure Key Vault & identity
+      context: [professional, certified]
+      usage:
+        en: Secret and key management as part of provisioned platforms; identity and governance on Azure.
+        es: Gestión de secretos y claves en las plataformas aprovisionadas; identidad y gobierno en Azure.
+
+- id: observability
+  order: 6
+  title: { en: Monitoring & observability, es: Monitorización y observabilidad }
+  summary:
+    en: Where the automation work started — detection, reporting and remediation.
+    es: Donde empezó el trabajo de automatización — detección, reporting y remediación.
+  items:
+    - name: Zabbix
+      context: [professional]
+      usage:
+        en: Multi-server metrics collection, Azure network-service monitoring and zero-touch agent rollout.
+        es: Recogida de métricas multiservidor, monitorización de servicios de red de Azure y despliegue zero-touch de agentes.
+    - name: Azure Monitor · Application Insights · KQL
+      context: [professional]
+      usage:
+        en: KQL-based alert rules that detect HTTP 503 degradation and trigger automated remediation.
+        es: Reglas de alerta basadas en KQL que detectan degradaciones HTTP 503 y disparan remediación automática.
+    - name: Prometheus · Grafana
+      context: [academic]
+      usage:
+        en: Performance, thermal and energy monitoring of edge and fog nodes with Node Exporter.
+        es: Monitorización de rendimiento, temperatura y energía de nodos edge y fog con Node Exporter.
+
+- id: automation
+  order: 7
+  title: { en: Programming & automation, es: Programación y automatización }
+  summary:
+    en: Languages used to glue platforms together and remove manual work.
+    es: Lenguajes para integrar plataformas y eliminar trabajo manual.
+  items:
+    - name: Python
+      context: [professional, academic]
+      usage:
+        en: Azure Functions, Azure Monitor/Zabbix API collectors and the thesis workflow-engine extension.
+        es: Azure Functions, colectores para las APIs de Azure Monitor y Zabbix y la extensión del motor de workflows del TFG.
+    - name: PowerShell
+      context: [professional]
+      usage:
+        en: Azure Automation runbooks, SDAF pipelines and agent installation via Run Command.
+        es: Runbooks de Azure Automation, pipelines de SDAF e instalación de agentes vía Run Command.
+    - name: Bash · Azure CLI
+      context: [professional, academic]
+      usage:
+        en: Provisioning scripts, agent rollout and environment setup.
+        es: Scripts de aprovisionamiento, despliegue de agentes y preparación de entornos.
+
+- id: architecture
+  order: 8
+  title: { en: Architecture & documentation, es: Arquitectura y documentación }
+  summary:
+    en: Contributing to the design artefacts that justify and govern a platform.
+    es: Contribución a los artefactos de diseño que justifican y gobiernan una plataforma.
+  items:
+    - name: Solution Designs · HLD · LLD
+      context: [professional]
+      usage:
+        en: Design documents for modernisation and migration initiatives.
+        es: Documentos de diseño para iniciativas de modernización y migración.
+    - name: ADRs
+      context: [professional]
+      usage:
+        en: Recording architecture decisions and their trade-offs.
+        es: Registro de decisiones de arquitectura y sus trade-offs.
+    - name: Diagrams · BoQs
+      context: [professional]
+      usage:
+        en: Architecture diagrams and Bills of Quantities for proposed platforms.
+        es: Diagramas de arquitectura y BoQs de las plataformas propuestas.

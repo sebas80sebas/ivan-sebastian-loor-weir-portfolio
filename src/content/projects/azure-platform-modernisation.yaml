@@ -1,0 +1,204 @@
+# Source: CV (Cloud DevSecOps Engineer, ALIANDO). Client and programme names
+# are deliberately anonymised; no topology, identifiers or sizing published.
+order: 1
+featured: true
+type: professional
+category:
+  en: Cloud platform engineering
+  es: Cloud platform engineering
+title:
+  en: Multi-environment Azure platform for a public-sector modernisation programme
+  es: Plataforma Azure multientorno para un programa de modernización del sector público
+summary:
+  en: Five complete Azure environments — sbx to prod — across two releases, with 40+ services spanning platform, data, AI and integration layers, provisioned through Terraform modules and Azure DevOps pipelines.
+  es: Cinco entornos Azure completos — de sbx a prod — en dos releases, con más de 40 servicios en las capas de plataforma, datos, IA e integración, aprovisionados con módulos Terraform y pipelines de Azure DevOps.
+outcome:
+  en: Release 0 and Release 1 environments delivered as code
+  es: Entornos de Release 0 y Release 1 entregados como código
+role:
+  en: Cloud DevSecOps Engineer — infrastructure provisioning, module development, architecture documentation
+  es: Cloud DevSecOps Engineer — aprovisionamiento de infraestructura, desarrollo de módulos, documentación de arquitectura
+period: '2026'
+org:
+  en: ALIANDO · Cloud Platform area
+  es: ALIANDO · Área Cloud Platform
+stack:
+  - Azure
+  - Terraform
+  - Azure DevOps
+  - OpenShift (UPI)
+  - Key Vault
+  - ADLS Gen2
+  - Databricks
+  - Azure OpenAI
+caseStudy:
+  confidential: true
+  overview:
+    en: A national-scale tax-administration modernisation programme needed its Azure estate built consistently, environment after environment and release after release. My work was turning that estate into code — Terraform modules executed by Azure DevOps pipelines — and keeping deployments moving when dependencies between layers blocked them.
+    es: Un programa de modernización de la administración tributaria a escala nacional necesitaba construir su estate en Azure de forma consistente, entorno tras entorno y release tras release. Mi trabajo consistió en convertir ese estate en código — módulos Terraform ejecutados por pipelines de Azure DevOps — y mantener los despliegues avanzando cuando las dependencias entre capas los bloqueaban.
+  context:
+    en: The engagement sits in ALIANDO’s Cloud Platform area, focused on cloud infrastructure modernisation and DevOps automation for an international public-sector client. The platform spans five environments (sandbox, development, QA, pre-production and production) and was delivered in successive releases — Release 0 and Release 1.
+    es: El proyecto se enmarca en el área Cloud Platform de ALIANDO, centrada en la modernización de infraestructura cloud y la automatización DevOps para un cliente internacional del sector público. La plataforma abarca cinco entornos (sandbox, desarrollo, QA, preproducción y producción) y se entregó en releases sucesivas — Release 0 y Release 1.
+  problem:
+    en: More than forty Azure services across networking, data, AI and platform layers had to exist identically in every environment, with dependencies between them (identity, secrets, networking, data services) that make ordering and configuration drift real risks. Manual or per-environment provisioning would not scale to five environments and multiple releases, nor survive audit.
+    es: Más de cuarenta servicios de Azure en las capas de red, datos, IA y plataforma debían existir de forma idéntica en cada entorno, con dependencias entre ellos (identidad, secretos, red, servicios de datos) que convierten el orden de despliegue y la deriva de configuración en riesgos reales. Un aprovisionamiento manual o por entorno no escalaría a cinco entornos y varias releases, ni resistiría una auditoría.
+  responsibilities:
+    en:
+      - Provisioned complete environments (sbx, dev, qa, pre, prod) for Release 0 and Release 1 through Terraform modules and Azure DevOps pipelines.
+      - Developed custom Terraform modules where existing ones did not cover the requirement.
+      - Troubleshot failed deployments and unblocked cross-layer dependencies so releases could progress.
+      - Delivered and operated OpenShift UPI clusters on Azure, automating provisioning and lifecycle management with Terraform and Azure DevOps.
+      - Contributed to Solution Designs, ADRs, HLDs, LLDs, architecture diagrams and Bills of Quantities.
+    es:
+      - Aprovisioné entornos completos (sbx, dev, qa, pre, prod) para Release 0 y Release 1 mediante módulos Terraform y pipelines de Azure DevOps.
+      - Desarrollé módulos Terraform propios donde los existentes no cubrían el requisito.
+      - Resolví despliegues fallidos y desbloqueé dependencias entre capas para que las releases avanzaran.
+      - Entregué y operé clústeres OpenShift UPI sobre Azure, automatizando su aprovisionamiento y ciclo de vida con Terraform y Azure DevOps.
+      - Contribuí a Solution Designs, ADRs, HLDs, LLDs, diagramas de arquitectura y BoQs.
+  architecture:
+    en: Every environment is described by the same Terraform codebase and differs only in configuration. Azure DevOps pipelines run plan and apply per environment. Each environment hosts the same logical layers — a platform layer (OpenShift UPI nodes, Container Registry, Key Vault, Redis Cache, Storage, IaaS VMs), a data layer, an AI layer and integration services — on top of a networking layer whose topology is intentionally not shown here.
+    es: Cada entorno se describe con el mismo código Terraform y solo difiere en configuración. Los pipelines de Azure DevOps ejecutan plan y apply por entorno. Cada entorno aloja las mismas capas lógicas — una capa de plataforma (nodos OpenShift UPI, Container Registry, Key Vault, Redis Cache, Storage, VMs IaaS), una capa de datos, una capa de IA y servicios de integración — sobre una capa de red cuya topología no se muestra intencionadamente.
+  diagram:
+    title:
+      en: Logical view — one codebase, five environments, layered services
+      es: Vista lógica — un código, cinco entornos, servicios por capas
+    description:
+      en: Architecture documentation informs Terraform modules stored in Git; Azure DevOps pipelines run plan and apply against five environments (sbx, dev, qa, pre, prod). Each environment contains a platform layer, a data layer, an AI and integration layer, and a networking layer.
+      es: La documentación de arquitectura guía los módulos Terraform en Git; los pipelines de Azure DevOps ejecutan plan y apply sobre cinco entornos (sbx, dev, qa, pre, prod). Cada entorno contiene una capa de plataforma, una de datos, una de IA e integración y una capa de red.
+    note:
+      en: Logical service map based on the services listed in my CV. Network topology, naming, identifiers and sizing are confidential and omitted.
+      es: Mapa lógico de servicios basado en los servicios listados en mi CV. La topología de red, la nomenclatura, los identificadores y el dimensionamiento son confidenciales y se omiten.
+    width: 960
+    height: 520
+    groups:
+      - id: lz
+        label: { en: Each environment — logical service layers (40+ services), es: Cada entorno — capas lógicas de servicios (40+ servicios) }
+        x: 20
+        y: 128
+        w: 920
+        h: 376
+        tone: accent
+      - label: { en: Platform, es: Plataforma }
+        x: 40
+        y: 160
+        w: 880
+        h: 64
+      - label: { en: Data, es: Datos }
+        x: 40
+        y: 250
+        w: 880
+        h: 64
+      - label: { en: AI & integration, es: IA e integración }
+        x: 40
+        y: 340
+        w: 880
+        h: 64
+    nodes:
+      - { id: docs, label: { en: Architecture docs, es: Docs de arquitectura }, sub: SD · ADR · HLD · LLD · BoQ, x: 20, y: 30, w: 160, h: 56, kind: external }
+      - { id: repo, label: Terraform modules, sub: { en: Git · per-env config, es: Git · config por entorno }, x: 210, y: 30, w: 170, h: 56, kind: source }
+      - { id: ado, label: Azure DevOps, sub: plan → apply, x: 410, y: 30, w: 160, h: 56, kind: pipeline }
+      - { id: envs, label: { en: Environments, es: Entornos }, sub: sbx · dev · qa · pre · prod — R0 / R1, x: 600, y: 30, w: 340, h: 56, kind: azure }
+      - { id: ocp, label: OpenShift UPI, x: 60, y: 174, w: 120, h: 40, kind: platform }
+      - { id: acr, label: Container Registry, x: 194, y: 174, w: 130, h: 40, kind: platform }
+      - { id: kv, label: Key Vault, x: 338, y: 174, w: 120, h: 40, kind: security }
+      - { id: redis, label: Redis Cache, x: 472, y: 174, w: 120, h: 40, kind: platform }
+      - { id: st, label: Storage, x: 606, y: 174, w: 120, h: 40, kind: platform }
+      - { id: vm, label: IaaS VMs, x: 740, y: 174, w: 120, h: 40, kind: platform }
+      - { id: adls, label: ADLS Gen2, x: 60, y: 264, w: 120, h: 40, kind: data }
+      - { id: adf, label: Data Factory, x: 194, y: 264, w: 120, h: 40, kind: data }
+      - { id: dbx, label: Databricks, x: 328, y: 264, w: 120, h: 40, kind: data }
+      - { id: sql, label: SQL Database, x: 462, y: 264, w: 120, h: 40, kind: data }
+      - { id: pg, label: PostgreSQL Flex, x: 596, y: 264, w: 120, h: 40, kind: data }
+      - { id: adx, label: Data Explorer, x: 730, y: 264, w: 120, h: 40, kind: data }
+      - { id: aoai, label: Azure OpenAI, x: 60, y: 354, w: 112, h: 40, kind: azure }
+      - { id: srch, label: AI Search, x: 182, y: 354, w: 112, h: 40, kind: azure }
+      - { id: aml, label: Azure ML, x: 304, y: 354, w: 112, h: 40, kind: azure }
+      - { id: func, label: Functions, x: 426, y: 354, w: 112, h: 40, kind: platform }
+      - { id: logic, label: Logic Apps, x: 548, y: 354, w: 112, h: 40, kind: platform }
+      - { id: evh, label: Event Hubs, x: 670, y: 354, w: 112, h: 40, kind: data }
+      - { id: nh, label: Notification Hubs, x: 792, y: 354, w: 120, h: 40, kind: platform }
+      - { id: net, label: { en: Networking layer, es: Capa de red }, sub: { en: topology intentionally omitted, es: topología omitida intencionadamente }, x: 40, y: 432, w: 880, h: 52, kind: external }
+    edges:
+      - { from: docs, to: repo, label: { en: informs, es: guía }, dashed: true }
+      - { from: repo, to: ado, label: commit / PR }
+      - { from: ado, to: envs, label: { en: per env, es: por entorno } }
+      - { from: envs, to: lz, label: { en: provisions, es: aprovisiona }, route: v }
+  stackGroups:
+    - label: { en: Infrastructure as Code, es: Infrastructure as Code }
+      items: [Terraform, Custom modules]
+    - label: { en: Delivery, es: Entrega }
+      items: [Azure DevOps pipelines, Git]
+    - label: { en: Platform, es: Plataforma }
+      items: [OpenShift UPI on Azure, Container Registry, Key Vault, Redis Cache, Storage Account, IaaS VMs]
+    - label: { en: Data, es: Datos }
+      items: [ADLS Gen2, Data Factory, Databricks, SQL Database, PostgreSQL Flexible Server, Data Explorer, Event Hubs]
+    - label: { en: AI & integration, es: IA e integración }
+      items: [Azure OpenAI (GPT-4o), Azure AI Search, Azure Machine Learning, Azure Functions, Logic Apps, Notification Hubs]
+  implementation:
+    en:
+      - One Terraform codebase for every environment; environments differ by configuration, not by code — the precondition for parity between sbx and prod.
+      - Services composed from reusable modules, with custom modules written where a requirement was not covered.
+      - Azure DevOps pipelines as the only deployment path, so every change to an environment is planned, applied and recorded the same way.
+      - OpenShift UPI clusters on Azure handled as infrastructure code too — provisioning and lifecycle steps automated through Terraform and pipelines rather than run by hand.
+      - Architecture artefacts (Solution Designs, ADRs, HLDs, LLDs, BoQs) maintained alongside the implementation so decisions stay traceable.
+    es:
+      - Un único código Terraform para todos los entornos; los entornos difieren en configuración, no en código — la condición previa para la paridad entre sbx y prod.
+      - Servicios compuestos a partir de módulos reutilizables, con módulos propios donde un requisito no estaba cubierto.
+      - Los pipelines de Azure DevOps como única vía de despliegue, de modo que cada cambio en un entorno se planifica, aplica y registra igual.
+      - Los clústeres OpenShift UPI sobre Azure también tratados como código — aprovisionamiento y ciclo de vida automatizados con Terraform y pipelines en lugar de ejecutarse a mano.
+      - Artefactos de arquitectura (Solution Designs, ADRs, HLDs, LLDs, BoQs) mantenidos junto a la implementación para que las decisiones sean trazables.
+  challenges:
+    - challenge:
+        en: Deployments blocked by dependencies between layers — a data or AI service cannot be completed until the platform resources it relies on exist and are reachable.
+        es: Despliegues bloqueados por dependencias entre capas — un servicio de datos o IA no puede completarse hasta que existen y son accesibles los recursos de plataforma de los que depende.
+      decision:
+        en: Treat dependency unblocking as engineering work — trace failures to the missing prerequisite, fix it in the module or configuration, and re-run through the pipeline instead of patching the environment manually.
+        es: Tratar el desbloqueo de dependencias como trabajo de ingeniería — rastrear el fallo hasta el prerrequisito ausente, corregirlo en el módulo o la configuración y relanzar desde el pipeline en lugar de parchear el entorno a mano.
+    - challenge:
+        en: Requirements that existing modules did not cover.
+        es: Requisitos que los módulos existentes no cubrían.
+      decision:
+        en: Write custom modules rather than inline one-off resources, so the gap is closed once for every environment.
+        es: Escribir módulos propios en lugar de recursos puntuales, de modo que el hueco se cierra una vez para todos los entornos.
+    - challenge:
+        en: Running OpenShift with user-provisioned infrastructure (UPI) on Azure, where the platform team owns the underlying infrastructure.
+        es: Ejecutar OpenShift con infraestructura aprovisionada por el usuario (UPI) en Azure, donde el equipo de plataforma es responsable de la infraestructura subyacente.
+      decision:
+        en: Automate provisioning and lifecycle management with the same Terraform + Azure DevOps toolchain used for the rest of the estate.
+        es: Automatizar el aprovisionamiento y el ciclo de vida con la misma cadena Terraform + Azure DevOps que el resto del estate.
+  security:
+    en:
+      - Secrets and keys centralised in Azure Key Vault as part of each environment rather than embedded in code or pipelines.
+      - Pipeline-only changes give a reviewable, auditable trail for every modification to the platform.
+      - Client architecture, network design and identifiers are confidential — this case study describes the approach, not the estate.
+    es:
+      - Secretos y claves centralizados en Azure Key Vault dentro de cada entorno, en lugar de embebidos en código o pipelines.
+      - Los cambios solo vía pipeline dejan un rastro revisable y auditable de cada modificación de la plataforma.
+      - La arquitectura del cliente, el diseño de red y los identificadores son confidenciales — este caso describe el enfoque, no el estate.
+  operations:
+    en:
+      - Environment parity makes issues reproducible in lower environments before they reach production.
+      - Successive releases extend the same codebase instead of starting new, divergent deployments.
+      - Lifecycle operations on OpenShift clusters run through automation, reducing manual intervention on critical infrastructure.
+    es:
+      - La paridad entre entornos permite reproducir problemas en entornos inferiores antes de que lleguen a producción.
+      - Las releases sucesivas amplían el mismo código en lugar de iniciar despliegues nuevos y divergentes.
+      - Las operaciones de ciclo de vida de los clústeres OpenShift se ejecutan mediante automatización, reduciendo la intervención manual sobre infraestructura crítica.
+  results:
+    en:
+      - Complete environment set (sbx, dev, qa, pre, prod) provisioned for Release 0 and Release 1.
+      - 40+ Azure services across networking, data, AI and platform layers delivered through Terraform and Azure DevOps.
+      - OpenShift UPI clusters on Azure delivered and operated with automated provisioning and lifecycle management.
+    es:
+      - Conjunto completo de entornos (sbx, dev, qa, pre, prod) aprovisionado para Release 0 y Release 1.
+      - Más de 40 servicios de Azure en las capas de red, datos, IA y plataforma entregados con Terraform y Azure DevOps.
+      - Clústeres OpenShift UPI sobre Azure entregados y operados con aprovisionamiento y ciclo de vida automatizados.
+  lessons:
+    en:
+      - Environment parity is a property of the codebase, not of discipline — if environments share code and differ only by configuration, drift has nowhere to hide.
+      - Much of real IaC work is dependency management between layers; modules should make those dependencies explicit.
+      - Architecture documents and code should evolve together; an ADR is most useful when the implementation it justifies is one pull request away.
+    es:
+      - La paridad entre entornos es una propiedad del código, no de la disciplina — si los entornos comparten código y solo difieren en configuración, la deriva no tiene dónde esconderse.
+      - Gran parte del trabajo real de IaC es gestionar dependencias entre capas; los módulos deben hacerlas explícitas.
+      - Documentación de arquitectura y código deben evolucionar juntos; un ADR es más útil cuando la implementación que justifica está a un pull request de distancia.

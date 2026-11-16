@@ -1,0 +1,11 @@
+order: 25
+type: academic
+category: { en: Distributed systems, es: Sistemas distribuidos }
+title: { en: Distributed P2P file-sharing system, es: Sistema P2P distribuido de compartición de ficheros }
+summary:
+  en: Peer-to-peer file sharing with a client–server registry, timestamped operations and RPC-based distributed logging.
+  es: Compartición de ficheros peer-to-peer con un registro cliente–servidor, operaciones con marca temporal y logging distribuido basado en RPC.
+role: { en: Developer, es: Desarrollador }
+period: UC3M
+stack: [Python, RPC, Sockets]
+repo: https://github.com/sebas80sebas/distributed-systems-uc3m

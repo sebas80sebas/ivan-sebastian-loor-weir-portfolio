@@ -1,0 +1,111 @@
+# Career timeline — source of truth: CV (docs/, private).
+# `clients` is only rendered when site.showClientNames === true.
+- id: aliando-cloud-devsecops-engineer
+  order: 1
+  company: ALIANDO
+  role:
+    en: Cloud DevSecOps Engineer
+    es: Cloud DevSecOps Engineer
+  start: '2026-01'
+  end: null
+  location:
+    en: Madrid, Spain
+    es: Madrid, España
+  workMode:
+    en: Remote
+    es: Remoto
+  area:
+    en: Cloud Platform
+    es: Cloud Platform
+  clients: []
+  clientsAnonymized:
+    en: International public-sector cloud modernisation programme
+    es: Programa internacional de modernización cloud en el sector público
+  summary:
+    en: Cloud infrastructure modernisation and DevOps automation — enterprise Azure platforms delivered end to end as code.
+    es: Modernización de infraestructura cloud y automatización DevOps — plataformas Azure enterprise entregadas de extremo a extremo como código.
+  highlights:
+    en:
+      - Provisioned complete Azure environments (sbx, dev, qa, pre, prod) across two releases of a national-scale modernisation programme, deploying 40+ services across networking, data, AI and platform layers through Terraform modules and Azure DevOps pipelines — including custom module development, troubleshooting and dependency unblocking.
+      - Delivered and operated enterprise OpenShift UPI clusters on Azure, automating provisioning and lifecycle management with Terraform and Azure DevOps.
+      - Designed and documented Solution Designs, ADRs, HLDs, LLDs, architecture diagrams and Bills of Quantities for modernisation and migration initiatives.
+      - Orchestrated end-to-end infrastructure deployment for SAP workloads on Azure with the SAP Deployment Automation Framework (SDAF), driving Terraform and PowerShell through Azure DevOps pipelines.
+      - Migrated Azure DevOps pipeline templates to GitHub Actions, translating Terraform IaC workflows while preserving equivalent build and deployment logic.
+      - Engineered Terraform modules aligned with Azure Verified Modules (AVM) standards to accelerate landing-zone deployments within the “Cloud Factory” initiative.
+    es:
+      - Aprovisioné entornos Azure completos (sbx, dev, qa, pre, prod) en dos releases de un programa de modernización a escala nacional, desplegando más de 40 servicios en las capas de red, datos, IA y plataforma mediante módulos Terraform y pipelines de Azure DevOps, incluido el desarrollo de módulos propios, troubleshooting y desbloqueo de dependencias.
+      - Entregué y operé clústeres OpenShift UPI enterprise sobre Azure, automatizando su aprovisionamiento y ciclo de vida con Terraform y Azure DevOps.
+      - Diseñé y documenté Solution Designs, ADRs, HLDs, LLDs, diagramas de arquitectura y BoQs para iniciativas de modernización y migración.
+      - Orquesté el despliegue de extremo a extremo de la infraestructura para cargas SAP en Azure con SAP Deployment Automation Framework (SDAF), ejecutando Terraform y PowerShell desde pipelines de Azure DevOps.
+      - Migré plantillas de pipelines de Azure DevOps a GitHub Actions, trasladando los flujos de IaC con Terraform y preservando una lógica de build y despliegue equivalente.
+      - Desarrollé módulos Terraform alineados con los estándares de Azure Verified Modules (AVM) para acelerar despliegues de landing zones dentro de la iniciativa “Cloud Factory”.
+  stack:
+    - Azure
+    - Terraform
+    - Azure Verified Modules
+    - Azure DevOps
+    - GitHub Actions
+    - OpenShift (UPI)
+    - SAP SDAF
+    - PowerShell
+    - Architecture documentation
+  projects:
+    - azure-platform-modernisation
+    - terraform-avm-module-library
+    - azure-devops-to-github-actions
+
+- id: aliando-azure-cloud-administrator
+  order: 2
+  company: ALIANDO
+  role:
+    en: Azure Cloud Administrator
+    es: Azure Cloud Administrator
+  start: '2025-09'
+  end: '2026-01'
+  location:
+    en: Madrid, Spain
+    es: Madrid, España
+  workMode:
+    en: Hybrid
+    es: Híbrido
+  area:
+    en: Managed Services
+    es: Managed Services
+  clients: []
+  clientsAnonymized:
+    en: Enterprise clients in the Middle East and Spain — rail, energy, asset management, retail and industry
+    es: Clientes enterprise en Oriente Medio y España — ferrocarril, energía, gestión de activos, retail e industria
+  summary:
+    en: Azure deployments, infrastructure automation, monitoring and incident management for enterprise clients.
+    es: Despliegues en Azure, automatización de infraestructura, monitorización y gestión de incidencias para clientes enterprise.
+  highlights:
+    en:
+      - Led the development of an automated data-collection system in Python on Azure Functions that integrated multiple Zabbix servers, centralised historical metrics in Azure Storage, generated Excel reports and delivered them to Microsoft Teams — reducing operational effort and improving reporting efficiency.
+      - Automated the onboarding of Azure ExpressRoute, VPN connections and Traffic Manager monitoring into Zabbix, giving consistent alerting and proactive detection of resource degradation.
+      - Designed and implemented automated remediation for HTTP 503 failures, using Application Insights and Azure Monitor KQL-based alert rules to trigger an Azure Automation runbook that restarts the affected VMs.
+      - Engineered a zero-touch Zabbix agent installation workflow with Azure CLI and Blob Storage that works on both internet-facing VMs and isolated private networks.
+      - Assisted in Azure Kubernetes Service (AKS) cluster upgrades, validating service continuity and post-upgrade stability.
+      - Supported Azure infrastructure audits covering Azure Red Hat OpenShift (ARO), CycleCloud and Spring Cloud, and handled VM troubleshooting — log rotation, disk optimisation and RDP session persistence for migrated workloads.
+    es:
+      - Lideré el desarrollo de un sistema automatizado de recogida de datos en Python sobre Azure Functions que integraba varios servidores Zabbix, centralizaba el histórico de métricas en Azure Storage, generaba informes Excel y los entregaba en Microsoft Teams, reduciendo esfuerzo operativo y mejorando la eficiencia del reporting.
+      - Automaticé la incorporación de la monitorización de Azure ExpressRoute, conexiones VPN y Traffic Manager en Zabbix, con alertado homogéneo y detección proactiva de degradaciones.
+      - "Diseñé e implementé la remediación automática de fallos HTTP 503: alertas basadas en consultas KQL sobre Application Insights y Azure Monitor que disparan un runbook de Azure Automation para reiniciar las VMs afectadas."
+      - Desarrollé un flujo de instalación zero-touch del agente Zabbix con Azure CLI y Blob Storage, válido tanto para VMs con salida a internet como para redes privadas aisladas.
+      - Participé en upgrades de clústeres de Azure Kubernetes Service (AKS), validando la continuidad del servicio y la estabilidad posterior.
+      - "Apoyé auditorías de infraestructura Azure sobre Azure Red Hat OpenShift (ARO), CycleCloud y Spring Cloud, y resolví incidencias en VMs: rotación de logs, optimización de disco y persistencia de sesiones RDP en cargas migradas."
+  stack:
+    - Azure
+    - Python
+    - Azure Functions
+    - Zabbix
+    - Azure Monitor
+    - Application Insights
+    - KQL
+    - Azure Automation
+    - PowerShell
+    - Azure CLI
+    - AKS
+  projects:
+    - zabbix-metrics-reporting
+    - auto-remediation-http-503
+    - network-monitoring-automation

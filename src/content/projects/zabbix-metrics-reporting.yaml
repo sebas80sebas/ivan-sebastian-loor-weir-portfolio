@@ -1,0 +1,153 @@
+# Source: CV (Azure Cloud Administrator) + previous public portfolio entry and
+# public repository zabbix-metrics-azure-exporter.
+order: 4
+featured: true
+type: professional
+category:
+  en: Monitoring automation
+  es: Automatización de la monitorización
+title:
+  en: Serverless metrics reporting across multiple Zabbix servers
+  es: Reporting serverless de métricas sobre varios servidores Zabbix
+summary:
+  en: A Python Azure Function that collects key metrics from several Zabbix servers, stores history in Azure Storage, generates Excel reports and delivers them to Microsoft Teams — replacing manual reporting.
+  es: Una Azure Function en Python que recoge métricas clave de varios servidores Zabbix, guarda el histórico en Azure Storage, genera informes Excel y los entrega en Microsoft Teams, sustituyendo el reporting manual.
+outcome:
+  en: Reduced operational effort and faster, consistent reporting
+  es: Menos esfuerzo operativo y un reporting más rápido y consistente
+role:
+  en: Lead developer
+  es: Desarrollador principal
+period: '2025'
+org:
+  en: ALIANDO · Managed Services area
+  es: ALIANDO · Área Managed Services
+stack:
+  - Python
+  - Azure Functions
+  - Zabbix API
+  - Blob Storage
+  - Microsoft Teams
+  - Terraform
+repo: https://github.com/sebas80sebas/zabbix-metrics-azure-exporter
+caseStudy:
+  overview:
+    en: Monitoring data is only useful if it reaches the people who need it. I led the development of a fully automated pipeline that pulls key metrics from multiple Zabbix servers, keeps their history in Azure Storage, builds Excel reports and posts them to Microsoft Teams — with no one assembling spreadsheets by hand.
+    es: Los datos de monitorización solo son útiles si llegan a quien los necesita. Lideré el desarrollo de un flujo totalmente automatizado que extrae métricas clave de varios servidores Zabbix, guarda su histórico en Azure Storage, genera informes Excel y los publica en Microsoft Teams — sin que nadie monte hojas de cálculo a mano.
+  context:
+    en: In ALIANDO’s Managed Services area, client environments are monitored with Zabbix, often across several Zabbix servers. Periodic reporting on key metrics was part of the service.
+    es: En el área Managed Services de ALIANDO, los entornos de los clientes se monitorizan con Zabbix, a menudo con varios servidores Zabbix. El reporting periódico de métricas clave formaba parte del servicio.
+  problem:
+    en: Gathering metrics from several Zabbix servers, consolidating them and producing reports by hand is slow, repetitive and error-prone, and leaves no centralised history to compare periods.
+    es: Recoger métricas de varios servidores Zabbix, consolidarlas y producir informes a mano es lento, repetitivo y propenso a errores, y no deja un histórico centralizado para comparar periodos.
+  responsibilities:
+    en:
+      - Led the design and development of the data-collection system.
+      - Implemented the collection and reporting logic in Python on Azure Functions.
+      - Integrated multiple Zabbix servers as data sources.
+      - Automated report delivery to Microsoft Teams.
+    es:
+      - Lideré el diseño y desarrollo del sistema de recogida de datos.
+      - Implementé la lógica de recogida y reporting en Python sobre Azure Functions.
+      - Integré varios servidores Zabbix como fuentes de datos.
+      - Automaticé la entrega de informes en Microsoft Teams.
+  architecture:
+    en: A serverless Azure Function written in Python queries each Zabbix server through its API, writes the collected metrics to Azure Blob Storage as a centralised history, generates an Excel report and delivers it to a Microsoft Teams channel. The Function and its storage are deployed with Terraform.
+    es: Una Azure Function serverless escrita en Python consulta cada servidor Zabbix a través de su API, escribe las métricas en Azure Blob Storage como histórico centralizado, genera un informe Excel y lo entrega en un canal de Microsoft Teams. La Function y su almacenamiento se despliegan con Terraform.
+  diagram:
+    title:
+      en: Collection, history and delivery pipeline
+      es: Flujo de recogida, histórico y entrega
+    description:
+      en: Several Zabbix servers are queried through the Zabbix API by a Python Azure Function. The function stores historical metrics in Azure Blob Storage, generates an Excel report and delivers it to Microsoft Teams. Terraform deploys the function and storage.
+      es: Una Azure Function en Python consulta varios servidores Zabbix a través de la API de Zabbix. La función guarda el histórico de métricas en Azure Blob Storage, genera un informe Excel y lo entrega en Microsoft Teams. Terraform despliega la función y el almacenamiento.
+    width: 960
+    height: 340
+    groups:
+      - label: { en: Monitoring estate, es: Estate monitorizado }
+        x: 20
+        y: 36
+        w: 200
+        h: 230
+    nodes:
+      - { id: z1, label: Zabbix server A, x: 40, y: 64, w: 160, h: 46, kind: observe }
+      - { id: z2, label: Zabbix server B, x: 40, y: 128, w: 160, h: 46, kind: observe }
+      - { id: z3, label: Zabbix server N, x: 40, y: 192, w: 160, h: 46, kind: observe }
+      - { id: fn, label: Azure Function, sub: { en: Python · collect & report, es: Python · recoge y reporta }, x: 300, y: 122, w: 190, h: 58, kind: azure }
+      - { id: blob, label: Blob Storage, sub: { en: historical metrics, es: histórico de métricas }, x: 570, y: 50, w: 170, h: 56, kind: data }
+      - { id: xls, label: { en: Excel report, es: Informe Excel }, sub: { en: generated automatically, es: generado automáticamente }, x: 570, y: 196, w: 170, h: 56, kind: data }
+      - { id: teams, label: Microsoft Teams, sub: { en: report delivery, es: entrega del informe }, x: 800, y: 196, w: 140, h: 56, kind: external }
+      - { id: tf, label: Terraform, sub: { en: deploys Function + Storage, es: despliega Function + Storage }, x: 300, y: 262, w: 190, h: 56, kind: source }
+    edges:
+      - { from: z1, to: fn, label: Zabbix API }
+      - { from: z2, to: fn }
+      - { from: z3, to: fn }
+      - { from: fn, to: blob, label: { en: store, es: guarda } }
+      - { from: fn, to: xls, label: { en: generate, es: genera } }
+      - { from: xls, to: teams, label: { en: deliver, es: entrega } }
+      - { from: tf, to: fn, dashed: true, route: v }
+  stackGroups:
+    - label: { en: Compute, es: Cómputo }
+      items: [Azure Functions (serverless), Python]
+    - label: { en: Data, es: Datos }
+      items: [Azure Blob Storage, Excel]
+    - label: { en: Integrations, es: Integraciones }
+      items: [Zabbix API, Microsoft Teams]
+    - label: { en: Deployment, es: Despliegue }
+      items: [Terraform]
+  implementation:
+    en:
+      - Serverless execution on Azure Functions — no servers to patch for a periodic workload.
+      - One collector that iterates over multiple Zabbix servers, so adding a source is configuration, not code.
+      - Historical data centralised in Blob Storage, making period-over-period comparison possible.
+      - Report generation and delivery automated end to end, with Teams as the delivery channel the team already used.
+      - Infrastructure for the solution declared in Terraform.
+    es:
+      - Ejecución serverless en Azure Functions — sin servidores que parchear para una carga periódica.
+      - Un único colector que recorre varios servidores Zabbix, de modo que añadir una fuente es configuración, no código.
+      - Histórico centralizado en Blob Storage, que permite comparar periodos.
+      - Generación y entrega de informes automatizadas de extremo a extremo, con Teams como canal que el equipo ya utilizaba.
+      - La infraestructura de la solución declarada en Terraform.
+  challenges:
+    - challenge:
+        en: Data spread across several independent Zabbix servers.
+        es: Datos repartidos en varios servidores Zabbix independientes.
+      decision:
+        en: Centralise collection in a single function and persist results in one storage location, giving a single source of truth for reporting.
+        es: Centralizar la recogida en una única función y persistir los resultados en un solo almacenamiento, con una única fuente de verdad para el reporting.
+    - challenge:
+        en: Reports are only valuable if they actually reach their audience.
+        es: Los informes solo aportan valor si llegan a su audiencia.
+      decision:
+        en: Deliver directly into Microsoft Teams instead of leaving files in storage for someone to fetch.
+        es: Entregarlos directamente en Microsoft Teams en lugar de dejar ficheros en el almacenamiento para que alguien los recoja.
+  security:
+    en:
+      - Zabbix API credentials and the Teams delivery endpoint are secrets — they belong in application configuration, never in source code.
+      - The function needs read access to Zabbix and write access to its own storage; nothing broader.
+    es:
+      - Las credenciales de la API de Zabbix y el endpoint de entrega en Teams son secretos — pertenecen a la configuración de la aplicación, nunca al código fuente.
+      - La función necesita acceso de lectura a Zabbix y de escritura a su propio almacenamiento; nada más amplio.
+  operations:
+    en:
+      - Fully automated — collection, storage, report generation and delivery run without manual steps.
+      - Serverless compute means no infrastructure to maintain for a workload that runs periodically.
+    es:
+      - Totalmente automatizado — recogida, almacenamiento, generación y entrega sin pasos manuales.
+      - El cómputo serverless evita mantener infraestructura para una carga que se ejecuta periódicamente.
+  results:
+    en:
+      - Manual multi-server reporting replaced by an automated pipeline.
+      - Reduced operational costs and improved reporting efficiency.
+      - Centralised metric history available for analysis.
+    es:
+      - El reporting manual multiservidor sustituido por un flujo automatizado.
+      - Reducción de costes operativos y mejora de la eficiencia del reporting.
+      - Histórico de métricas centralizado disponible para análisis.
+  lessons:
+    en:
+      - Automate the whole path to the reader, not just the data collection.
+      - Serverless is a natural fit for periodic glue workloads between platforms.
+    es:
+      - Hay que automatizar todo el camino hasta el lector, no solo la recogida de datos.
+      - Serverless encaja de forma natural en cargas periódicas de integración entre plataformas.

@@ -1,0 +1,177 @@
+# Source: CV ("Engineered high-compliance Terraform modules following AVM
+# standards … Cloud Factory initiative") + module code reviewed in docs/.
+order: 2
+featured: true
+type: professional
+category:
+  en: Infrastructure as Code
+  es: Infrastructure as Code
+title:
+  en: AVM-aligned Terraform module library for landing-zone deployments
+  es: Librería de módulos Terraform alineados con AVM para landing zones
+summary:
+  en: A catalogue of Terraform modules built on Azure Verified Modules — AKS, Container Registry, AI Foundry, Azure OpenAI, AI Search, Data Factory and Databricks — with security controls exposed as first-class inputs.
+  es: Un catálogo de módulos Terraform construidos sobre Azure Verified Modules — AKS, Container Registry, AI Foundry, Azure OpenAI, AI Search, Data Factory y Databricks — con los controles de seguridad expuestos como inputs de primer nivel.
+outcome:
+  en: Reusable, versioned building blocks for the Cloud Factory initiative
+  es: Bloques reutilizables y versionados para la iniciativa Cloud Factory
+role:
+  en: Module author — design, implementation, examples and versioning
+  es: Autor de módulos — diseño, implementación, ejemplos y versionado
+period: '2026'
+org:
+  en: ALIANDO · Cloud Factory initiative
+  es: ALIANDO · Iniciativa Cloud Factory
+stack:
+  - Terraform
+  - Azure Verified Modules
+  - azurerm
+  - azapi
+  - tfsec
+  - AKS
+  - Azure AI Foundry
+caseStudy:
+  overview:
+    en: Landing-zone deployments are only as fast and as safe as the modules they are assembled from. I built Terraform modules aligned with Azure Verified Modules (AVM) standards so that teams could compose platforms from tested, versioned building blocks — with private networking, encryption, identity and diagnostics available by design rather than bolted on.
+    es: Los despliegues de landing zones son tan rápidos y seguros como los módulos con los que se montan. Desarrollé módulos Terraform alineados con los estándares de Azure Verified Modules (AVM) para que los equipos compongan plataformas a partir de bloques probados y versionados — con red privada, cifrado, identidad y diagnóstico disponibles por diseño, no añadidos a posteriori.
+  context:
+    en: Part of ALIANDO’s “Cloud Factory” initiative, whose goal is to accelerate and standardise Azure landing-zone deployments. AVM is Microsoft’s standard for Terraform and Bicep modules, defining consistent interfaces for cross-cutting concerns such as private endpoints, locks, role assignments and diagnostic settings.
+    es: Forma parte de la iniciativa “Cloud Factory” de ALIANDO, cuyo objetivo es acelerar y estandarizar los despliegues de landing zones en Azure. AVM es el estándar de Microsoft para módulos Terraform y Bicep, con interfaces homogéneas para aspectos transversales como private endpoints, locks, role assignments y diagnostic settings.
+  problem:
+    en: Without a shared module layer, each deployment re-implements the same resources slightly differently, and security controls depend on whoever writes the code that day. The library needed to give consumers a simple, stable interface while staying close enough to upstream AVM to absorb its improvements.
+    es: Sin una capa de módulos compartida, cada despliegue reimplementa los mismos recursos de forma ligeramente distinta y los controles de seguridad dependen de quién escriba el código ese día. La librería debía ofrecer una interfaz simple y estable a los consumidores, manteniéndose lo bastante cerca de AVM upstream como para incorporar sus mejoras.
+  responsibilities:
+    en:
+      - Designed and implemented module wrappers on top of official AVM resource modules, pinning upstream versions.
+      - Authored scenario-based examples for each module (default, private endpoint, customer-managed keys and others).
+      - Maintained a CHANGELOG per module and evolved modules as upstream AVM versions changed.
+      - Defined composition boundaries between modules (for example, AI Foundry consuming AI Search from its dedicated module).
+    es:
+      - Diseñé e implementé wrappers sobre los módulos de recursos oficiales de AVM, fijando las versiones upstream.
+      - Escribí ejemplos por escenario para cada módulo (default, private endpoint, claves gestionadas por el cliente, entre otros).
+      - Mantuve un CHANGELOG por módulo y evolucioné los módulos según cambiaban las versiones de AVM upstream.
+      - Definí los límites de composición entre módulos (por ejemplo, AI Foundry consumiendo AI Search desde su módulo dedicado).
+  architecture:
+    en: Each module wraps a pinned upstream AVM module behind a typed interface of variables and outputs, ships runnable examples and a changelog, and is checked with terraform validate and tfsec static analysis. All modules expose the same cross-cutting interfaces — private endpoints, customer-managed keys, managed identities, RBAC role assignments, diagnostic settings and resource locks — so a landing zone can apply one security posture across every service.
+    es: Cada módulo envuelve un módulo AVM upstream con versión fijada tras una interfaz tipada de variables y outputs, incluye ejemplos ejecutables y un changelog, y se comprueba con terraform validate y el análisis estático de tfsec. Todos exponen las mismas interfaces transversales — private endpoints, claves gestionadas por el cliente, identidades gestionadas, role assignments RBAC, diagnostic settings y locks — para que una landing zone aplique una única postura de seguridad en todos los servicios.
+  diagram:
+    title:
+      en: Module anatomy — from upstream AVM to landing-zone consumers
+      es: Anatomía de un módulo — de AVM upstream a las landing zones
+    description:
+      en: Upstream Azure Verified Modules are wrapped by a module with a typed interface, examples and a changelog. Modules pass terraform validate and tfsec before being consumed by landing-zone deployments. Every module exposes private endpoints, customer-managed keys, managed identity, RBAC, diagnostics and locks.
+      es: Los Azure Verified Modules upstream se envuelven en un módulo con interfaz tipada, ejemplos y changelog. Los módulos pasan terraform validate y tfsec antes de consumirse en despliegues de landing zones. Cada módulo expone private endpoints, claves gestionadas por el cliente, identidad gestionada, RBAC, diagnóstico y locks.
+    width: 960
+    height: 410
+    groups:
+      - id: wrapper
+        label: { en: Wrapper module (one per service), es: Módulo wrapper (uno por servicio) }
+        x: 230
+        y: 36
+        w: 320
+        h: 230
+        tone: accent
+      - id: xcut
+        label: { en: Cross-cutting interfaces exposed by every module, es: Interfaces transversales expuestas por todos los módulos }
+        x: 230
+        y: 318
+        w: 710
+        h: 76
+        tone: signal
+    nodes:
+      - { id: avm, label: { en: Upstream AVM module, es: Módulo AVM upstream }, sub: { en: pinned version, es: versión fijada }, x: 20, y: 120, w: 170, h: 60, kind: external }
+      - { id: iface, label: { en: Typed interface, es: Interfaz tipada }, sub: variables · outputs · locals, x: 250, y: 66, w: 280, h: 52, kind: source }
+      - { id: ex, label: { en: Scenario examples, es: Ejemplos por escenario }, sub: default · private-endpoint · cmk …, x: 250, y: 132, w: 280, h: 52, kind: source }
+      - { id: chlog, label: CHANGELOG, sub: { en: semantic versions, es: versiones semánticas }, x: 250, y: 198, w: 280, h: 52, kind: source }
+      - { id: validate, label: terraform validate, x: 600, y: 80, w: 160, h: 48, kind: pipeline }
+      - { id: tfsec, label: tfsec, sub: { en: static security analysis, es: análisis estático de seguridad }, x: 600, y: 168, w: 160, h: 56, kind: security }
+      - { id: lz, label: { en: Landing zones, es: Landing zones }, sub: Cloud Factory, x: 800, y: 120, w: 140, h: 60, kind: azure }
+      - { id: pe, label: Private endpoints, x: 244, y: 338, w: 108, h: 40, kind: security }
+      - { id: cmk, label: CMK, x: 362, y: 338, w: 108, h: 40, kind: security }
+      - { id: mi, label: Managed identity, x: 480, y: 338, w: 108, h: 40, kind: security }
+      - { id: rbac, label: RBAC, x: 598, y: 338, w: 108, h: 40, kind: security }
+      - { id: diag, label: Diagnostics, x: 716, y: 338, w: 108, h: 40, kind: observe }
+      - { id: lock, label: Locks, x: 834, y: 338, w: 94, h: 40, kind: security }
+    edges:
+      - { from: avm, to: iface, label: { en: wraps, es: envuelve } }
+      - { from: wrapper, to: validate }
+      - { from: validate, to: tfsec, route: v }
+      - { from: tfsec, to: lz, label: { en: consumed by, es: consumido por } }
+      - { from: wrapper, to: xcut, label: { en: exposes, es: expone }, route: v }
+  stackGroups:
+    - label: { en: Terraform, es: Terraform }
+      items: [Terraform 1.x, azurerm 4.x, azapi 2.x, modtm (AVM telemetry), random, time]
+    - label: { en: Upstream standard, es: Estándar upstream }
+      items: [Azure Verified Modules (avm-res-*), avm-utl-interfaces, avm-utl-regions]
+    - label: { en: Quality, es: Calidad }
+      items: [terraform validate, tfsec, terraform-docs, CHANGELOG]
+    - label: { en: Modules, es: Módulos }
+      items: [AKS, Container Registry, AI Foundry, Azure OpenAI / Cognitive Services, AI Search, Data Factory, Databricks]
+  implementation:
+    en:
+      - "AKS: built from the AVM managed-cluster module and later upgraded to a newer upstream release, with examples ranging from default and private clusters to a secure-baseline private cluster and a WAF-aligned configuration."
+      - "Container Registry: based on the AVM registry module, with examples for geo-replication, private endpoints, CMK encryption, scope maps and registry tokens."
+      - "AI Foundry: supports both BYOR (bring your own resources — existing Cosmos DB, Key Vault and Storage) and CYOR (create them inline) patterns, plus a private-endpoint example with public access disabled and DNS managed by Azure Policy."
+      - "Azure OpenAI / Cognitive Services: a wrapper that mirrors the full upstream interface — 39 inputs and 11 outputs — with examples for private endpoints, CMK, disabled local auth and Responsible AI policies."
+      - "Data Factory, AI Search and Databricks: managed-identity, private-endpoint and diagnostic-settings support, with self-hosted integration runtimes and linked services for Data Factory and VNet injection plus access connectors for Databricks."
+    es:
+      - "AKS: construido a partir del módulo de managed cluster de AVM y actualizado después a una release upstream más reciente, con ejemplos que van desde clústeres default y privados hasta un clúster privado secure-baseline y una configuración alineada con WAF."
+      - "Container Registry: basado en el módulo de registry de AVM, con ejemplos de geo-replicación, private endpoints, cifrado CMK, scope maps y registry tokens."
+      - "AI Foundry: soporta los patrones BYOR (traer recursos existentes — Cosmos DB, Key Vault y Storage) y CYOR (crearlos en línea), además de un ejemplo con private endpoints, acceso público deshabilitado y DNS gestionado por Azure Policy."
+      - "Azure OpenAI / Cognitive Services: un wrapper que refleja la interfaz upstream completa — 39 inputs y 11 outputs — con ejemplos de private endpoints, CMK, autenticación local deshabilitada y políticas de Responsible AI."
+      - "Data Factory, AI Search y Databricks: soporte de identidades gestionadas, private endpoints y diagnostic settings, con self-hosted integration runtimes y linked services en Data Factory, y VNet injection y access connectors en Databricks."
+  challenges:
+    - challenge:
+        en: Keeping wrappers close to upstream AVM without exposing consumers to every upstream change.
+        es: Mantener los wrappers cerca de AVM upstream sin exponer a los consumidores a cada cambio upstream.
+      decision:
+        en: Pin the upstream module version and record every bump in a per-module CHANGELOG, so upgrades are deliberate, reviewable events.
+        es: Fijar la versión del módulo upstream y registrar cada actualización en un CHANGELOG por módulo, para que las actualizaciones sean eventos deliberados y revisables.
+    - challenge:
+        en: Overlapping responsibilities between modules — AI Foundry depends on AI Search, which already has its own naming, networking and RBAC conventions.
+        es: Responsabilidades solapadas entre módulos — AI Foundry depende de AI Search, que ya tiene sus propias convenciones de nombres, red y RBAC.
+      decision:
+        en: Never create AI Search inside the AI Foundry module; consume it by resource ID from its dedicated module. One resource, one owner.
+        es: No crear nunca AI Search dentro del módulo de AI Foundry; consumirlo por resource ID desde su módulo dedicado. Un recurso, un propietario.
+    - challenge:
+        en: Proof-of-concept deployments and production landing zones need different dependency models.
+        es: Las pruebas de concepto y las landing zones de producción necesitan modelos de dependencias distintos.
+      decision:
+        en: Support both BYOR (recommended for production and landing zones) and CYOR (convenient for PoCs and demos), documented side by side in the examples.
+        es: Soportar BYOR (recomendado para producción y landing zones) y CYOR (cómodo para PoCs y demos), documentados uno junto al otro en los ejemplos.
+  security:
+    en:
+      - Private endpoints, customer-managed keys, managed identities, RBAC role assignments and resource locks are module inputs, so secure configurations are the documented path.
+      - Examples cover hardened scenarios explicitly — private clusters, disabled public access, disabled local authentication, CMK encryption.
+      - Module code is checked with tfsec static analysis.
+    es:
+      - Private endpoints, claves gestionadas por el cliente, identidades gestionadas, role assignments RBAC y locks son inputs de los módulos, de modo que la configuración segura es el camino documentado.
+      - Los ejemplos cubren explícitamente escenarios reforzados — clústeres privados, acceso público deshabilitado, autenticación local deshabilitada, cifrado CMK.
+      - El código de los módulos se comprueba con el análisis estático de tfsec.
+  operations:
+    en:
+      - Diagnostic settings are part of every module interface, so observability is configured at deployment time.
+      - Scenario examples double as documentation and as a fast way to validate a module change end to end.
+      - Versioned modules let landing zones upgrade on their own schedule.
+    es:
+      - Los diagnostic settings forman parte de la interfaz de todos los módulos, así que la observabilidad se configura en el despliegue.
+      - Los ejemplos por escenario sirven a la vez de documentación y de forma rápida de validar un cambio de extremo a extremo.
+      - Los módulos versionados permiten que cada landing zone se actualice a su ritmo.
+  results:
+    en:
+      - Seven AVM-aligned modules covering container, AI and data services for landing-zone deployments.
+      - A consistent security interface across all modules, so one posture can be applied platform-wide.
+      - Scenario examples and changelogs that make modules self-documenting and safe to upgrade.
+    es:
+      - Siete módulos alineados con AVM que cubren servicios de contenedores, IA y datos para despliegues de landing zones.
+      - Una interfaz de seguridad homogénea en todos los módulos, para aplicar una única postura en toda la plataforma.
+      - Ejemplos por escenario y changelogs que hacen los módulos autodocumentados y seguros de actualizar.
+  lessons:
+    en:
+      - A module’s interface is a security control — what is easy to set is what gets set.
+      - Wrapping a standard is more maintainable than forking it; the value is in the opinionated interface, not in copied code.
+      - Clear ownership boundaries between modules prevent duplicated resources and conflicting conventions.
+    es:
+      - La interfaz de un módulo es un control de seguridad — lo que es fácil de configurar es lo que se configura.
+      - Envolver un estándar es más mantenible que hacer un fork; el valor está en la interfaz opinada, no en el código copiado.
+      - Unos límites de propiedad claros entre módulos evitan recursos duplicados y convenciones en conflicto.

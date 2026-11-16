@@ -1,0 +1,11 @@
+order: 24
+type: personal
+category: { en: Azure operations, es: Operación en Azure }
+title: { en: Session-independent workloads on Azure Windows VMs, es: Cargas independientes de la sesión en VMs Windows de Azure }
+summary:
+  en: Keeps applications running on Azure Windows VMs after an RDP disconnect by running them as Windows services with NSSM — a pattern used for cloud-migrated workloads.
+  es: Mantiene las aplicaciones en ejecución en VMs Windows de Azure tras desconectar el RDP, ejecutándolas como servicios de Windows con NSSM — un patrón aplicado a cargas migradas a la nube.
+role: { en: Author, es: Autor }
+period: Personal
+stack: [PowerShell, Batch, NSSM, Azure VMs]
+repo: https://github.com/sebas80sebas/azure-vm-rdp-testing

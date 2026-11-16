@@ -1,0 +1,11 @@
+order: 21
+type: personal
+category: { en: Infrastructure as Code, es: Infrastructure as Code }
+title: { en: Terraform module for Azure Cosmos DB, es: Módulo Terraform para Azure Cosmos DB }
+summary:
+  en: Terraform module for Azure Cosmos DB (NoSQL) with multi-region configuration, failover policies and private endpoints.
+  es: Módulo Terraform para Azure Cosmos DB (NoSQL) con configuración multirregión, políticas de failover y private endpoints.
+role: { en: Author, es: Autor }
+period: Personal
+stack: [Terraform, Azure Cosmos DB, Private Link]
+repo: https://github.com/sebas80sebas/terraform-azure-cosmosdb

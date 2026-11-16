@@ -1,0 +1,92 @@
+# Proctored professional certifications ONLY.
+# Every entry is backed by a certificate or score report in docs/certifications
+# (private). Dates are taken from those documents. Do NOT add course
+# completions here — they belong in learning.yaml.
+- id: ccdv-f
+  order: 1
+  code: CCDV-F
+  name: Claude Certified Developer – Foundations
+  issuer: Anthropic
+  level: { en: Foundations, es: Foundations }
+  earned: '2026-11-06'
+  validUntil: '2027-11-06'
+  score: 970
+  maxScore: 1000
+  highlight: true
+  verifyUrl: https://www.credly.com/badges/a7f95069-720d-49d7-bb24-12d88e61e1b8
+  domain: { en: AI engineering & agentic systems, es: AI engineering y sistemas agénticos }
+
+- id: ccao-f
+  order: 2
+  code: CCAO-F
+  name: Claude Certified Associate – Foundations
+  issuer: Anthropic
+  level: { en: Foundations, es: Foundations }
+  earned: '2026-11-01'
+  validUntil: '2027-11-01'
+  verifyUrl: https://www.credly.com/badges/5e61bf4d-451e-4678-ab67-10b2f9ef48c5
+  domain: { en: AI-assisted work & solution design, es: Trabajo asistido por IA y diseño de soluciones }
+
+- id: gh-500
+  order: 3
+  code: GH-500
+  name: GitHub Advanced Security
+  issuer: GitHub
+  level: { en: Specialty, es: Especialidad }
+  earned: '2026-10-14'
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/7A1808D1EFF05EAE?sharingId=AD10C0F7F316F6CF
+  domain: { en: Code security, secret protection & supply chain, es: Seguridad del código, secretos y cadena de suministro }
+
+- id: gh-200
+  order: 4
+  code: GH-200
+  name: GitHub Actions
+  issuer: GitHub
+  level: { en: Specialty, es: Especialidad }
+  earned: '2026-09-15'
+  score: 850
+  maxScore: 1000
+  highlight: true
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/8E691CB4AC8179D6?sharingId=AD10C0F7F316F6CF
+  domain: { en: CI/CD workflow automation, es: Automatización de workflows CI/CD }
+
+- id: az-104
+  order: 5
+  code: AZ-104
+  name: 'Microsoft Certified: Azure Administrator Associate'
+  issuer: Microsoft
+  level: { en: Associate, es: Associate }
+  earned: '2026-09-09'
+  validUntil: '2027-09-10'
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/66227A57497430FB?sharingId=AD10C0F7F316F6CF
+  domain: { en: Identity, governance, compute, networking & monitoring, es: Identidad, gobierno, cómputo, red y monitorización }
+
+- id: terraform-associate
+  order: 6
+  code: HCTA0-004
+  name: 'HashiCorp Certified: Terraform Associate (004)'
+  issuer: HashiCorp
+  level: { en: Associate, es: Associate }
+  validUntil: '2028-06-05'
+  verifyUrl: https://www.credly.com/badges/bea89323-d678-42fd-a500-2e85ebf28009
+  domain: { en: Infrastructure as Code, es: Infrastructure as Code }
+
+- id: ab-900
+  order: 7
+  code: AB-900
+  name: 'Microsoft 365 Certified: Copilot and Agent Administration Fundamentals'
+  issuer: Microsoft
+  level: { en: Fundamentals, es: Fundamentals }
+  earned: '2026-06-15'
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/89DA02C0BA8ED4DF?sharingId=AD10C0F7F316F6CF
+  domain: { en: Microsoft 365 data protection & agent administration, es: Protección de datos en Microsoft 365 y administración de agentes }
+
+- id: az-900
+  order: 8
+  code: AZ-900
+  name: 'Microsoft Certified: Azure Fundamentals'
+  issuer: Microsoft
+  level: { en: Fundamentals, es: Fundamentals }
+  earned: '2025-10-17'
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/1C6FA238FAD80FD4?sharingId=AD10C0F7F316F6CF
+  domain: { en: Cloud concepts, Azure services & governance, es: Conceptos cloud, servicios y gobierno de Azure }

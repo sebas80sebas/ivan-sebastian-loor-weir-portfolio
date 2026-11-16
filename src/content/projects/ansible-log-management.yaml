@@ -1,0 +1,11 @@
+order: 23
+type: personal
+category: { en: Automation · operations, es: Automatización · operaciones }
+title: { en: Ansible log management system, es: Sistema de gestión de logs con Ansible }
+summary:
+  en: Centralised log rotation, aggregation and analysis across multiple Linux hosts using Ansible roles and Jinja2 templates.
+  es: Rotación, agregación y análisis centralizados de logs en varios hosts Linux mediante roles de Ansible y plantillas Jinja2.
+role: { en: Author, es: Autor }
+period: Personal
+stack: [Ansible, Jinja2, YAML, Bash]
+repo: https://github.com/sebas80sebas/ansible-log-management-system

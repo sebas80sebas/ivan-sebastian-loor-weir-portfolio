@@ -1,0 +1,142 @@
+# Source: CV (Azure Cloud Administrator) + previous public portfolio entry and
+# public repository azure-auto-remediation-503.
+order: 5
+featured: true
+type: professional
+category:
+  en: Reliability automation
+  es: Automatización de fiabilidad
+title:
+  en: Automated remediation of HTTP 503 failures on Azure
+  es: Remediación automática de fallos HTTP 503 en Azure
+summary:
+  en: Application Insights telemetry and KQL-based Azure Monitor alert rules detect HTTP 503 degradation and trigger an Azure Automation runbook that restarts the affected virtual machines — no human in the loop.
+  es: La telemetría de Application Insights y reglas de alerta de Azure Monitor basadas en KQL detectan degradaciones HTTP 503 y disparan un runbook de Azure Automation que reinicia las máquinas virtuales afectadas, sin intervención humana.
+outcome:
+  en: Detection-to-recovery without manual intervention
+  es: De la detección a la recuperación sin intervención manual
+role:
+  en: Designer and implementer
+  es: Diseño e implementación
+period: '2025'
+org:
+  en: ALIANDO · Managed Services area
+  es: ALIANDO · Área Managed Services
+stack:
+  - Application Insights
+  - Azure Monitor
+  - KQL
+  - Azure Automation
+  - PowerShell
+repo: https://github.com/sebas80sebas/azure-auto-remediation-503
+caseStudy:
+  overview:
+    en: A recurring failure mode with a known fix is a candidate for automation. I designed and implemented a closed loop on Azure that detects HTTP 503 errors from application telemetry and restarts the affected VMs automatically.
+    es: Un modo de fallo recurrente con una solución conocida es candidato a automatización. Diseñé e implementé un ciclo cerrado en Azure que detecta errores HTTP 503 a partir de la telemetría de la aplicación y reinicia automáticamente las VMs afectadas.
+  context:
+    en: Azure-hosted applications running on virtual machines, operated by ALIANDO’s Managed Services area, where HTTP 503 (Service Unavailable) failures required an operator to notice the degradation and restart the service.
+    es: Aplicaciones alojadas en Azure sobre máquinas virtuales, operadas por el área Managed Services de ALIANDO, en las que los fallos HTTP 503 (Service Unavailable) requerían que un operador detectara la degradación y reiniciara el servicio.
+  problem:
+    en: Each 503 incident depended on a human — someone had to see the alert, diagnose and restart the VM. Time to recovery was bounded by response time, not by how long the fix takes.
+    es: Cada incidente 503 dependía de una persona — alguien debía ver la alerta, diagnosticar y reiniciar la VM. El tiempo de recuperación lo marcaba el tiempo de respuesta, no lo que tarda la solución.
+  responsibilities:
+    en:
+      - Designed the end-to-end detection and remediation flow.
+      - Wrote the KQL queries behind the alert rules.
+      - Implemented the Azure Automation runbook that restarts the affected VMs.
+    es:
+      - Diseñé el flujo de detección y remediación de extremo a extremo.
+      - Escribí las consultas KQL de las reglas de alerta.
+      - Implementé el runbook de Azure Automation que reinicia las VMs afectadas.
+  architecture:
+    en: Application Insights collects request telemetry from the application. An Azure Monitor log alert rule evaluates a KQL query for HTTP 503 responses; when it fires, an action group invokes an Azure Automation runbook written in PowerShell, which restarts the affected virtual machines.
+    es: Application Insights recoge la telemetría de peticiones de la aplicación. Una regla de alerta de logs de Azure Monitor evalúa una consulta KQL sobre las respuestas HTTP 503; cuando se dispara, un action group invoca un runbook de Azure Automation escrito en PowerShell que reinicia las máquinas virtuales afectadas.
+  diagram:
+    title:
+      en: Closed-loop detection and remediation
+      es: Detección y remediación en ciclo cerrado
+    description:
+      en: The application on Azure VMs sends telemetry to Application Insights. An Azure Monitor alert rule runs a KQL query for HTTP 503 responses and, when it fires, an action group invokes an Azure Automation PowerShell runbook that restarts the affected VMs.
+      es: La aplicación en VMs de Azure envía telemetría a Application Insights. Una regla de alerta de Azure Monitor ejecuta una consulta KQL sobre respuestas HTTP 503 y, cuando se dispara, un action group invoca un runbook de PowerShell en Azure Automation que reinicia las VMs afectadas.
+    width: 960
+    height: 300
+    groups:
+      - label: Azure Monitor
+        x: 206
+        y: 76
+        w: 396
+        h: 126
+        tone: accent
+    nodes:
+      - { id: app, label: { en: Application, es: Aplicación }, sub: Azure VMs, x: 20, y: 110, w: 150, h: 58, kind: azure }
+      - { id: ai, label: Application Insights, sub: { en: request telemetry, es: telemetría de peticiones }, x: 222, y: 110, w: 170, h: 58, kind: observe }
+      - { id: alert, label: { en: Log alert rule, es: Regla de alerta }, sub: { en: KQL · HTTP 503, es: KQL · HTTP 503 }, x: 418, y: 110, w: 168, h: 58, kind: observe }
+      - { id: ag, label: Action group, x: 630, y: 114, w: 130, h: 50, kind: azure }
+      - { id: rb, label: Automation runbook, sub: PowerShell, x: 790, y: 110, w: 150, h: 58, kind: pipeline }
+    edges:
+      - { from: app, to: ai, label: telemetry }
+      - { from: ai, to: alert, label: KQL }
+      - { from: alert, to: ag, label: { en: fires, es: dispara } }
+      - { from: ag, to: rb, label: { en: invokes, es: invoca } }
+      - { from: rb, to: app, label: { en: restart affected VMs, es: reinicia las VMs afectadas }, route: u }
+  stackGroups:
+    - label: { en: Detection, es: Detección }
+      items: [Application Insights, Azure Monitor alert rules, KQL]
+    - label: { en: Remediation, es: Remediación }
+      items: [Azure Automation, PowerShell runbook]
+    - label: { en: Target, es: Destino }
+      items: [Azure Virtual Machines]
+  implementation:
+    en:
+      - Detection based on application telemetry, so the signal is what users actually experience — 503 responses — rather than an indirect host metric.
+      - Alert logic expressed in KQL, which keeps the detection rule explicit, reviewable and easy to tune.
+      - Remediation implemented as an Azure Automation runbook, so the fix is the same scripted action every time.
+      - Platform-native wiring — alert rule → action group → runbook — with no extra infrastructure to run.
+    es:
+      - Detección basada en la telemetría de la aplicación, de modo que la señal es lo que experimentan los usuarios — respuestas 503 — y no una métrica indirecta del host.
+      - Lógica de alerta expresada en KQL, lo que mantiene la regla explícita, revisable y fácil de ajustar.
+      - Remediación implementada como runbook de Azure Automation, de modo que la solución es siempre la misma acción scriptada.
+      - Integración nativa de la plataforma — regla de alerta → action group → runbook — sin infraestructura adicional que operar.
+  challenges:
+    - challenge:
+        en: Distinguishing real service degradation from noise.
+        es: Distinguir una degradación real del ruido.
+      decision:
+        en: Base the alert on a KQL query over request telemetry, where conditions and thresholds can be expressed precisely and adjusted without changing the remediation.
+        es: Basar la alerta en una consulta KQL sobre la telemetría de peticiones, donde condiciones y umbrales se expresan con precisión y se ajustan sin tocar la remediación.
+    - challenge:
+        en: Making the remediation repeatable and safe to run unattended.
+        es: Hacer la remediación repetible y segura para ejecutarse sin supervisión.
+      decision:
+        en: Encapsulate it in a single runbook scoped to restarting the affected VMs, rather than a broader set of ad-hoc actions.
+        es: Encapsularla en un único runbook limitado a reiniciar las VMs afectadas, en lugar de un conjunto más amplio de acciones ad hoc.
+  security:
+    en:
+      - An unattended runbook should run under an identity with only the permissions needed to restart the target VMs.
+      - Keeping the remediation narrow (restart only) limits the impact of a false positive.
+    es:
+      - Un runbook desatendido debe ejecutarse con una identidad que solo tenga los permisos necesarios para reiniciar las VMs objetivo.
+      - Mantener la remediación acotada (solo reinicio) limita el impacto de un falso positivo.
+  operations:
+    en:
+      - Recovery no longer waits for an operator to respond to the alert.
+      - Alert history and runbook job history give a record of every automated intervention.
+      - Restart is a mitigation, not a root-cause fix — automated recoveries remain visible for follow-up.
+    es:
+      - La recuperación ya no espera a que un operador responda a la alerta.
+      - El histórico de alertas y de ejecuciones del runbook deja constancia de cada intervención automática.
+      - Reiniciar es una mitigación, no una corrección de causa raíz — las recuperaciones automáticas siguen visibles para su seguimiento.
+  results:
+    en:
+      - HTTP 503 failures detected and remediated automatically, without human intervention.
+      - Faster incident response for a known, recurring failure mode.
+    es:
+      - Fallos HTTP 503 detectados y remediados automáticamente, sin intervención humana.
+      - Respuesta más rápida ante un modo de fallo conocido y recurrente.
+  lessons:
+    en:
+      - Automate known fixes for known failures, and keep the automation as narrow as the fix.
+      - Alerting on user-facing signals produces more meaningful automation than alerting on infrastructure proxies.
+    es:
+      - Automatizar soluciones conocidas para fallos conocidos, y mantener la automatización tan acotada como la solución.
+      - Alertar sobre señales que ve el usuario produce una automatización más significativa que alertar sobre indicadores de infraestructura.

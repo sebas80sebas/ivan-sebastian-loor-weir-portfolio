@@ -1,0 +1,66 @@
+# Focus areas and course completions. Courses are NOT certifications and must
+# never be counted as such.
+- id: focus-architecture
+  kind: focus
+  order: 1
+  title: { en: Azure solution architecture, es: Arquitectura de soluciones en Azure }
+  description:
+    en: Landing zones, design trade-offs and the documentation that justifies them — ADRs, HLDs and LLDs.
+    es: Landing zones, trade-offs de diseño y la documentación que los justifica — ADRs, HLDs y LLDs.
+- id: focus-aks
+  kind: focus
+  order: 2
+  title: { en: Managed Kubernetes (AKS), es: Kubernetes gestionado (AKS) }
+  description:
+    en: Deploying and operating AKS as part of the wider platform — networking, identity, security and observability.
+    es: Desplegar y operar AKS como parte de la plataforma — red, identidad, seguridad y observabilidad.
+- id: focus-devsecops
+  kind: focus
+  order: 3
+  title: { en: DevSecOps & supply-chain security, es: DevSecOps y seguridad de la cadena de suministro }
+  description:
+    en: Security controls in pipelines and module interfaces — code scanning, secret protection, dependency review.
+    es: Controles de seguridad en pipelines e interfaces de módulos — code scanning, protección de secretos, revisión de dependencias.
+- id: focus-ai
+  kind: focus
+  order: 4
+  title: { en: AI engineering & agentic systems, es: AI engineering y sistemas agénticos }
+  description:
+    en: Building with LLM APIs, MCP and agent tooling — and how AI-assisted engineering fits into secure delivery.
+    es: Construir con APIs de LLM, MCP y herramientas de agentes — y cómo encaja la ingeniería asistida por IA en una entrega segura.
+
+- id: course-databricks-fundamentals
+  kind: course
+  order: 10
+  provider: Databricks
+  title: { en: Databricks Fundamentals, es: Databricks Fundamentals }
+- id: course-databricks-genai
+  kind: course
+  order: 11
+  provider: Databricks
+  title: { en: Generative AI Fundamentals, es: Generative AI Fundamentals }
+- id: course-ai-fluency
+  kind: course
+  order: 12
+  provider: Anthropic
+  title: { en: 'AI Fluency: Framework & Foundations', es: 'AI Fluency: Framework & Foundations' }
+- id: course-claude-101
+  kind: course
+  order: 13
+  provider: Anthropic
+  title: { en: Claude 101, es: Claude 101 }
+- id: course-claude-code
+  kind: course
+  order: 14
+  provider: Anthropic
+  title: { en: Claude Code in Action, es: Claude Code in Action }
+- id: course-mcp
+  kind: course
+  order: 15
+  provider: Anthropic
+  title: { en: Introduction to Model Context Protocol, es: Introduction to Model Context Protocol }
+- id: course-claude-api
+  kind: course
+  order: 16
+  provider: Anthropic
+  title: { en: Building with the Claude API, es: Building with the Claude API }
