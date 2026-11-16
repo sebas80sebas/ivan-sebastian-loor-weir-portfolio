@@ -1,5 +1,12 @@
 # Focus areas and course completions. Courses are NOT certifications and must
 # never be counted as such.
+- id: focus-iac
+  kind: focus
+  order: 0
+  title: { en: Terraform & IaC at scale, es: Terraform e IaC a escala }
+  description:
+    en: Module design, multi-environment patterns and the delivery workflows around Infrastructure as Code.
+    es: Diseño de módulos, patrones multientorno y los flujos de entrega alrededor de Infrastructure as Code.
 - id: focus-architecture
   kind: focus
   order: 1
@@ -9,7 +16,7 @@
     es: Landing zones, trade-offs de diseño y la documentación que los justifica — ADRs, HLDs y LLDs.
 - id: focus-aks
   kind: focus
-  order: 2
+  order: 5
   title: { en: Managed Kubernetes (AKS), es: Kubernetes gestionado (AKS) }
   description:
     en: Deploying and operating AKS as part of the wider platform — networking, identity, security and observability.

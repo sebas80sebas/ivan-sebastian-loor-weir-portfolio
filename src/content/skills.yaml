@@ -4,7 +4,7 @@
 #   personal     → used in personal repositories
 #   certified    → validated by a proctored certification (never on its own)
 - id: cloud
-  order: 1
+  order: 2
   title: { en: Cloud platform — Azure, es: Plataforma cloud — Azure }
   summary:
     en: Day-to-day platform. Multi-environment provisioning, operations and audits across infrastructure, data and AI services.
@@ -32,11 +32,11 @@
         es: Automatización de la monitorización de ExpressRoute, conexiones VPN y Traffic Manager; aprovisionamiento de agentes en redes privadas.
 
 - id: iac
-  order: 2
-  title: { en: Infrastructure as Code, es: Infrastructure as Code }
+  order: 1
+  title: { en: Infrastructure as Code — Terraform, es: Infrastructure as Code — Terraform }
   summary:
-    en: Core strength. Reusable modules, multi-environment deployments and standardisation.
-    es: Fortaleza principal. Módulos reutilizables, despliegues multientorno y estandarización.
+    en: Core strength. Terraform is how every environment I deliver comes to exist — reusable modules, multi-environment deployments and standardisation.
+    es: Fortaleza principal. Terraform es la forma en la que nace cada entorno que entrego — módulos reutilizables, despliegues multientorno y estandarización.
   items:
     - name: Terraform
       context: [professional, certified]
@@ -83,7 +83,7 @@
         es: Infraestructura, módulos y código de automatización bajo control de versiones.
 
 - id: containers
-  order: 4
+  order: 7
   title: { en: Containers & orchestration, es: Contenedores y orquestación }
   summary:
     en: Enterprise OpenShift and AKS work in the job; deeper runtime comparison in the thesis.
@@ -111,7 +111,7 @@
         es: Ejecutores implementados y evaluados sobre un nodo edge Raspberry Pi 5 en el TFG.
 
 - id: security
-  order: 5
+  order: 4
   title: { en: Security & DevSecOps, es: Seguridad y DevSecOps }
   summary:
     en: Security designed into module interfaces and delivery workflows.
@@ -139,7 +139,7 @@
         es: Gestión de secretos y claves en las plataformas aprovisionadas; identidad y gobierno en Azure.
 
 - id: observability
-  order: 6
+  order: 5
   title: { en: Monitoring & observability, es: Monitorización y observabilidad }
   summary:
     en: Where the automation work started — detection, reporting and remediation.
@@ -162,7 +162,7 @@
         es: Monitorización de rendimiento, temperatura y energía de nodos edge y fog con Node Exporter.
 
 - id: automation
-  order: 7
+  order: 6
   title: { en: Programming & automation, es: Programación y automatización }
   summary:
     en: Languages used to glue platforms together and remove manual work.

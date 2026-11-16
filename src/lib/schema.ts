@@ -36,9 +36,9 @@ export function personSchema(siteUrl: string, lang: Lang, certs: Cert[] = []) {
     },
     knowsLanguage: ['es', 'en'],
     knowsAbout: [
-      'Microsoft Azure',
       'Terraform',
       'Infrastructure as Code',
+      'Microsoft Azure',
       'Azure Verified Modules',
       'Azure DevOps',
       'GitHub Actions',

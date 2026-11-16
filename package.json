@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Bilingual (EN/ES) portfolio of Iván Sebastián Loor Weir, Cloud DevSecOps Engineer — Azure, Infrastructure as Code, cloud security and Kubernetes.",
+  "description": "Bilingual (EN/ES) portfolio of Iván Sebastián Loor Weir, Cloud DevSecOps Engineer — Azure, Terraform & Infrastructure as Code, DevSecOps and cloud security.",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Iván Sebastián Loor Weir",
   "engines": {

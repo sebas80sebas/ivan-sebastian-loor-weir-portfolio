@@ -24,6 +24,12 @@ const mailto = `mailto:${site.contact.email}?subject=${encodeURIComponent(t('con
         {t('contact.title.a')} <em class="serif-em">{t('contact.title.em')}</em>
       </h2>
       <p class="contact__body">{t('contact.body')}</p>
+      <div class="contact__roles">
+        <p class="contact__roles-label">{t('contact.openTo')}</p>
+        <ul role="list">
+          {site.openTo.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
       <div class="contact__ctas">
         <a class="btn btn--accent" href={mailto}><Icon name="mail" /> {t('contact.cta')}</a>
         <a class="btn btn--on-ink" href={site.contact.linkedin} target="_blank" rel="noopener noreferrer">
@@ -114,6 +120,31 @@ const mailto = `mailto:${site.contact.email}?subject=${encodeURIComponent(t('con
     max-width: 52ch;
     font-size: var(--step-1);
     color: var(--ink-muted);
+  }
+  .contact__roles {
+    margin-top: var(--space-5);
+  }
+  .contact__roles-label {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .contact__roles ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .contact__roles li {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(79, 209, 224, 0.4);
+    border-radius: var(--radius-pill);
+    background: rgba(79, 209, 224, 0.08);
+    color: var(--ink-text);
+    font-size: var(--step--1);
+    font-weight: 500;
   }
   .contact__ctas {
     display: flex;

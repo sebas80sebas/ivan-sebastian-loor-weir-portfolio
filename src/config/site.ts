@@ -15,7 +15,7 @@ export const site = {
     es: 'Cloud DevSecOps Engineer',
   },
   employer: 'ALIANDO',
-  positioning: 'Azure · Infrastructure as Code · Cloud Security · Kubernetes',
+  positioning: 'Azure · Terraform & Infrastructure as Code · DevSecOps · Cloud Security',
   location: {
     en: 'Madrid, Spain',
     es: 'Madrid, España',
@@ -41,11 +41,14 @@ export const site = {
   },
 
   /**
-   * Client names appear in the private CV but are anonymised on the public
-   * site by default. Set to `true` only after confirming that each client
-   * (and project name) may be disclosed publicly.
+   * Render the `clients` listed in experience.yaml. Only clients whose public
+   * disclosure has been approved are listed there (currently: Qatar General
+   * Tax Authority / Dhareeba 2.0); other roles fall back to `clientsAnonymized`.
    */
-  showClientNames: false,
+  showClientNames: true,
+
+  /** Roles the author is open to — shown in the contact section. */
+  openTo: ['DevOps Engineer', 'DevSecOps Engineer', 'Cloud Engineer', 'Solutions Architect', 'Automation Specialist'],
 
   /** Default social preview image (1200×630), relative to /public. */
   ogImage: '/og-image.png',

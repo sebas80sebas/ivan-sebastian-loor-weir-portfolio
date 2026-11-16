@@ -1,5 +1,5 @@
-# Source: CV (Cloud DevSecOps Engineer, ALIANDO). Client and programme names
-# are deliberately anonymised; no topology, identifiers or sizing published.
+# Source: CV (Cloud DevSecOps Engineer, ALIANDO). Client and programme name
+# disclosed with the author's approval; no topology, identifiers or sizing published.
 order: 1
 featured: true
 type: professional
@@ -7,24 +7,24 @@ category:
   en: Cloud platform engineering
   es: Cloud platform engineering
 title:
-  en: Multi-environment Azure platform for a public-sector modernisation programme
-  es: Plataforma Azure multientorno para un programa de modernización del sector público
+  en: Dhareeba 2.0 — multi-environment Azure platform for the Qatar General Tax Authority
+  es: Dhareeba 2.0 — plataforma Azure multientorno para la Autoridad Tributaria de Qatar
 summary:
-  en: Five complete Azure environments — sbx to prod — across two releases, with 40+ services spanning platform, data, AI and integration layers, provisioned through Terraform modules and Azure DevOps pipelines.
-  es: Cinco entornos Azure completos — de sbx a prod — en dos releases, con más de 40 servicios en las capas de plataforma, datos, IA e integración, aprovisionados con módulos Terraform y pipelines de Azure DevOps.
+  en: As infrastructure lead, delivered five complete Azure environments — sbx to prod — across two releases, with 40+ services spanning platform, data, AI and integration layers, all provisioned as code with Terraform modules and Azure DevOps pipelines.
+  es: Como responsable de infraestructura, entregué cinco entornos Azure completos — de sbx a prod — en dos releases, con más de 40 servicios en las capas de plataforma, datos, IA e integración, todo aprovisionado como código con módulos Terraform y pipelines de Azure DevOps.
 outcome:
   en: Release 0 and Release 1 environments delivered as code
   es: Entornos de Release 0 y Release 1 entregados como código
 role:
-  en: Cloud DevSecOps Engineer — infrastructure provisioning, module development, architecture documentation
-  es: Cloud DevSecOps Engineer — aprovisionamiento de infraestructura, desarrollo de módulos, documentación de arquitectura
+  en: Infrastructure lead — Terraform provisioning, module development, architecture documentation
+  es: Responsable de infraestructura — aprovisionamiento con Terraform, desarrollo de módulos, documentación de arquitectura
 period: '2026'
 org:
-  en: ALIANDO · Cloud Platform area
-  es: ALIANDO · Área Cloud Platform
+  en: ALIANDO · Cloud Platform · Client — Qatar General Tax Authority
+  es: ALIANDO · Cloud Platform · Cliente — Autoridad Tributaria de Qatar
 stack:
-  - Azure
   - Terraform
+  - Azure
   - Azure DevOps
   - OpenShift (UPI)
   - Key Vault
@@ -34,23 +34,23 @@ stack:
 caseStudy:
   confidential: true
   overview:
-    en: A national-scale tax-administration modernisation programme needed its Azure estate built consistently, environment after environment and release after release. My work was turning that estate into code — Terraform modules executed by Azure DevOps pipelines — and keeping deployments moving when dependencies between layers blocked them.
-    es: Un programa de modernización de la administración tributaria a escala nacional necesitaba construir su estate en Azure de forma consistente, entorno tras entorno y release tras release. Mi trabajo consistió en convertir ese estate en código — módulos Terraform ejecutados por pipelines de Azure DevOps — y mantener los despliegues avanzando cuando las dependencias entre capas los bloqueaban.
+    en: Dhareeba 2.0, the Qatar General Tax Authority’s programme, needed its Azure estate built consistently, environment after environment and release after release. As infrastructure lead, I turned that estate into code — Terraform modules executed by Azure DevOps pipelines — and kept deployments moving when dependencies between layers blocked them.
+    es: Dhareeba 2.0, el programa de la Autoridad Tributaria de Qatar (General Tax Authority), necesitaba construir su estate en Azure de forma consistente, entorno tras entorno y release tras release. Como responsable de infraestructura, convertí ese estate en código — módulos Terraform ejecutados por pipelines de Azure DevOps — y mantuve los despliegues avanzando cuando las dependencias entre capas los bloqueaban.
   context:
-    en: The engagement sits in ALIANDO’s Cloud Platform area, focused on cloud infrastructure modernisation and DevOps automation for an international public-sector client. The platform spans five environments (sandbox, development, QA, pre-production and production) and was delivered in successive releases — Release 0 and Release 1.
-    es: El proyecto se enmarca en el área Cloud Platform de ALIANDO, centrada en la modernización de infraestructura cloud y la automatización DevOps para un cliente internacional del sector público. La plataforma abarca cinco entornos (sandbox, desarrollo, QA, preproducción y producción) y se entregó en releases sucesivas — Release 0 y Release 1.
+    en: The engagement sits in ALIANDO’s Cloud Platform area, focused on cloud infrastructure modernisation and DevOps automation for the Qatar General Tax Authority, where I act as infrastructure lead for the Dhareeba 2.0 platform. The platform spans five environments (sandbox, development, QA, pre-production and production) and was delivered in successive releases — Release 0 and Release 1.
+    es: El proyecto se enmarca en el área Cloud Platform de ALIANDO, centrada en la modernización de infraestructura cloud y la automatización DevOps para la Autoridad Tributaria de Qatar, donde actúo como responsable de infraestructura de la plataforma Dhareeba 2.0. La plataforma abarca cinco entornos (sandbox, desarrollo, QA, preproducción y producción) y se entregó en releases sucesivas — Release 0 y Release 1.
   problem:
     en: More than forty Azure services across networking, data, AI and platform layers had to exist identically in every environment, with dependencies between them (identity, secrets, networking, data services) that make ordering and configuration drift real risks. Manual or per-environment provisioning would not scale to five environments and multiple releases, nor survive audit.
     es: Más de cuarenta servicios de Azure en las capas de red, datos, IA y plataforma debían existir de forma idéntica en cada entorno, con dependencias entre ellos (identidad, secretos, red, servicios de datos) que convierten el orden de despliegue y la deriva de configuración en riesgos reales. Un aprovisionamiento manual o por entorno no escalaría a cinco entornos y varias releases, ni resistiría una auditoría.
   responsibilities:
     en:
-      - Provisioned complete environments (sbx, dev, qa, pre, prod) for Release 0 and Release 1 through Terraform modules and Azure DevOps pipelines.
+      - Led the infrastructure workstream and provisioned complete environments (sbx, dev, qa, pre, prod) for Release 0 and Release 1 through Terraform modules and Azure DevOps pipelines.
       - Developed custom Terraform modules where existing ones did not cover the requirement.
       - Troubleshot failed deployments and unblocked cross-layer dependencies so releases could progress.
       - Delivered and operated OpenShift UPI clusters on Azure, automating provisioning and lifecycle management with Terraform and Azure DevOps.
       - Contributed to Solution Designs, ADRs, HLDs, LLDs, architecture diagrams and Bills of Quantities.
     es:
-      - Aprovisioné entornos completos (sbx, dev, qa, pre, prod) para Release 0 y Release 1 mediante módulos Terraform y pipelines de Azure DevOps.
+      - Lideré la parte de infraestructura y aprovisioné entornos completos (sbx, dev, qa, pre, prod) para Release 0 y Release 1 mediante módulos Terraform y pipelines de Azure DevOps.
       - Desarrollé módulos Terraform propios donde los existentes no cubrían el requisito.
       - Resolví despliegues fallidos y desbloqueé dependencias entre capas para que las releases avanzaran.
       - Entregué y operé clústeres OpenShift UPI sobre Azure, automatizando su aprovisionamiento y ciclo de vida con Terraform y Azure DevOps.
@@ -170,11 +170,11 @@ caseStudy:
     en:
       - Secrets and keys centralised in Azure Key Vault as part of each environment rather than embedded in code or pipelines.
       - Pipeline-only changes give a reviewable, auditable trail for every modification to the platform.
-      - Client architecture, network design and identifiers are confidential — this case study describes the approach, not the estate.
+      - Network design, identifiers and sizing are confidential — this case study describes the approach, not the estate.
     es:
       - Secretos y claves centralizados en Azure Key Vault dentro de cada entorno, en lugar de embebidos en código o pipelines.
       - Los cambios solo vía pipeline dejan un rastro revisable y auditable de cada modificación de la plataforma.
-      - La arquitectura del cliente, el diseño de red y los identificadores son confidenciales — este caso describe el enfoque, no el estate.
+      - El diseño de red, los identificadores y el dimensionamiento son confidenciales — este caso describe el enfoque, no el estate.
   operations:
     en:
       - Environment parity makes issues reproducible in lower environments before they reach production.

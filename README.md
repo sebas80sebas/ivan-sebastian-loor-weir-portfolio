@@ -2,7 +2,7 @@
 
 Bilingual (English / Spanish) personal portfolio of **Iván Sebastián Loor Weir**, Cloud DevSecOps Engineer at ALIANDO.
 
-> **Cloud DevSecOps Engineer · Azure · Infrastructure as Code · Cloud Security · Kubernetes**
+> **Cloud DevSecOps Engineer · Azure · Terraform & Infrastructure as Code · DevSecOps · Cloud Security**
 
 A static, dependency-light website built with Astro and deployed on Cloudflare Pages. It presents professional experience, technical case studies with architecture diagrams, verified certifications, skills and education. All the content is structured, schema-validated data rather than hard-coded markup.
 
@@ -88,7 +88,8 @@ ivan-sebastian-loor-weir-portfolio/
 │   ├── favicon-32.png, apple-touch-icon.png, icon-512.png
 │   ├── og-image.png             # 1200×630 social / LinkedIn preview (npm run og)
 │   ├── site.webmanifest
-│   └── cv/                      # (optional) approved public CV PDFs — see §7
+│   ├── cv/                      # Public CV PDF(s) — see §7
+│   └── files/                   # Public documents (bachelor's thesis PDF)
 ├── scripts/
 │   ├── generate-brand-assets.mjs  # Rebuilds PNG icons from the SVG monogram
 │   ├── generate-og-image.mjs      # Renders the OG image with headless Chrome
@@ -172,13 +173,13 @@ All content is YAML under `src/content/` and is validated by `src/content.config
 
 > **YAML tip:** quote any value that contains `: ` or a comma inside `{ … }` flow mappings, or use block style (`en:` / `es:` on separate lines).
 
-**Add a project (card only).** Create `src/content/projects/<slug>.yaml` with `order`, `type` (`professional | academic | personal`), `category`, `title`, `summary`, `role`, `period`, `stack` and optionally `repo`. Projects without `caseStudy` appear in the "More projects" archive.
+**Add a project (card only).** Create `src/content/projects/<slug>.yaml` with `order`, `type` (`professional | academic | personal`), `category`, `title`, `summary`, `role`, `period`, `stack`, optionally `repo`, and optionally `links` (extra repositories or PDFs: `{ label, href, kind: github | pdf }`, shown in the case-study header). Projects without `caseStudy` appear in the "More projects" archive.
 
 **Add a case study.** Add a `caseStudy` block to the project file (see `azure-platform-modernisation.yaml` for a complete example). Its presence creates `/projects/<slug>/` and `/es/projects/<slug>/` automatically. Required fields: `overview`, `context`, `problem`, `responsibilities`, `architecture`, `stackGroups`, `implementation`, `challenges`, `security`, `operations`, `results`, `lessons`. Optional fields: `diagram`, `resultsTable`, `confidential` (shows the confidentiality note).
 
 **Diagrams.** A `diagram` has `width`/`height` (viewBox units), `groups` (zones, each optionally with an `id` so that edges can target them), `nodes` (`id`, `label`, `sub`, `x`, `y`, `w`, `h`, `kind`) and `edges` (`from`, `to`, `label`, `dashed`, `route`). `kind` sets the colour and legend entry (`source`, `pipeline`, `security`, `azure`, `platform`, `data`, `observe`, `external`, `device`). Connectors are routed automatically; use `route: h | v | hv | vh | u` to force a shape. The text alternative is generated from the same data. Only draw components that are documented, and never include real topology, names or identifiers.
 
-**Update experience.** Edit `src/content/experience.yaml`. Real client names go in `clients` and are only rendered when `showClientNames` is `true` in `src/config/site.ts`. `clientsAnonymized` is shown otherwise. `projects` links a role to its case studies.
+**Update experience.** Edit `src/content/experience.yaml`. Approved client names go in `clients` (rendered when `showClientNames` is `true` in `src/config/site.ts`). Roles with an empty list show `clientsAnonymized`. Because the repository is public, never list a client before its disclosure is approved. `projects` links a role to its case studies.
 
 **Add a certification.** Add an entry to `src/content/certifications.yaml`. Only proctored certifications backed by a certificate or score report belong there. Set `highlight: true` with `score`/`maxScore` to show a score. Never invent credential IDs or verification URLs; leave `verifyUrl` out if there is none. Course completions go in `learning.yaml` (`kind: course`).
 
@@ -228,7 +229,7 @@ The site is fully static and needs no server, database or secrets.
 - **Private documentation is never committed.** `/docs/` (CVs, certificates, employment documents, private notes) is excluded in `.gitignore`. Nothing is copied from `docs/` into the public build automatically; public assets are created separately and sanitised (for example, the profile photo is re-encoded without metadata).
 - **No secrets.** The site uses no API keys, tokens or backend. `.env`, key and certificate files and credential JSON files are git-ignored. `.env.example` documents the only variable, `SITE_URL`, which is public by nature (it is printed into every page).
 - **Public vs private assets.** Everything under `public/`, `src/` and `src/content/` is published. Do not put anything there that you would not show a stranger.
-- **Client confidentiality.** Client names are hidden by default (`showClientNames: false`). Case studies describe approach and logical design only: no subscription or tenant IDs, IP ranges, private endpoints, internal URLs, resource names, sizing or commercial figures. Before adding a case study, check that every component in its diagram and every claim is documented and publishable.
+- **Client confidentiality.** Only clients whose disclosure has been approved are listed in `experience.yaml` (currently the Qatar General Tax Authority / Dhareeba 2.0); other roles use `clientsAnonymized`. Case studies describe approach and logical design only: no subscription or tenant IDs, IP ranges, private endpoints, internal URLs, resource names, sizing or commercial figures. Before adding a case study, check that every component in its diagram and every claim is documented and publishable.
 - **Browser security.** A hash-based CSP (`default-src 'self'`, no inline script without a hash, `object-src 'none'`), `frame-ancestors 'none'`, HSTS, `nosniff`, a strict referrer policy and a restrictive `Permissions-Policy`. Fonts and images are self-hosted, so the site makes no third-party requests and has no tracking.
 - **Dependencies.** Versions are pinned exactly in `package.json` and locked in `package-lock.json`; run `npm audit` before releases.
 - If a secret is ever committed, deleting the file is not enough: rotate the credential and rewrite the history (for example with `git filter-repo`).

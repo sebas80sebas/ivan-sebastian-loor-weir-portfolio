@@ -21,7 +21,7 @@ export const ui = {
   en: {
     'meta.home.title': 'Iván Sebastián Loor Weir — Cloud DevSecOps Engineer',
     'meta.home.description':
-      'Cloud DevSecOps Engineer at ALIANDO (Madrid). Azure platforms delivered as code with Terraform and CI/CD, cloud security, observability automation and Kubernetes. Case studies, certifications and experience.',
+      'Cloud DevSecOps Engineer at ALIANDO (Madrid). Azure platforms delivered as code with Terraform and CI/CD, DevSecOps, cloud security and automation. Case studies, certifications and experience.',
     'meta.projects.title': 'Projects & case studies — Iván Sebastián Loor Weir',
     'meta.projects.description':
       'Cloud engineering, Infrastructure as Code, DevSecOps and monitoring-automation projects by Iván Sebastián Loor Weir, with detailed technical case studies.',
@@ -60,7 +60,7 @@ export const ui = {
     'hero.fact.envs.value': '5',
     'hero.fact.envs.label': 'environments provisioned as code, sbx → prod',
     'hero.fact.services.value': '40+',
-    'hero.fact.services.label': 'Azure services delivered through Terraform & Azure DevOps',
+    'hero.fact.services.label': 'Azure services deployed with Terraform for Dhareeba 2.0',
     'hero.fact.certs.label': 'professional certifications — Microsoft, HashiCorp, GitHub, Anthropic',
     'hero.visual.label': 'Illustrative diagram of a Terraform delivery flow: commit, plan, security scan and apply, promoted across sandbox, development, QA, pre-production and production environments.',
     'hero.visual.caption': 'Illustrative · IaC promotion flow',
@@ -94,7 +94,7 @@ export const ui = {
 
     'projects.title': 'Case studies in cloud engineering, IaC and automation.',
     'projects.intro':
-      'Professional work is described at the level of architecture and engineering decisions; client identities and environment details are anonymised.',
+      'Professional work is described at the level of architecture and engineering decisions; confidential environment details are omitted.',
     'projects.filter.label': 'Filter projects by type',
     'projects.filter.all': 'All',
     'projects.type.professional': 'Professional',
@@ -130,7 +130,7 @@ export const ui = {
     'case.facts.period': 'Period',
     'case.facts.org': 'Context',
     'case.confidential':
-      'Client-confidential details (names, identifiers, network topology, sizing) are intentionally omitted. Diagrams show the logical design only.',
+      'Confidential environment details (identifiers, network topology, sizing) are intentionally omitted. Diagrams show the logical design only.',
     'case.next': 'Next case study',
     'case.prev': 'Previous case study',
     'case.repo': 'View source on GitHub',
@@ -160,6 +160,7 @@ export const ui = {
     'education.thesis': 'Bachelor’s thesis',
     'education.grade': 'Grade',
     'education.readThesis': 'Read the thesis case study',
+    'education.thesisPdf': 'Download thesis (PDF)',
 
     'learning.title': 'Where my learning is going.',
     'learning.intro':
@@ -168,10 +169,11 @@ export const ui = {
     'learning.courses': 'Course completions',
     'learning.coursesNote': 'Courses and learning badges — not proctored certifications.',
 
-    'contact.title.a': 'Building on Azure, Kubernetes or',
+    'contact.title.a': 'Building on Azure, Terraform or',
     'contact.title.em': 'secure delivery pipelines?',
     'contact.body':
-      'I’m open to conversations about Cloud Engineering, DevSecOps and platform roles — in Spain or internationally, remote or hybrid.',
+      'I’m open to DevOps, DevSecOps, Cloud Engineer, Solutions Architect and Automation Specialist roles — in Spain or internationally, remote or hybrid.',
+    'contact.openTo': 'Open to roles as',
     'contact.email': 'Email',
     'contact.linkedin': 'LinkedIn',
     'contact.github': 'GitHub',
@@ -192,7 +194,7 @@ export const ui = {
   es: {
     'meta.home.title': 'Iván Sebastián Loor Weir — Cloud DevSecOps Engineer',
     'meta.home.description':
-      'Cloud DevSecOps Engineer en ALIANDO (Madrid). Plataformas Azure entregadas como código con Terraform y CI/CD, seguridad cloud, automatización de la observabilidad y Kubernetes. Casos de estudio, certificaciones y experiencia.',
+      'Cloud DevSecOps Engineer en ALIANDO (Madrid). Plataformas Azure entregadas como código con Terraform y CI/CD, DevSecOps, seguridad cloud y automatización. Casos de estudio, certificaciones y experiencia.',
     'meta.projects.title': 'Proyectos y casos de estudio — Iván Sebastián Loor Weir',
     'meta.projects.description':
       'Proyectos de Cloud Engineering, Infrastructure as Code, DevSecOps y automatización de la monitorización de Iván Sebastián Loor Weir, con casos de estudio técnicos.',
@@ -231,7 +233,7 @@ export const ui = {
     'hero.fact.envs.value': '5',
     'hero.fact.envs.label': 'entornos aprovisionados como código, de sbx a prod',
     'hero.fact.services.value': '40+',
-    'hero.fact.services.label': 'servicios Azure desplegados con Terraform y Azure DevOps',
+    'hero.fact.services.label': 'servicios Azure desplegados con Terraform en Dhareeba 2.0',
     'hero.fact.certs.label': 'certificaciones profesionales: Microsoft, HashiCorp, GitHub y Anthropic',
     'hero.visual.label': 'Diagrama ilustrativo de un flujo de entrega con Terraform: commit, plan, análisis de seguridad y apply, promovido por los entornos de sandbox, desarrollo, QA, preproducción y producción.',
     'hero.visual.caption': 'Ilustrativo · flujo de promoción IaC',
@@ -265,7 +267,7 @@ export const ui = {
 
     'projects.title': 'Casos de estudio de Cloud Engineering, IaC y automatización.',
     'projects.intro':
-      'El trabajo profesional se describe a nivel de arquitectura y decisiones de ingeniería; la identidad de los clientes y los detalles de sus entornos están anonimizados.',
+      'El trabajo profesional se describe a nivel de arquitectura y decisiones de ingeniería; los detalles confidenciales de los entornos se omiten.',
     'projects.filter.label': 'Filtrar proyectos por tipo',
     'projects.filter.all': 'Todos',
     'projects.type.professional': 'Profesional',
@@ -301,7 +303,7 @@ export const ui = {
     'case.facts.period': 'Periodo',
     'case.facts.org': 'Contexto',
     'case.confidential':
-      'Los detalles confidenciales del cliente (nombres, identificadores, topología de red, dimensionamiento) se omiten intencionadamente. Los diagramas muestran solo el diseño lógico.',
+      'Los detalles confidenciales de los entornos (identificadores, topología de red, dimensionamiento) se omiten intencionadamente. Los diagramas muestran solo el diseño lógico.',
     'case.next': 'Siguiente caso',
     'case.prev': 'Caso anterior',
     'case.repo': 'Ver código en GitHub',
@@ -331,6 +333,7 @@ export const ui = {
     'education.thesis': 'Trabajo Fin de Grado',
     'education.grade': 'Calificación',
     'education.readThesis': 'Leer el caso de estudio del TFG',
+    'education.thesisPdf': 'Descargar TFG (PDF)',
 
     'learning.title': 'Hacia dónde va mi aprendizaje.',
     'learning.intro':
@@ -339,10 +342,11 @@ export const ui = {
     'learning.courses': 'Cursos completados',
     'learning.coursesNote': 'Cursos y badges de aprendizaje, no certificaciones con examen supervisado.',
 
-    'contact.title.a': '¿Trabajas con Azure, Kubernetes o',
+    'contact.title.a': '¿Trabajas con Azure, Terraform o',
     'contact.title.em': 'pipelines de entrega seguros?',
     'contact.body':
-      'Estoy abierto a conversar sobre roles de Cloud Engineering, DevSecOps y plataforma, en España o a nivel internacional, en remoto o en formato híbrido.',
+      'Estoy abierto a puestos de DevOps, DevSecOps, Cloud Engineer, Solutions Architect y Automation Specialist, en España o a nivel internacional, en remoto o en formato híbrido.',
+    'contact.openTo': 'Abierto a puestos de',
     'contact.email': 'Email',
     'contact.linkedin': 'LinkedIn',
     'contact.github': 'GitHub',
