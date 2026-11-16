@@ -30,6 +30,14 @@ stack:
   - tfsec
   - AKS
   - Azure AI Foundry
+links:
+  - { label: AKS module, href: https://github.com/sebas80sebas/terraform-azure-avm-aks }
+  - { label: Container Registry module, href: https://github.com/sebas80sebas/terraform-azure-avm-acr }
+  - { label: AI Foundry module, href: https://github.com/sebas80sebas/terraform-azure-avm-ai-foundry }
+  - { label: Azure OpenAI module, href: https://github.com/sebas80sebas/terraform-azure-avm-openai }
+  - { label: AI Search module, href: https://github.com/sebas80sebas/terraform-azure-avm-search-service }
+  - { label: Data Factory module, href: https://github.com/sebas80sebas/terraform-azure-avm-data-factory }
+  - { label: Databricks module, href: https://github.com/sebas80sebas/terraform-azure-avm-databricks-workspace }
 caseStudy:
   overview:
     en: Landing-zone deployments are only as fast and as safe as the modules they are assembled from. I built Terraform modules aligned with Azure Verified Modules (AVM) standards so that teams could compose platforms from tested, versioned building blocks — with private networking, encryption, identity and diagnostics available by design rather than bolted on.
@@ -159,11 +167,11 @@ caseStudy:
       - Los módulos versionados permiten que cada landing zone se actualice a su ritmo.
   results:
     en:
-      - Seven AVM-aligned modules covering container, AI and data services for landing-zone deployments.
+      - Seven AVM-aligned modules covering container, AI and data services for landing-zone deployments, each published with its examples and changelog.
       - A consistent security interface across all modules, so one posture can be applied platform-wide.
       - Scenario examples and changelogs that make modules self-documenting and safe to upgrade.
     es:
-      - Siete módulos alineados con AVM que cubren servicios de contenedores, IA y datos para despliegues de landing zones.
+      - Siete módulos alineados con AVM que cubren servicios de contenedores, IA y datos para despliegues de landing zones, cada uno publicado con sus ejemplos y changelog.
       - Una interfaz de seguridad homogénea en todos los módulos, para aplicar una única postura en toda la plataforma.
       - Ejemplos por escenario y changelogs que hacen los módulos autodocumentados y seguros de actualizar.
   lessons:

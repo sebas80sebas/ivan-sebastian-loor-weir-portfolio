@@ -19,6 +19,7 @@
     grade: '9.5 / 10'
     date: '2026-03'
     project: tfg-edge-to-cloud-containers
+    pdf: /files/tfg-ivan-sebastian-loor-weir-2026.pdf
     summary:
       en: Extended the DAGonStar workflow engine with Docker, Kubernetes (k3s/k0s), Nomad and Apptainer executors plus a cross-runtime data-staging layer, and evaluated performance and energy efficiency on real Edge–Fog–Cloud hardware with Prometheus and Grafana.
       es: Extensión del motor de workflows DAGonStar con ejecutores para Docker, Kubernetes (k3s/k0s), Nomad y Apptainer y una capa de staging de datos entre runtimes, con evaluación de rendimiento y eficiencia energética sobre hardware Edge–Fog–Cloud real con Prometheus y Grafana.

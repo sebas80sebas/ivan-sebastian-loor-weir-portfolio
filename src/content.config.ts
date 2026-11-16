@@ -125,6 +125,8 @@ const education = defineCollection({
         date: isoMonth,
         project: z.string(),
         summary: l10n,
+        /** Public PDF of the thesis, relative to /public. */
+        pdf: z.string().optional(),
       })
       .optional(),
     honours: l10n.optional(),
@@ -193,6 +195,16 @@ const projects = defineCollection({
     org: l10n.optional(),
     stack: z.array(z.string()),
     repo: url.optional(),
+    /** Extra public links shown on the case-study page (additional repositories, PDFs). */
+    links: z
+      .array(
+        z.object({
+          label: z.union([z.string(), l10n]),
+          href: z.string(),
+          kind: z.enum(['github', 'pdf']).default('github'),
+        }),
+      )
+      .default([]),
     /** Short outcome line for cards. */
     outcome: l10n.optional(),
     /** Present ⇒ the project gets a dedicated case-study page. */

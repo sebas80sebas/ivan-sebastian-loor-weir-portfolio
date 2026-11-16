@@ -32,6 +32,9 @@ stack:
   - Azure CLI
   - PowerShell
 repo: https://github.com/sebas80sebas/zabbix-expressroute-monitoring
+links:
+  - { label: Traffic Manager collector, href: https://github.com/sebas80sebas/zabbix-azure-trafficmanager-monitoring }
+  - { label: { en: Zero-touch agent installer, es: Instalador zero-touch del agente }, href: https://github.com/sebas80sebas/no-rdp-zabbix-agent-installer }
 caseStudy:
   overview:
     en: Network services are where outages start and where they are hardest to see. I automated the onboarding of Azure ExpressRoute, VPN connections and Traffic Manager into Zabbix, and built a zero-touch way to install Zabbix agents on VMs — including those in isolated private networks.

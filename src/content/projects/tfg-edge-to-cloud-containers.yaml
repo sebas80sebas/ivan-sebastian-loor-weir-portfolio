@@ -33,6 +33,8 @@ stack:
   - Grafana
   - MongoDB Atlas
 repo: https://github.com/sebas80sebas/dagonstar-containers
+links:
+  - { label: { en: Thesis (PDF), es: TFG (PDF) }, href: /files/tfg-ivan-sebastian-loor-weir-2026.pdf, kind: pdf }
 caseStudy:
   overview:
     en: Edge-to-Cloud infrastructures mix ARM devices, desktop machines and managed cloud services, with no shared filesystem between them. My thesis extended DAGonStar — a DAG-based scientific workflow engine — so the same workflow can run its tasks in Docker, Kubernetes (k3s/k0s), Nomad or Apptainer, locally or on remote nodes, and then measured what each choice costs in time, resources and energy.

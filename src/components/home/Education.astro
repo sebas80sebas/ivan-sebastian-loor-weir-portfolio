@@ -44,9 +44,16 @@ const items = (await getCollection('education')).sort((a, b) => a.data.order - b
                   </div>
                   <p class="thesis__title serif">“{l(e.thesis.title, lang)}”</p>
                   <p class="thesis__summary">{l(e.thesis.summary, lang)}</p>
-                  <a class="text-link thesis__link" href={localizePath(projectPath(e.thesis.project), lang)}>
-                    {t('education.readThesis')} <Icon name="arrow-right" size={15} />
-                  </a>
+                  <div class="thesis__actions">
+                    <a class="text-link thesis__link" href={localizePath(projectPath(e.thesis.project), lang)}>
+                      {t('education.readThesis')} <Icon name="arrow-right" size={15} />
+                    </a>
+                    {e.thesis.pdf && (
+                      <a class="btn btn--ghost thesis__pdf" href={e.thesis.pdf} download>
+                        <Icon name="download" /> {t('education.thesisPdf')}
+                      </a>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -129,12 +136,21 @@ const items = (await getCollection('education')).sort((a, b) => a.data.order - b
     color: var(--ink-2);
     max-width: 64ch;
   }
+  .thesis__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    margin-top: var(--space-5);
+  }
   .thesis__link {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    margin-top: var(--space-4);
     font-size: var(--step--1);
+  }
+  .thesis__pdf {
+    min-height: 2.5rem;
   }
   @media (max-width: 52rem) {
     .edu__item {

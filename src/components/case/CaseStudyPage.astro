@@ -109,11 +109,30 @@ const jsonLd = graph(
           </div>
         </dl>
         {
-          d.repo && (
-            <a class="btn btn--on-ink case-hero__repo" href={d.repo} target="_blank" rel="noopener noreferrer">
-              <Icon name="github" /> {t('case.repo')}
-              <span class="sr-only">{t('common.newTab')}</span>
-            </a>
+          (d.repo || d.links.length > 0) && (
+            <ul class="case-hero__links" role="list">
+              {d.repo && (
+                <li>
+                  <a class="btn btn--on-ink" href={d.repo} target="_blank" rel="noopener noreferrer">
+                    <Icon name="github" /> {t('case.repo')}
+                    <span class="sr-only">{t('common.newTab')}</span>
+                  </a>
+                </li>
+              )}
+              {d.links.map((link) => (
+                <li>
+                  <a
+                    class="btn btn--on-ink"
+                    href={link.href}
+                    {...(link.kind === 'pdf' ? { download: '' } : { target: '_blank', rel: 'noopener noreferrer' })}
+                  >
+                    <Icon name={link.kind === 'pdf' ? 'download' : 'github'} />
+                    {typeof link.label === 'string' ? link.label : l(link.label, lang)}
+                    {link.kind !== 'pdf' && <span class="sr-only">{t('common.newTab')}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
           )
         }
       </div>
@@ -389,8 +408,17 @@ const jsonLd = graph(
     color: var(--ink-text);
     font-size: var(--step--1);
   }
-  .case-hero__repo {
+  .case-hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
     margin-top: var(--space-6);
+  }
+  .case-hero__links .btn {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
   }
 
   .case-body {
