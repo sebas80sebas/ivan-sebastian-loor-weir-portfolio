@@ -34,7 +34,7 @@
   issuer: GitHub
   level: { en: Specialty, es: Especialidad }
   earned: '2026-10-14'
-  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/7A1808D1EFF05EAE?sharingId=AD10C0F7F316F6CF
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir/7A1808D1EFF05EAE?sharingId=AD10C0F7F316F6CF
   domain:
     en: Code security, secret protection & supply chain
     es: Seguridad del código, secretos y cadena de suministro
@@ -49,7 +49,7 @@
   score: 850
   maxScore: 1000
   highlight: true
-  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/8E691CB4AC8179D6?sharingId=AD10C0F7F316F6CF
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir/8E691CB4AC8179D6?sharingId=AD10C0F7F316F6CF
   domain: { en: CI/CD workflow automation, es: Automatización de workflows CI/CD }
 
 - id: az-104
@@ -60,7 +60,7 @@
   level: { en: Associate, es: Associate }
   earned: '2026-09-09'
   validUntil: '2027-09-10'
-  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/66227A57497430FB?sharingId=AD10C0F7F316F6CF
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir/66227A57497430FB?sharingId=AD10C0F7F316F6CF
   domain:
     en: Identity, governance, compute, networking & monitoring
     es: Identidad, gobierno, cómputo, red y monitorización
@@ -82,7 +82,7 @@
   issuer: Microsoft
   level: { en: Fundamentals, es: Fundamentals }
   earned: '2026-06-15'
-  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/89DA02C0BA8ED4DF?sharingId=AD10C0F7F316F6CF
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir/89DA02C0BA8ED4DF?sharingId=AD10C0F7F316F6CF
   domain: { en: Microsoft 365 data protection & agent administration, es: Protección de datos en Microsoft 365 y administración de agentes }
 
 - id: az-900
@@ -92,7 +92,7 @@
   issuer: Microsoft
   level: { en: Fundamentals, es: Fundamentals }
   earned: '2025-10-17'
-  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/1C6FA238FAD80FD4?sharingId=AD10C0F7F316F6CF
+  verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir/1C6FA238FAD80FD4?sharingId=AD10C0F7F316F6CF
   domain:
     en: Cloud concepts, Azure services & governance
     es: Conceptos cloud, servicios y gobierno de Azure
