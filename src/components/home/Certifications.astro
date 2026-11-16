@@ -1,0 +1,296 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Icon from '@/components/Icon.astro';
+import type { Lang } from '@/i18n/ui';
+import { formatDate, l, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+  index: number;
+}
+const { lang, index } = Astro.props;
+const t = useTranslations(lang);
+const certs = (await getCollection('certifications')).sort((a, b) => a.data.order - b.data.order);
+const issuers = ['Microsoft', 'HashiCorp', 'GitHub', 'Anthropic'] as const;
+const byIssuer = issuers
+  .map((issuer) => ({ issuer, items: certs.filter((c) => c.data.issuer === issuer) }))
+  .filter((g) => g.items.length);
+---
+<section id="certifications" class="section certs" aria-labelledby="certs-title">
+  <div class="container">
+    <SectionHeader
+      id="certs-title"
+      index={index}
+      label={t('section.certifications')}
+      title={t('certs.title')}
+      intro={t('certs.intro')}
+    />
+
+    <div class="certs__summary" data-reveal>
+      <p class="certs__count"><span>{certs.length}</span> {t('certs.count')}</p>
+      <ul class="certs__issuers" role="list">
+        {
+          byIssuer.map((g) => (
+            <li class={`issuer issuer--${g.issuer.toLowerCase()}`}>
+              <span class="issuer__dot" aria-hidden="true" />
+              {g.issuer} <span class="muted mono">×{g.items.length}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="certs__groups">
+      {
+        byIssuer.map((g) => (
+          <div class={`cgroup issuer--${g.issuer.toLowerCase()}`} data-reveal>
+            <h3 class="cgroup__title label">{g.issuer}</h3>
+            <ul class="cgroup__list" role="list">
+              {g.items.map(({ data: c }) => (
+                <li class:list={['cert card', { 'cert--highlight': c.highlight }]}>
+                  <div class="cert__badge" aria-hidden="true">
+                    <span class="cert__code">{c.code}</span>
+                    <span class="cert__level">{l(c.level, lang)}</span>
+                  </div>
+                  <div class="cert__body">
+                    <h4 class="cert__name">{c.name}</h4>
+                    <p class="cert__domain">{l(c.domain, lang)}</p>
+                    <dl class="cert__meta">
+                      {c.earned && (
+                        <div>
+                          <dt>{t('certs.earned')}</dt>
+                          <dd>
+                            <time datetime={c.earned}>{formatDate(c.earned, lang, { day: true })}</time>
+                          </dd>
+                        </div>
+                      )}
+                      {!c.earned && c.validUntil && (
+                        <div>
+                          <dt>{t('certs.validUntil')}</dt>
+                          <dd>
+                            <time datetime={c.validUntil}>{formatDate(c.validUntil, lang)}</time>
+                          </dd>
+                        </div>
+                      )}
+                      {c.highlight && c.score && (
+                        <div class="cert__score">
+                          <dt>{t('certs.score')}</dt>
+                          <dd>
+                            <strong>{c.score}</strong>/{c.maxScore}
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
+                    {c.verifyUrl && (
+                      <a class="cert__verify" href={c.verifyUrl} target="_blank" rel="noopener noreferrer">
+                        <Icon name="shield" size={15} /> {t('certs.verify')}
+                        <span class="sr-only">
+                          — {c.name} {t('common.newTab')}
+                        </span>
+                      </a>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .certs {
+    --ms: #2f6fd6;
+    --hc: #7b42bc;
+    --gh: #24292f;
+    --an: #c4623f;
+  }
+  :global(:root[data-theme='dark']) .certs {
+    --gh: #c9d1d9;
+    --hc: #a77be0;
+    --ms: #5c9bff;
+    --an: #e08a65;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .certs {
+      --gh: #c9d1d9;
+      --hc: #a77be0;
+      --ms: #5c9bff;
+      --an: #e08a65;
+    }
+  }
+  .issuer--microsoft { --c: var(--ms); }
+  .issuer--hashicorp { --c: var(--hc); }
+  .issuer--github { --c: var(--gh); }
+  .issuer--anthropic { --c: var(--an); }
+
+  .certs__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-6);
+    padding-bottom: var(--space-5);
+    margin-bottom: var(--space-6);
+    border-bottom: var(--border);
+  }
+  .certs__count {
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+  .certs__count span {
+    font-family: var(--font-serif);
+    font-size: var(--step-4);
+    line-height: 1;
+    color: var(--ink);
+    margin-right: 0.3rem;
+  }
+  .certs__issuers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    font-size: var(--step--1);
+  }
+  .issuer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .issuer__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--c);
+  }
+
+  .certs__groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-5);
+  }
+  .cgroup__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+  }
+  .cgroup__title::before {
+    content: '';
+    width: 14px;
+    height: 2px;
+    background: var(--c);
+  }
+  .cgroup__list {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .cert {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    transition: border-color var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+  }
+  .cert:hover {
+    border-color: var(--line-strong);
+  }
+  .cert--highlight {
+    border-color: color-mix(in srgb, var(--c) 45%, var(--line));
+  }
+  .cert__badge {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.25rem;
+    aspect-ratio: 1;
+    padding: 0.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--c) 40%, var(--line));
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--c) 16%, transparent), transparent 70%),
+      var(--surface);
+    text-align: center;
+  }
+  .cert__code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--c);
+    line-height: 1.1;
+    word-break: break-word;
+  }
+  .cert__level {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .cert__name {
+    font-size: var(--step-0);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .cert__domain {
+    margin-top: 0.25rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .cert__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin-top: var(--space-3);
+    font-size: var(--step--2);
+  }
+  .cert__meta dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .cert__meta dd {
+    margin: 0.1rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .cert__score strong {
+    color: var(--c);
+    font-weight: 600;
+  }
+  .cert__verify {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .cert__verify:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 56rem) {
+    .certs__groups {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 26rem) {
+    .cert {
+      grid-template-columns: 1fr;
+    }
+    .cert__badge {
+      aspect-ratio: auto;
+      justify-items: start;
+      grid-auto-flow: column;
+      justify-content: start;
+      gap: 0.6rem;
+    }
+  }
+</style>

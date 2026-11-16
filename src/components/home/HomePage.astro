@@ -1,0 +1,48 @@
+---
+/** Home page composition, shared by / (EN) and /es/ (ES). */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from './Hero.astro';
+import About from './About.astro';
+import Experience from './Experience.astro';
+import Projects from './Projects.astro';
+import Certifications from './Certifications.astro';
+import Skills from './Skills.astro';
+import Education from './Education.astro';
+import Learning from './Learning.astro';
+import Contact from './Contact.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { graph, personSchema, websiteSchema } from '@/lib/schema';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const certs = await getCollection('certifications');
+const siteUrl = Astro.site!.href;
+const jsonLd = graph(
+  {
+    '@type': 'ProfilePage',
+    '@id': `${new URL(Astro.url.pathname, Astro.site).href}#page`,
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    inLanguage: lang,
+    mainEntity: { '@id': `${siteUrl}#person` },
+    isPartOf: { '@id': `${siteUrl}#website` },
+  },
+  personSchema(siteUrl, lang, certs.map((c) => c.data)),
+  websiteSchema(siteUrl, lang),
+);
+---
+<BaseLayout lang={lang} title={t('meta.home.title')} description={t('meta.home.description')} type="profile" jsonLd={jsonLd}>
+  <Hero lang={lang} certCount={certs.length} />
+  <About lang={lang} index={1} />
+  <Experience lang={lang} index={2} />
+  <Projects lang={lang} index={3} />
+  <Certifications lang={lang} index={4} />
+  <Skills lang={lang} index={5} />
+  <Education lang={lang} index={6} />
+  <Learning lang={lang} index={7} />
+  <Contact lang={lang} index={8} />
+</BaseLayout>

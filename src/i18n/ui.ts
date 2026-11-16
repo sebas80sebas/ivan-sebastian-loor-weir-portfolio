@@ -90,6 +90,7 @@ export const ui = {
     'experience.related': 'Related case studies',
     'experience.area': 'Area',
     'experience.clients': 'Clients',
+    'experience.more': 'more achievements',
 
     'projects.title': 'Case studies in cloud engineering, IaC and automation.',
     'projects.intro':
@@ -106,6 +107,7 @@ export const ui = {
     'projects.moreIntro': 'Smaller personal and academic projects. Source code on GitHub.',
     'projects.viewAll': 'All projects',
     'projects.featured': 'Featured',
+    'projects.shown': 'projects shown',
 
     'case.back': 'All projects',
     'case.overview': 'Overview',
@@ -259,6 +261,7 @@ export const ui = {
     'experience.related': 'Casos de estudio relacionados',
     'experience.area': 'Área',
     'experience.clients': 'Clientes',
+    'experience.more': 'logros más',
 
     'projects.title': 'Casos de estudio de Cloud Engineering, IaC y automatización.',
     'projects.intro':
@@ -275,6 +278,7 @@ export const ui = {
     'projects.moreIntro': 'Proyectos personales y académicos más pequeños. Código fuente en GitHub.',
     'projects.viewAll': 'Todos los proyectos',
     'projects.featured': 'Destacado',
+    'projects.shown': 'proyectos mostrados',
 
     'case.back': 'Todos los proyectos',
     'case.overview': 'Resumen',

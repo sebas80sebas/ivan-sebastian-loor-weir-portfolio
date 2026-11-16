@@ -1,0 +1,33 @@
+# About section. Keep it factual: every claim here must be supported by the
+# CV or the case studies.
+- id: about
+  paragraphs:
+    en:
+      - I’m a Cloud DevSecOps Engineer at ALIANDO in Madrid, working in the Cloud Platform area on enterprise Azure environments delivered entirely as code. My work sits where infrastructure, automation and security meet — Terraform modules, Azure DevOps and GitHub Actions pipelines, and the platform services that run on top of them.
+      - I came into cloud engineering through managed services, operating Azure for enterprise clients in the Middle East and Spain. That is where I learned that what you cannot observe, you cannot operate — and where I started automating monitoring, reporting and incident remediation. In 2026 I moved into platform delivery — multi-environment landing zones, OpenShift on Azure and SAP infrastructure — and into the architecture documentation behind them.
+      - I’m now deepening my work in cloud architecture and managed Kubernetes, and in how AI-assisted engineering fits into secure delivery. My Computer Engineering degree at UC3M ended with a thesis on container runtimes across edge, fog and cloud.
+    es:
+      - Soy Cloud DevSecOps Engineer en ALIANDO (Madrid) y trabajo en el área Cloud Platform sobre entornos Azure enterprise entregados íntegramente como código. Mi trabajo está donde se cruzan infraestructura, automatización y seguridad — módulos Terraform, pipelines de Azure DevOps y GitHub Actions, y los servicios de plataforma que se ejecutan sobre ellos.
+      - Llegué a la ingeniería cloud desde managed services, operando Azure para clientes enterprise en Oriente Medio y España. Ahí aprendí que lo que no se puede observar no se puede operar, y empecé a automatizar la monitorización, el reporting y la remediación de incidencias. En 2026 pasé a la entrega de plataformas — landing zones multientorno, OpenShift sobre Azure e infraestructura SAP — y a la documentación de arquitectura que las acompaña.
+      - Ahora estoy profundizando en arquitectura cloud y Kubernetes gestionado, y en cómo encaja la ingeniería asistida por IA en una entrega segura. Terminé Ingeniería Informática en la UC3M con un TFG sobre runtimes de contenedores entre edge, fog y cloud.
+  principles:
+    en:
+      - Infrastructure should be reproducible, automated and version-controlled.
+      - Architecture decisions should be documented and technically justified.
+      - Security belongs throughout the delivery lifecycle — in modules and pipelines, not in a final checklist.
+      - Automation should reduce operational complexity and human error.
+    es:
+      - La infraestructura debe ser reproducible, automatizada y estar bajo control de versiones.
+      - Las decisiones de arquitectura deben documentarse y justificarse técnicamente.
+      - La seguridad pertenece a todo el ciclo de entrega — en módulos y pipelines, no en un checklist final.
+      - La automatización debe reducir la complejidad operativa y el error humano.
+  languages:
+    - name: { en: Spanish, es: Español }
+      level: { en: Native, es: Nativo }
+    - name: { en: English, es: Inglés }
+      level: { en: C1 Advanced, es: C1 Avanzado }
+      credential: { en: EF SET certified (67/100), es: Certificado EF SET (67/100) }
+      url: https://cert.efset.org/eCZWWY
+  focus:
+    en: Azure architecture · AKS · DevSecOps · AI engineering
+    es: Arquitectura Azure · AKS · DevSecOps · AI engineering

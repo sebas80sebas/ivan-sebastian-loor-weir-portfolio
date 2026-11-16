@@ -35,7 +35,9 @@
   level: { en: Specialty, es: Especialidad }
   earned: '2026-10-14'
   verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/7A1808D1EFF05EAE?sharingId=AD10C0F7F316F6CF
-  domain: { en: Code security, secret protection & supply chain, es: Seguridad del código, secretos y cadena de suministro }
+  domain:
+    en: Code security, secret protection & supply chain
+    es: Seguridad del código, secretos y cadena de suministro
 
 - id: gh-200
   order: 4
@@ -59,7 +61,9 @@
   earned: '2026-09-09'
   validUntil: '2027-09-10'
   verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/66227A57497430FB?sharingId=AD10C0F7F316F6CF
-  domain: { en: Identity, governance, compute, networking & monitoring, es: Identidad, gobierno, cómputo, red y monitorización }
+  domain:
+    en: Identity, governance, compute, networking & monitoring
+    es: Identidad, gobierno, cómputo, red y monitorización
 
 - id: terraform-associate
   order: 6
@@ -89,4 +93,6 @@
   level: { en: Fundamentals, es: Fundamentals }
   earned: '2025-10-17'
   verifyUrl: https://learn.microsoft.com/api/credentials/share/en-us/IvanSebastianLoorWeir-1638/1C6FA238FAD80FD4?sharingId=AD10C0F7F316F6CF
-  domain: { en: Cloud concepts, Azure services & governance, es: Conceptos cloud, servicios y gobierno de Azure }
+  domain:
+    en: Cloud concepts, Azure services & governance
+    es: Conceptos cloud, servicios y gobierno de Azure

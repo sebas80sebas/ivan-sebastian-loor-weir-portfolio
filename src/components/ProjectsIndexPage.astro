@@ -1,0 +1,49 @@
+---
+/** /projects/ and /es/projects/: every case study plus the smaller projects. */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectArchive from '@/components/ProjectArchive.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { getProjects } from '@/lib/projects';
+import { graph, personSchema } from '@/lib/schema';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.caseStudy);
+const archive = projects.filter((p) => !p.data.caseStudy);
+const jsonLd = graph(
+  {
+    '@type': 'CollectionPage',
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    name: t('meta.projects.title'),
+    inLanguage: lang,
+    author: { '@id': `${Astro.site!.href}#person` },
+  },
+  personSchema(Astro.site!.href, lang),
+);
+---
+<BaseLayout lang={lang} title={t('meta.projects.title')} description={t('meta.projects.description')} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <SectionHeader index={3} label={t('section.projects')} title={t('projects.title')} intro={t('projects.intro')} />
+      <div class="grid">
+        {featured.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} headingLevel="h2" />)}
+      </div>
+      <ProjectArchive projects={archive} lang={lang} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+    gap: var(--space-5);
+  }
+</style>

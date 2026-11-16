@@ -1,0 +1,162 @@
+---
+import Icon from './Icon.astro';
+import type { Lang } from '@/i18n/ui';
+import { l, localizePath, useTranslations } from '@/i18n/utils';
+import { projectPath, type Project } from '@/lib/projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  index: number;
+  headingLevel?: 'h3' | 'h2';
+}
+const { project, lang, index, headingLevel: H = 'h3' } = Astro.props;
+const t = useTranslations(lang);
+const d = project.data;
+const href = localizePath(projectPath(project.id), lang);
+---
+<article class="pcard card" data-type={d.type} data-reveal>
+  <div class="pcard__top">
+    <span class={`badge badge--${d.type}`}>{t(`projects.type.${d.type}`)}</span>
+    <span class="pcard__index mono" aria-hidden="true">{String(index).padStart(2, '0')}</span>
+  </div>
+  <p class="pcard__category label">{l(d.category, lang)}</p>
+  <H class="pcard__title">
+    <a href={href} class="pcard__link">{l(d.title, lang)}</a>
+  </H>
+  <p class="pcard__summary">{l(d.summary, lang)}</p>
+  {
+    d.outcome && (
+      <p class="pcard__outcome">
+        <Icon name="check" size={16} /> {l(d.outcome, lang)}
+      </p>
+    )
+  }
+  <ul class="chips pcard__stack" role="list">
+    {d.stack.slice(0, 6).map((s) => <li class="chip">{s}</li>)}
+  </ul>
+  <div class="pcard__foot">
+    <span class="pcard__role"><span class="sr-only">{t('projects.role')}: </span>{l(d.role, lang).split(' — ')[0]}</span>
+    <span class="pcard__cta" aria-hidden="true">{t('projects.readCase')} <Icon name="arrow-right" size={16} /></span>
+  </div>
+</article>
+
+<style>
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.9rem);
+    transition:
+      transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .pcard:hover,
+  .pcard:focus-within {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-lg);
+  }
+  .pcard::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: linear-gradient(90deg, var(--accent-bright), var(--signal));
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+  .pcard:hover::before,
+  .pcard:focus-within::before {
+    opacity: 1;
+  }
+  .pcard__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pcard__index {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+  .pcard__category {
+    margin-top: var(--space-5);
+  }
+  .pcard__title {
+    margin-top: var(--space-2);
+    font-size: var(--step-2);
+    line-height: 1.22;
+  }
+  .pcard__link {
+    text-decoration: none;
+  }
+  .pcard__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .pcard__link:focus-visible {
+    outline: none;
+  }
+  .pcard:has(.pcard__link:focus-visible) {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+  .pcard__summary {
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .pcard__outcome {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+    margin-top: var(--space-4);
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .pcard__outcome :global(.icon) {
+    flex: none;
+    margin-top: 0.2em;
+    color: var(--ok);
+  }
+  .pcard__stack {
+    margin-top: var(--space-5);
+  }
+  .pcard__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: auto;
+    padding-top: var(--space-5);
+  }
+  .pcard__role {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+  .pcard__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: none;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .pcard__cta :global(.icon) {
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .pcard:hover .pcard__cta :global(.icon) {
+    transform: translateX(3px);
+  }
+  .pcard[hidden] {
+    display: none;
+  }
+</style>

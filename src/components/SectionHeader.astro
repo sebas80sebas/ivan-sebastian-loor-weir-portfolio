@@ -1,0 +1,50 @@
+---
+/** Numbered section header: "01 / About" label, title (with optional serif emphasis) and intro. */
+interface Props {
+  index: number;
+  label: string;
+  title: string;
+  em?: string;
+  intro?: string;
+  id?: string;
+}
+const { index, label, title, em, intro, id } = Astro.props;
+---
+<header class="section-header" data-reveal>
+  <p class="section-header__label label">
+    <span class="section-header__index">{String(index).padStart(2, '0')}</span>
+    <span aria-hidden="true">/</span>
+    {label}
+  </p>
+  <h2 id={id} class="section-header__title">
+    {title}{em && <> <em class="serif-em">{em}</em></>}
+  </h2>
+  {intro && <p class="section-header__intro lead">{intro}</p>}
+</header>
+
+<style>
+  .section-header {
+    max-width: 50rem;
+    margin-bottom: var(--space-7);
+  }
+  .section-header__label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .section-header__index {
+    color: var(--accent);
+  }
+  .section-header__title {
+    margin-top: var(--space-4);
+    font-size: var(--step-4);
+    letter-spacing: -0.025em;
+  }
+  .section-header__title .serif-em {
+    color: var(--accent);
+  }
+  .section-header__intro {
+    margin-top: var(--space-4);
+    max-width: 44rem;
+  }
+</style>

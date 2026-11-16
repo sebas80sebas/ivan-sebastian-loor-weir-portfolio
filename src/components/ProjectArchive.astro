@@ -1,0 +1,120 @@
+---
+/** Compact list of smaller projects without a case-study page. */
+import Icon from './Icon.astro';
+import type { Lang } from '@/i18n/ui';
+import { l, useTranslations } from '@/i18n/utils';
+import type { Project } from '@/lib/projects';
+
+interface Props {
+  projects: Project[];
+  lang: Lang;
+}
+const { projects, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+{
+  projects.length > 0 && (
+    <div class="archive" data-reveal>
+      <div class="archive__head">
+        <h3>{t('projects.more')}</h3>
+        <p class="muted">{t('projects.moreIntro')}</p>
+      </div>
+      <ul class="archive__list" role="list">
+        {projects.map((p) => (
+          <li class="archive__item">
+            <div class="archive__main">
+              <p class="archive__meta">
+                <span class={`badge badge--${p.data.type}`}>{t(`projects.type.${p.data.type}`)}</span>
+                <span class="label">{l(p.data.category, lang)}</span>
+              </p>
+              <p class="archive__title">{l(p.data.title, lang)}</p>
+              <p class="archive__summary">{l(p.data.summary, lang)}</p>
+            </div>
+            <ul class="chips archive__stack" role="list">
+              {p.data.stack.map((s) => (
+                <li class="chip">{s}</li>
+              ))}
+            </ul>
+            {p.data.repo && (
+              <a class="archive__repo" href={p.data.repo} target="_blank" rel="noopener noreferrer">
+                <Icon name="github" /> {t('projects.viewRepo')}
+                <span class="sr-only">
+                  — {l(p.data.title, lang)} {t('common.newTab')}
+                </span>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .archive {
+    margin-top: var(--space-8);
+  }
+  .archive__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--ink);
+  }
+  .archive__head h3 {
+    font-size: var(--step-2);
+  }
+  .archive__head p {
+    font-size: var(--step--1);
+  }
+  .archive__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto;
+    gap: var(--space-5);
+    align-items: center;
+    padding-block: var(--space-5);
+    border-bottom: var(--border);
+  }
+  .archive__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .archive__title {
+    margin-top: var(--space-2);
+    font-weight: 600;
+  }
+  .archive__summary {
+    margin-top: 0.3rem;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .archive__repo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.8rem;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    font-size: var(--step--1);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  }
+  .archive__repo:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  @media (max-width: 52rem) {
+    .archive__item {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .archive__repo {
+      justify-self: start;
+    }
+  }
+</style>

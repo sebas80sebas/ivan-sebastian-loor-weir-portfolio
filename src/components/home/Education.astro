@@ -1,0 +1,145 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Icon from '@/components/Icon.astro';
+import type { Lang } from '@/i18n/ui';
+import { l, localizePath, useTranslations } from '@/i18n/utils';
+import { projectPath } from '@/lib/projects';
+
+interface Props {
+  lang: Lang;
+  index: number;
+}
+const { lang, index } = Astro.props;
+const t = useTranslations(lang);
+const items = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
+---
+<section id="education" class="section education" aria-labelledby="education-title">
+  <div class="container">
+    <SectionHeader id="education-title" index={index} label={t('section.education')} title={t('education.title')} />
+
+    <ol class="edu" role="list">
+      {
+        items.map(({ data: e }) => (
+          <li class:list={['edu__item', { 'edu__item--main': !!e.thesis }]} data-reveal>
+            <div class="edu__years mono">
+              {e.start} — {e.end}
+            </div>
+            <div class="edu__body">
+              <h3 class="edu__degree">{l(e.degree, lang)}</h3>
+              <p class="edu__inst">
+                {e.institution} · {l(e.location, lang)}
+              </p>
+              {e.description && <p class="edu__desc">{l(e.description, lang)}</p>}
+              {e.honours && <p class="edu__desc">{l(e.honours, lang)}</p>}
+
+              {e.thesis && (
+                <div class="thesis card">
+                  <div class="thesis__head">
+                    <p class="label">{t('education.thesis')}</p>
+                    <p class="thesis__grade">
+                      <span class="label">{t('education.grade')}</span>
+                      <strong>{e.thesis.grade}</strong>
+                    </p>
+                  </div>
+                  <p class="thesis__title serif">“{l(e.thesis.title, lang)}”</p>
+                  <p class="thesis__summary">{l(e.thesis.summary, lang)}</p>
+                  <a class="text-link thesis__link" href={localizePath(projectPath(e.thesis.project), lang)}>
+                    {t('education.readThesis')} <Icon name="arrow-right" size={15} />
+                  </a>
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .edu {
+    display: grid;
+    gap: var(--space-6);
+  }
+  .edu__item {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: var(--border);
+  }
+  .edu__years {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--muted);
+    padding-top: 0.3em;
+  }
+  .edu__item--main .edu__years {
+    color: var(--accent);
+  }
+  .edu__degree {
+    font-size: var(--step-2);
+  }
+  .edu__inst {
+    margin-top: 0.35rem;
+    color: var(--ink-2);
+  }
+  .edu__desc {
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .thesis {
+    margin-top: var(--space-5);
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+    background:
+      linear-gradient(135deg, var(--accent-soft), transparent 55%),
+      var(--surface);
+  }
+  .thesis__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .thesis__grade {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .thesis__grade strong {
+    font-family: var(--font-serif);
+    font-size: var(--step-3);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .thesis__title {
+    margin-top: var(--space-3);
+    font-size: var(--step-3);
+    line-height: 1.2;
+    max-width: 30ch;
+  }
+  .thesis__summary {
+    margin-top: var(--space-4);
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    max-width: 64ch;
+  }
+  .thesis__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--space-4);
+    font-size: var(--step--1);
+  }
+  @media (max-width: 52rem) {
+    .edu__item {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>

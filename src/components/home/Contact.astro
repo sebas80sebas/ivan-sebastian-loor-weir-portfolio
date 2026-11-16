@@ -1,0 +1,160 @@
+---
+import Icon from '@/components/Icon.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { availableCvs, cvRequestHref } from '@/lib/cv';
+
+interface Props {
+  lang: Lang;
+  index: number;
+}
+const { lang, index } = Astro.props;
+const t = useTranslations(lang);
+const cvs = availableCvs(lang);
+const mailto = `mailto:${site.contact.email}?subject=${encodeURIComponent(t('contact.subject'))}`;
+---
+<section id="contact" class="contact" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div data-reveal>
+      <p class="label contact__label">
+        <span>{String(index).padStart(2, '0')}</span> / {t('section.contact')}
+      </p>
+      <h2 id="contact-title" class="contact__title">
+        {t('contact.title.a')} <em class="serif-em">{t('contact.title.em')}</em>
+      </h2>
+      <p class="contact__body">{t('contact.body')}</p>
+      <div class="contact__ctas">
+        <a class="btn btn--accent" href={mailto}><Icon name="mail" /> {t('contact.cta')}</a>
+        <a class="btn btn--on-ink" href={site.contact.linkedin} target="_blank" rel="noopener noreferrer">
+          <Icon name="linkedin" /> LinkedIn <span class="sr-only">{t('common.newTab')}</span>
+        </a>
+        {
+          cvs.length > 0 ? (
+            cvs.map((cv) => (
+              <a class="btn btn--on-ink" href={cv.href} download>
+                <Icon name="download" /> {cv.lang === 'en' ? t('cv.downloadEn') : t('cv.downloadEs')}
+              </a>
+            ))
+          ) : (
+            <a class="btn btn--on-ink" href={cvRequestHref(t('cv.requestSubject'))}>
+              <Icon name="file" /> {t('cv.request')}
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <dl class="contact__list" data-reveal>
+      <div>
+        <dt>{t('contact.email')}</dt>
+        <dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd>
+      </div>
+      <div>
+        <dt>{t('contact.linkedin')}</dt>
+        <dd>
+          <a href={site.contact.linkedin} target="_blank" rel="noopener noreferrer">
+            {site.contact.linkedin.replace('https://www.', '')}
+            <span class="sr-only">{t('common.newTab')}</span>
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt>{t('contact.github')}</dt>
+        <dd>
+          <a href={site.contact.github} target="_blank" rel="noopener noreferrer">
+            {site.contact.github.replace('https://', '')}
+            <span class="sr-only">{t('common.newTab')}</span>
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt>{t('contact.location')}</dt>
+        <dd>{site.location[lang]}</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--ink-bg);
+    color: var(--ink-text);
+    padding-block: var(--section-pad);
+    border-bottom: 1px solid var(--ink-line);
+    background-image:
+      radial-gradient(40rem 24rem at 100% 0%, rgba(79, 209, 224, 0.1), transparent 60%),
+      linear-gradient(rgba(233, 237, 243, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233, 237, 243, 0.03) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: end;
+  }
+  .contact__label {
+    color: var(--ink-muted);
+  }
+  .contact__label span {
+    color: var(--ink-accent);
+  }
+  .contact__title {
+    margin-top: var(--space-4);
+    font-size: var(--step-5);
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+  }
+  .contact__title .serif-em {
+    color: var(--ink-accent);
+  }
+  .contact__body {
+    margin-top: var(--space-5);
+    max-width: 52ch;
+    font-size: var(--step-1);
+    color: var(--ink-muted);
+  }
+  .contact__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .contact .btn:focus-visible,
+  .contact a:focus-visible {
+    outline-color: var(--ink-accent);
+  }
+  .contact__list {
+    display: grid;
+  }
+  .contact__list > div {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--ink-line);
+  }
+  .contact__list dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .contact__list dd {
+    margin: 0.3rem 0 0;
+    overflow-wrap: anywhere;
+  }
+  .contact__list a {
+    color: var(--ink-text);
+    text-decoration: none;
+  }
+  .contact__list a:hover {
+    color: var(--ink-accent);
+    text-decoration: underline;
+  }
+  @media (max-width: 56rem) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-7);
+    }
+  }
+</style>

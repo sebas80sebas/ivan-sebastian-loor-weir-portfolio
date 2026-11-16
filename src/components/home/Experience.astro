@@ -1,0 +1,289 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Icon from '@/components/Icon.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { formatDate, l, localizePath, useTranslations } from '@/i18n/utils';
+import { getProjects, projectPath } from '@/lib/projects';
+
+interface Props {
+  lang: Lang;
+  index: number;
+}
+const { lang, index } = Astro.props;
+const t = useTranslations(lang);
+const roles = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+const projects = await getProjects();
+const titleOf = (slug: string) => projects.find((p) => p.id === slug);
+
+const VISIBLE = 3;
+---
+<section id="experience" class="section experience" aria-labelledby="experience-title">
+  <div class="container">
+    <SectionHeader
+      id="experience-title"
+      index={index}
+      label={t('section.experience')}
+      title={t('experience.title')}
+      intro={t('experience.intro')}
+    />
+
+    <ol class="timeline" role="list">
+      {
+        roles.map(({ data: r }, i) => {
+          const highlights = l(r.highlights, lang);
+          const related = r.projects.map(titleOf).filter((p) => p && p.data.caseStudy);
+          return (
+            <li class:list={['role', { 'role--current': r.end === null }]} data-reveal>
+              <div class="role__when">
+                <span class="role__node" aria-hidden="true" />
+                <p class="role__dates mono">
+                  <time datetime={r.start}>{formatDate(r.start, lang)}</time>
+                  {' — '}
+                  {r.end ? <time datetime={r.end}>{formatDate(r.end, lang)}</time> : <span>{t('experience.present')}</span>}
+                </p>
+                <p class="role__place">
+                  {l(r.location, lang)} · {l(r.workMode, lang)}
+                </p>
+              </div>
+
+              <article class="role__card card">
+                <header class="role__head">
+                  <div>
+                    <p class="role__company">{r.company}</p>
+                    <h3 class="role__title">{l(r.role, lang)}</h3>
+                  </div>
+                  {r.end === null && <span class="badge badge--professional">{t('experience.present')}</span>}
+                </header>
+
+                <dl class="role__meta">
+                  <div>
+                    <dt class="label">{t('experience.area')}</dt>
+                    <dd>{l(r.area, lang)}</dd>
+                  </div>
+                  <div>
+                    <dt class="label">{t('experience.clients')}</dt>
+                    <dd>{site.showClientNames && r.clients.length ? r.clients.join(', ') : l(r.clientsAnonymized, lang)}</dd>
+                  </div>
+                </dl>
+
+                <p class="role__summary">{l(r.summary, lang)}</p>
+
+                <h4 class="label role__sub">{t('experience.highlights')}</h4>
+                <ul class="role__highlights">
+                  {highlights.slice(0, VISIBLE).map((h) => <li>{h}</li>)}
+                </ul>
+                {highlights.length > VISIBLE && (
+                  <details class="role__more">
+                    <summary>
+                      <span class="role__more-open">+ {highlights.length - VISIBLE} {t('experience.more')}</span>
+                    </summary>
+                    <ul class="role__highlights">
+                      {highlights.slice(VISIBLE).map((h) => <li>{h}</li>)}
+                    </ul>
+                  </details>
+                )}
+
+                <h4 class="label role__sub">{t('experience.stack')}</h4>
+                <ul class="chips" role="list">
+                  {r.stack.map((s) => <li class="chip">{s}</li>)}
+                </ul>
+
+                {related.length > 0 && (
+                  <div class="role__related">
+                    <h4 class="label">{t('experience.related')}</h4>
+                    <ul role="list">
+                      {related.map((p) => (
+                        <li>
+                          <a href={localizePath(projectPath(p!.id), lang)}>
+                            {l(p!.data.title, lang)} <Icon name="arrow-right" size={15} />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </article>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: var(--space-7);
+  }
+  .role {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--space-6);
+    position: relative;
+  }
+  .role__when {
+    position: relative;
+    padding-left: 1.6rem;
+    padding-top: var(--space-5);
+  }
+  .role__when::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: calc(var(--space-5) + 14px);
+    bottom: calc(-1 * var(--space-7) - var(--space-5));
+    width: 1px;
+    background: var(--line);
+  }
+  .role:last-child .role__when::before {
+    display: none;
+  }
+  .role__node {
+    position: absolute;
+    left: 0;
+    top: calc(var(--space-5) + 4px);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid var(--line-strong);
+    background: var(--bg);
+  }
+  .role--current .role__node {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .role__dates {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .role__place {
+    margin-top: 0.25rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .role__card {
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+  }
+  .role--current .role__card {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    box-shadow: var(--shadow-md);
+  }
+  .role__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .role__company {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .role__title {
+    margin-top: 0.35rem;
+    font-size: var(--step-2);
+  }
+  .role__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+    padding-block: var(--space-4);
+    border-block: var(--border);
+  }
+  .role__meta dd {
+    margin: 0.3rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+  }
+  .role__summary {
+    margin-top: var(--space-5);
+    color: var(--ink-2);
+  }
+  .role__sub {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+  .role__highlights {
+    display: grid;
+    gap: 0.6rem;
+    padding-left: 1.1em;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .role__highlights li::marker {
+    color: var(--accent);
+  }
+  .role__more {
+    margin-top: 0.6rem;
+  }
+  .role__more summary {
+    width: fit-content;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--accent);
+    list-style: none;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    border-radius: var(--radius-xs);
+  }
+  .role__more summary::-webkit-details-marker {
+    display: none;
+  }
+  .role__more[open] summary {
+    display: none;
+  }
+  .role__related {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: var(--border);
+  }
+  .role__related ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: var(--space-3);
+  }
+  .role__related a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .role__related a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 52rem) {
+    .role {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+    .role__when {
+      padding-top: 0;
+    }
+    .role__when::before {
+      display: none;
+    }
+    .role__node {
+      top: 5px;
+    }
+    .role__meta {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+  }
+</style>

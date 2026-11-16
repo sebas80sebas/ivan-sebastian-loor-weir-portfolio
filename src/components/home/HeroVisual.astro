@@ -1,0 +1,234 @@
+---
+/**
+ * Hero visual: an illustrative IaC delivery flow — a pipeline "terminal" and
+ * an environment promotion track (sbx → prod). It is labelled as illustrative
+ * and contains no metrics, identifiers or client data. Pure HTML/CSS; the
+ * animation is disabled when reduced motion is requested.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const t = useTranslations(Astro.props.lang);
+const steps = [
+  { cmd: 'terraform fmt -check', state: 'ok' },
+  { cmd: 'terraform validate', state: 'ok' },
+  { cmd: 'tfsec .', state: 'ok' },
+  { cmd: 'terraform plan -out=tfplan', state: 'ok' },
+  { cmd: 'approval → terraform apply tfplan', state: 'run' },
+];
+const envs = ['sbx', 'dev', 'qa', 'pre', 'prod'];
+---
+<figure class="hv" role="img" aria-label={t('hero.visual.label')}>
+  <div class="hv__window" aria-hidden="true">
+    <div class="hv__bar">
+      <span class="hv__dots"><i></i><i></i><i></i></span>
+      <span class="hv__title">pipeline · infra / landing-zone</span>
+    </div>
+    <div class="hv__body">
+      <p class="hv__line hv__line--prompt" style="--i:0">
+        <span class="hv__muted">$</span> git push origin feature/network-module
+      </p>
+      {
+        steps.map((s, i) => (
+          <p class={`hv__line hv__step hv__step--${s.state}`} style={`--i:${i + 1}`}>
+            <span class="hv__arrow">▸</span>
+            <span class="hv__cmd">{s.cmd}</span>
+            <span class="hv__state">{s.state === 'ok' ? '✓' : '●'}</span>
+          </p>
+        ))
+      }
+    </div>
+    <div class="hv__track">
+      <ol class="hv__envs">
+        {
+          envs.map((e, i) => (
+            <li class="hv__env" style={`--i:${i}`}>
+              <span class="hv__node" />
+              <span class="hv__env-name">{e}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <span class="hv__packet"></span>
+    </div>
+  </div>
+  <figcaption class="hv__caption" aria-hidden="true">{t('hero.visual.caption')}</figcaption>
+</figure>
+
+<style>
+  .hv {
+    margin: 0;
+    width: 100%;
+  }
+  .hv__window {
+    border: 1px solid var(--ink-line);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(16, 26, 41, 0.92), rgba(10, 17, 28, 0.92));
+    box-shadow:
+      0 0 0 1px rgba(79, 209, 224, 0.04),
+      0 40px 80px -40px rgba(0, 0, 0, 0.8),
+      0 0 120px -40px rgba(79, 209, 224, 0.25);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: clamp(0.72rem, 0.66rem + 0.25vw, 0.84rem);
+    color: var(--ink-text);
+  }
+  .hv__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--ink-line);
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+  }
+  .hv__dots {
+    display: flex;
+    gap: 6px;
+  }
+  .hv__dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ink-line);
+  }
+  .hv__body {
+    padding: 1.1rem 1.2rem 0.6rem;
+  }
+  .hv__line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.28rem 0;
+    white-space: nowrap;
+    opacity: 0;
+    animation: hv-in 0.5s var(--ease-out) forwards;
+    animation-delay: calc(0.35s + var(--i) * 0.38s);
+  }
+  .hv__muted {
+    color: var(--ink-muted);
+  }
+  .hv__arrow {
+    color: var(--ink-signal);
+  }
+  .hv__cmd {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hv__state {
+    margin-left: auto;
+    padding-left: 1rem;
+  }
+  .hv__step--ok .hv__state {
+    color: #4cc38a;
+  }
+  .hv__step--run .hv__state {
+    color: var(--ink-accent);
+    animation: hv-pulse 1.4s ease-in-out infinite;
+  }
+  .hv__track {
+    position: relative;
+    margin: 0.4rem 1.2rem 1.3rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--ink-line);
+  }
+  .hv__envs {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+  }
+  .hv__envs::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    height: 1px;
+    background: var(--ink-line);
+  }
+  .hv__env {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+  }
+  .hv__env:first-child {
+    justify-items: start;
+  }
+  .hv__env:last-child {
+    justify-items: end;
+    color: var(--ink-accent);
+  }
+  .hv__node {
+    width: 13px;
+    height: 13px;
+    border: 1px solid var(--ink-muted);
+    border-radius: 50%;
+    background: var(--ink-bg);
+    animation: hv-node 0.4s var(--ease-out) forwards;
+    animation-delay: calc(2.6s + var(--i) * 0.45s);
+  }
+  .hv__env:last-child .hv__node {
+    border-color: var(--ink-accent);
+  }
+  .hv__packet {
+    position: absolute;
+    top: calc(1rem + 3px);
+    left: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink-accent);
+    box-shadow: 0 0 12px 2px rgba(79, 209, 224, 0.6);
+    opacity: 0;
+    animation: hv-travel 2.4s var(--ease-out) 2.5s forwards;
+  }
+  .hv__caption {
+    margin-top: var(--space-3);
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  @keyframes hv-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes hv-pulse {
+    50% { opacity: 0.35; }
+  }
+  @keyframes hv-node {
+    to { background: var(--ink-accent); border-color: var(--ink-accent); }
+  }
+  @keyframes hv-travel {
+    0% { opacity: 1; left: 3px; }
+    95% { opacity: 1; }
+    100% { opacity: 0; left: calc(100% - 10px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hv__line {
+      opacity: 1;
+      animation: none;
+    }
+    .hv__node {
+      animation: none;
+      background: var(--ink-accent);
+      border-color: var(--ink-accent);
+    }
+    .hv__packet,
+    .hv__step--run .hv__state {
+      animation: none;
+    }
+  }
+</style>

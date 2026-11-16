@@ -1,0 +1,139 @@
+---
+import SectionHeader from '@/components/SectionHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectArchive from '@/components/ProjectArchive.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { getProjects } from '@/lib/projects';
+
+interface Props {
+  lang: Lang;
+  index: number;
+}
+const { lang, index } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.caseStudy);
+const archive = projects.filter((p) => !p.data.caseStudy);
+const types = [...new Set(featured.map((p) => p.data.type))];
+---
+<section id="projects" class="section projects" aria-labelledby="projects-title">
+  <div class="container">
+    <SectionHeader
+      id="projects-title"
+      index={index}
+      label={t('section.projects')}
+      title={t('projects.title')}
+      intro={t('projects.intro')}
+    />
+
+    <div class="filters" role="group" aria-label={t('projects.filter.label')} data-filters hidden>
+      <button type="button" class="filter" aria-pressed="true" data-filter="all">
+        {t('projects.filter.all')} <span class="filter__count">{featured.length}</span>
+      </button>
+      {
+        types.map((ty) => (
+          <button type="button" class="filter" aria-pressed="false" data-filter={ty}>
+            {t(`projects.type.${ty}`)}{' '}
+            <span class="filter__count">{featured.filter((p) => p.data.type === ty).length}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class:list={['projects__grid', { 'is-balanced': featured.length % 3 === 1 }]} data-project-grid>
+      {featured.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} />)}
+    </div>
+    <p class="sr-only" aria-live="polite" data-filter-status data-label={t('projects.shown')}></p>
+
+    <ProjectArchive projects={archive} lang={lang} />
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement: filters are hidden without JS, and every card is visible.
+  document.querySelectorAll<HTMLElement>('[data-filters]').forEach((group) => {
+    group.hidden = false;
+    const grid = group.parentElement!.querySelector<HTMLElement>('[data-project-grid]')!;
+    const status = group.parentElement!.querySelector<HTMLElement>('[data-filter-status]');
+    const buttons = group.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter!;
+        grid.dataset.filtered = String(f !== 'all');
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        let shown = 0;
+        grid.querySelectorAll<HTMLElement>('[data-type]').forEach((card) => {
+          const visible = f === 'all' || card.dataset.type === f;
+          card.hidden = !visible;
+          if (visible) {
+            shown++;
+            card.classList.add('is-visible');
+          }
+        });
+        if (status) status.textContent = `${shown} ${status.dataset.label}`;
+      }),
+    );
+  });
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+  .filters[hidden] {
+    display: none;
+  }
+  .filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.4rem;
+    padding: 0.35rem 0.9rem;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    transition: all var(--dur) var(--ease-out);
+  }
+  .filter:hover {
+    border-color: var(--line-strong);
+    color: var(--ink);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .filter__count {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    opacity: 0.7;
+  }
+  /* Explicit columns so the featured grid never leaves an orphan card:
+     2 columns → first card spans the row; 3 columns → first and last span two. */
+  .projects__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+  @media (min-width: 42rem) {
+    .projects__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .projects__grid.is-balanced:not([data-filtered='true']) > :global(:first-child) {
+      grid-column: span 2;
+    }
+  }
+  @media (min-width: 68rem) {
+    .projects__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .projects__grid.is-balanced:not([data-filtered='true']) > :global(:last-child) {
+      grid-column: span 2;
+    }
+  }
+</style>

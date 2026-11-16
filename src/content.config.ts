@@ -5,6 +5,7 @@
  * validated here at build time — a missing translation or a malformed date
  * fails the build instead of shipping a broken page.
  *
+ *   profile.yaml          → About section copy, principles, languages
  *   experience.yaml       → career timeline
  *   certifications.yaml   → proctored professional certifications ONLY
  *   learning.yaml         → focus areas + course completions (not certifications)
@@ -17,10 +18,22 @@ import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 /* ---- Shared helpers -------------------------------------------------------- */
-const l10n = z.object({ en: z.string().min(1), es: z.string().min(1) });
-const l10nList = z.object({ en: z.array(z.string().min(1)), es: z.array(z.string().min(1)) });
+// strictObject: an unexpected key (e.g. a YAML flow mapping split by a comma) fails the build.
+const l10n = z.strictObject({ en: z.string().min(1), es: z.string().min(1) });
+const l10nList = z.strictObject({ en: z.array(z.string().min(1)), es: z.array(z.string().min(1)) });
 const isoMonth = z.string().regex(/^\d{4}-\d{2}(-\d{2})?$/, 'Use YYYY-MM or YYYY-MM-DD');
 const url = z.string().url();
+
+/* ---- Profile (About section copy) ----------------------------------------- */
+const profile = defineCollection({
+  loader: file('src/content/profile.yaml'),
+  schema: z.object({
+    paragraphs: l10nList,
+    principles: l10nList,
+    languages: z.array(z.object({ name: l10n, level: l10n, credential: l10n.optional(), url: url.optional() })),
+    focus: l10n,
+  }),
+});
 
 /* ---- Experience -------------------------------------------------------------- */
 const experience = defineCollection({
@@ -212,4 +225,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { experience, certifications, learning, skills, education, projects };
+export const collections = { profile, experience, certifications, learning, skills, education, projects };
