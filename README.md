@@ -86,11 +86,13 @@ ivan-sebastian-loor-weir-portfolio/
 │   ├── _headers                 # Cloudflare Pages security & cache headers
 │   ├── favicon.svg              # ISLW monogram (source of all icons)
 │   ├── favicon-32.png, apple-touch-icon.png, icon-512.png
-│   ├── og-image.png             # 1200×630 social preview (generated)
+│   ├── og-image.png             # 1200×630 social / LinkedIn preview (npm run og)
 │   ├── site.webmanifest
 │   └── cv/                      # (optional) approved public CV PDFs — see §7
 ├── scripts/
-│   └── generate-brand-assets.mjs  # Rebuilds PNG icons + OG image from SVG
+│   ├── generate-brand-assets.mjs  # Rebuilds PNG icons from the SVG monogram
+│   ├── generate-og-image.mjs      # Renders the OG image with headless Chrome
+│   └── og/og-image.html           # OG image layout (uses the site's web fonts)
 ├── src/
 │   ├── assets/                  # Images processed by astro:assets (profile photo)
 │   ├── components/
@@ -160,7 +162,8 @@ npm run preview    # serves dist/ at http://localhost:4321
 | `npm run build` | `astro build` | Static production build into `dist/` |
 | `npm run preview` | `astro preview` | Serve the production build locally |
 | `npm run check` | `astro check` | Type-check `.astro`/`.ts` files and content |
-| `npm run brand` | `node scripts/generate-brand-assets.mjs` | Regenerate PNG icons and `og-image.png` from the SVG monogram |
+| `npm run brand` | `node scripts/generate-brand-assets.mjs` | Regenerate PNG favicons/app icons from the SVG monogram |
+| `npm run og` | `node scripts/generate-og-image.mjs` | Render `public/og-image.png` (1200×630) from `scripts/og/og-image.html` with headless Chrome (set `CHROME_PATH` if Chrome is not on the PATH) |
 | `npm run astro` | `astro` | Astro CLI passthrough |
 
 ## 7. Content management
@@ -183,7 +186,9 @@ All content is YAML under `src/content/` and is validated by `src/content.config
 
 **Replace or publish CV files.** Copy an approved PDF to `public/cv/ivan-sebastian-loor-weir-cv-en.pdf` and/or `public/cv/ivan-sebastian-loor-weir-cv-es.pdf` (the paths are configured in `src/config/site.ts`), then rebuild. Download buttons appear automatically (`src/lib/cv.ts` checks which files exist at build time). Without files, the site shows a "Request CV" email link. Use a public version of the CV, for example one without a phone number.
 
-**Images and brand assets.** Replace `src/assets/profile.jpg` (square, at least 640 px; strip EXIF metadata first). Responsive WebP versions are generated at build time. After changing `public/favicon.svg` or the OG copy, run `npm run brand`.
+**Images and brand assets.** Replace `src/assets/profile.jpg` (square, at least 640 px; strip EXIF metadata first). Responsive WebP versions are generated at build time. After changing `public/favicon.svg`, run `npm run brand`.
+
+**Social preview (Open Graph / LinkedIn Featured).** `public/og-image.png` is a 1200×630 card designed to read at thumbnail size: name, title, portrait and certification count. Edit the layout in `scripts/og/og-image.html` and run `npm run og`. The certification count is read from `certifications.yaml`, and the portrait from `src/assets/profile.jpg`. LinkedIn caches previews; after changing the image, refresh it with the LinkedIn Post Inspector.
 
 ## 8. Internationalization
 

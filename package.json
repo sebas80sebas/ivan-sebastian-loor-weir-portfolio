@@ -14,7 +14,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "brand": "node scripts/generate-brand-assets.mjs"
+    "brand": "node scripts/generate-brand-assets.mjs",
+    "og": "node scripts/generate-og-image.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.5",

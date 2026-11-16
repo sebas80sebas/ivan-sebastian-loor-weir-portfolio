@@ -1,0 +1,151 @@
+<!doctype html>
+<!--
+  Open Graph / LinkedIn "Featured" preview — 1200×630.
+  Rendered to public/og-image.png by scripts/generate-og-image.mjs using
+  headless Chrome, so it uses the site's real typefaces.
+
+  Small-size legibility rules: one focal name, one accent title, a portrait for
+  instant recognition, and no text below ~22px. Everything important sits
+  inside a 64px safe margin (LinkedIn may crop card edges slightly).
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face { font-family: 'Plex Sans'; font-weight: 500; src: url('{{FONTS}}/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Sans'; font-weight: 600; src: url('{{FONTS}}/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Mono'; font-weight: 500; src: url('{{FONTS}}/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Instrument Serif'; font-style: italic; src: url('{{FONTS}}/instrument-serif/files/instrument-serif-latin-400-italic.woff2') format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        position: relative;
+        background: #0a111c;
+        color: #e9edf3;
+        font-family: 'Plex Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Background: blueprint grid fading out, two soft glows, top accent bar */
+      .grid {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(233,237,243,.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(233,237,243,.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(ellipse 85% 95% at 72% 45%, #000 30%, transparent 85%);
+      }
+      .glow-a { position: absolute; width: 760px; height: 760px; right: -200px; top: -260px;
+        background: radial-gradient(circle, rgba(79,209,224,.20), transparent 62%); }
+      .glow-b { position: absolute; width: 640px; height: 640px; left: -260px; bottom: -380px;
+        background: radial-gradient(circle, rgba(124,157,255,.14), transparent 62%); }
+      .bar { position: absolute; left: 0; top: 0; right: 0; height: 8px;
+        background: linear-gradient(90deg, #4fd1e0, #7c9dff); }
+
+      .wrap {
+        position: absolute; inset: 64px 64px 56px 72px;
+        display: grid; grid-template-columns: 1fr 360px; gap: 40px; align-items: center;
+      }
+
+      /* Left column */
+      .brand { display: flex; align-items: center; gap: 18px; }
+      .brand svg { width: 64px; height: 64px; }
+      .eyebrow {
+        font-family: 'Plex Mono', monospace; font-weight: 500;
+        font-size: 22px; letter-spacing: .14em; text-transform: uppercase; color: #9aa6b8;
+      }
+      h1 {
+        margin-top: 34px;
+        font-weight: 600; font-size: 84px; line-height: .98; letter-spacing: -.035em;
+      }
+      .title {
+        margin-top: 18px;
+        font-family: 'Instrument Serif', serif; font-style: italic;
+        font-size: 60px; line-height: 1; color: #4fd1e0;
+      }
+      .tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+      .tag {
+        padding: 9px 16px; border: 1.5px solid #2a3b57; border-radius: 10px;
+        background: rgba(16,26,41,.75);
+        font-family: 'Plex Mono', monospace; font-weight: 500; font-size: 23px; color: #dbe3ee;
+      }
+
+      /* Right column: portrait + credential badge */
+      .portrait { position: relative; width: 360px; height: 360px; justify-self: end; }
+      .ring {
+        position: absolute; inset: 0; border-radius: 50%;
+        background: conic-gradient(from 210deg, #4fd1e0, #7c9dff, #4fd1e0);
+        padding: 5px;
+      }
+      .ring::after {
+        content: ''; position: absolute; inset: -18px; border-radius: 50%;
+        border: 1.5px dashed rgba(79,209,224,.35);
+      }
+      .frame {
+        width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+        border: 6px solid #0a111c; background: #dfe7f1;
+      }
+      /* Tighter crop on the face so the portrait reads at thumbnail size. */
+      .photo {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+        transform: scale(1.5); transform-origin: 49% 24%;
+      }
+      .badge {
+        position: absolute; left: -96px; bottom: 4px;
+        display: flex; align-items: center; gap: 14px;
+        padding: 14px 20px 14px 16px;
+        background: #101a29; border: 1.5px solid #2a3b57; border-radius: 16px;
+        box-shadow: 0 18px 40px -12px rgba(0,0,0,.7);
+      }
+      .badge b {
+        font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+        font-size: 54px; line-height: .8; color: #4fd1e0;
+      }
+      .badge span { font-size: 21px; line-height: 1.15; font-weight: 500; color: #e9edf3; }
+      .badge small { display: block; font-size: 17px; font-weight: 500; color: #9aa6b8; }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <div class="glow-a"></div>
+    <div class="glow-b"></div>
+    <div class="bar"></div>
+
+    <main class="wrap">
+      <section>
+        <div class="brand">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="14" fill="#101A29" stroke="#2a3b57" stroke-width="1.5" />
+            <g fill="none" stroke="#F4F2EC" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 13.5V29.5" />
+              <path d="M47.5 16.2C45.4 13.4 37.6 12.6 37.6 17.4c0 5 10.4 3.8 10.4 9.2 0 5.2-8.6 5.1-10.9 2.2" />
+              <path d="M15 35.5V51.5h12" />
+              <path d="M35.6 35.5l3.6 16 3.8-11 3.8 11 3.6-16" />
+            </g>
+            <circle cx="32" cy="32.5" r="2.6" fill="#4FD1E0" />
+          </svg>
+          <span class="eyebrow">Portfolio · Madrid</span>
+        </div>
+
+        <h1>Iván Sebastián<br />Loor Weir</h1>
+        <p class="title">Cloud DevSecOps Engineer</p>
+
+        <div class="tags">
+          <span class="tag">Azure</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">DevSecOps</span>
+          <span class="tag">Kubernetes</span>
+        </div>
+      </section>
+
+      <aside class="portrait">
+        <div class="ring"><div class="frame"><img class="photo" src="{{PHOTO}}" alt="" /></div></div>
+        <div class="badge">
+          <b>{{CERTS}}</b>
+          <span>certifications<small>Microsoft · HashiCorp · GitHub · Anthropic</small></span>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
