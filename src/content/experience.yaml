@@ -29,14 +29,14 @@
     es: Modernización de infraestructura cloud y automatización DevOps — plataformas Azure enterprise entregadas de extremo a extremo como código.
   highlights:
     en:
-      - As infrastructure lead for Dhareeba 2.0 (Qatar General Tax Authority), provisioned complete Azure environments (sbx, dev, qa, pre, prod) across Release 0 and Release 1, deploying 40+ services across networking, data, AI and platform layers through Terraform modules and Azure DevOps pipelines — including custom module development, troubleshooting and dependency unblocking.
+      - As one of the main people responsible for the infrastructure of Dhareeba 2.0 (Qatar General Tax Authority), provisioned complete Azure environments (sbx, dev, qa, pre, prod) across Release 0 and Release 1, deploying 40+ services across networking, data, AI and platform layers through Terraform modules and Azure DevOps pipelines — including custom module development, troubleshooting and dependency unblocking.
       - Delivered and operated enterprise OpenShift UPI clusters on Azure, automating provisioning and lifecycle management with Terraform and Azure DevOps.
       - Designed and documented Solution Designs, ADRs, HLDs, LLDs, architecture diagrams and Bills of Quantities for modernisation and migration initiatives.
       - Orchestrated end-to-end infrastructure deployment for SAP workloads on Azure with the SAP Deployment Automation Framework (SDAF), driving Terraform and PowerShell through Azure DevOps pipelines.
       - Migrated Azure DevOps pipeline templates to GitHub Actions, translating Terraform IaC workflows while preserving equivalent build and deployment logic.
       - Engineered Terraform modules aligned with Azure Verified Modules (AVM) standards to accelerate landing-zone deployments within the “Cloud Factory” initiative.
     es:
-      - Como responsable de infraestructura de Dhareeba 2.0 (Autoridad Tributaria de Qatar), aprovisioné entornos Azure completos (sbx, dev, qa, pre, prod) en Release 0 y Release 1, desplegando más de 40 servicios en las capas de red, datos, IA y plataforma mediante módulos Terraform y pipelines de Azure DevOps, incluido el desarrollo de módulos propios, troubleshooting y desbloqueo de dependencias.
+      - Como uno de los principales responsables de la infraestructura de Dhareeba 2.0 (Autoridad Tributaria de Qatar), aprovisioné entornos Azure completos (sbx, dev, qa, pre, prod) en Release 0 y Release 1, desplegando más de 40 servicios en las capas de red, datos, IA y plataforma mediante módulos Terraform y pipelines de Azure DevOps, incluido el desarrollo de módulos propios, troubleshooting y desbloqueo de dependencias.
       - Entregué y operé clústeres OpenShift UPI enterprise sobre Azure, automatizando su aprovisionamiento y ciclo de vida con Terraform y Azure DevOps.
       - Diseñé y documenté Solution Designs, ADRs, HLDs, LLDs, diagramas de arquitectura y BoQs para iniciativas de modernización y migración.
       - Orquesté el despliegue de extremo a extremo de la infraestructura para cargas SAP en Azure con SAP Deployment Automation Framework (SDAF), ejecutando Terraform y PowerShell desde pipelines de Azure DevOps.
