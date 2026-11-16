@@ -1,0 +1,75 @@
+This repository contains two kinds of material under different terms:
+
+  1. SOURCE CODE   — licensed under the MIT License (Part 1).
+  2. PERSONAL CONTENT AND BRAND ASSETS — all rights reserved (Part 2).
+
+If a file is not listed in Part 2, it is source code covered by Part 1.
+
+================================================================================
+PART 1 — SOURCE CODE: MIT LICENSE
+================================================================================
+
+Applies to the website's code and configuration, including:
+
+  - src/components/, src/layouts/, src/lib/, src/i18n/utils.ts, src/styles/
+  - src/pages/, src/content.config.ts
+  - scripts/ (excluding the personal text inside scripts/og/og-image.html)
+  - astro.config.mjs, tsconfig.json, package.json, public/_headers
+  - Documentation describing how the code works (README.md)
+
+MIT License
+
+Copyright (c) 2026 Iván Sebastián Loor Weir
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+PART 2 — PERSONAL CONTENT AND BRAND ASSETS: ALL RIGHTS RESERVED
+================================================================================
+
+Copyright (c) 2026 Iván Sebastián Loor Weir. All rights reserved.
+
+The following material describes the author's professional identity, career
+and work. It is NOT licensed under the MIT License, and no permission is
+granted to copy, modify, redistribute or reuse it, in whole or in part,
+except as permitted by applicable law (for example, viewing the website or
+quoting with attribution):
+
+  - src/content/          All biographical, professional, project, case-study,
+                          certification, education and skills content (YAML)
+  - src/i18n/ui.ts        Interface and marketing copy (the translation
+                          mechanism itself is in src/i18n/utils.ts, Part 1)
+  - src/config/site.ts    Personal identity and contact details
+  - src/assets/           Personal photograph
+  - public/favicon.svg, public/favicon-32.png, public/apple-touch-icon.png,
+    public/icon-512.png, public/og-image.png, public/site.webmanifest,
+    src/components/Monogram.astro (the ISLW brand mark geometry)
+  - Text, name, portrait and brand mark rendered by scripts/og/og-image.html
+  - public/cv/            Curriculum vitae files, if present
+
+In particular, you may not present this content, the photograph, the name or
+the ISLW brand mark as your own, or use them to impersonate the author.
+
+If you reuse the code, replace all content listed in Part 2 with your own.
+
+Third-party names and trademarks mentioned in the content (for example
+Microsoft, Azure, HashiCorp, Terraform, GitHub, Anthropic, Claude) belong to
+their respective owners and are used for identification only. Fonts are
+distributed via @fontsource under the SIL Open Font License 1.1 and are not
+covered by this file.

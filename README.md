@@ -250,11 +250,11 @@ The site is fully static and needs no server, database or secrets.
 
 ## 13. License
 
-**No open-source license is applied.** The repository is public for transparency and as a code sample, but its content (text, case studies, photo, brand mark and CV) is personal and not licensed for reuse. All rights are reserved by default.
+The repository uses a **dual licensing** model; see [`LICENSE`](LICENSE) for the full terms.
 
-If you want others to be able to reuse the code without the personal content, a reasonable approach is:
+| Material | Terms |
+|---|---|
+| **Source code**: components, layouts, lib, styles, pages, content schema, scripts, configuration | [MIT License](LICENSE) — free to reuse, with attribution |
+| **Personal content and brand assets**: `src/content/`, UI copy in `src/i18n/ui.ts`, `src/config/site.ts`, profile photo, ISLW monogram, icons, OG image, CV files | **All rights reserved** — not licensed for reuse |
 
-- **Code** (`src/components`, `src/lib`, `src/layouts`, `src/styles`, `scripts`, configuration): MIT License.
-- **Content and assets** (`src/content`, `src/assets`, `public/` images, the brand mark): all rights reserved.
-
-Record that split in a `LICENSE` file before declaring it.
+If you fork this project as a starting point for your own portfolio, keep the MIT notice for the code and replace all the personal content, the photo and the brand mark with your own. Fonts are distributed by `@fontsource` under the SIL Open Font License 1.1.
